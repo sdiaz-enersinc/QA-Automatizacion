@@ -1,0 +1,208 @@
+{
+  "registroInsumosOfertaSubmoduleLabel": "Insumos oferta",
+  "registroInsumosOfertaLegacySubmoduleLabel": "Planta y consumos",
+  "registroInsumosOfertaLegacyBreadcrumb": "Plantas y consumos",
+  "registroInsumosOfertaAgrLabel": "Recursos Generción (AGR)",
+  "registroInsumosOfertaAbsentLabels": ["Heat Rate"],
+  "registroInsumosOfertaTabNames": [
+    "Recursos Generción (AGR)",
+    "Oferta Diaria",
+    "Parametros Regas",
+    "OEF Proyectada",
+    "Conceptos OC",
+    "Diario Promigas",
+    "Horario Promigas",
+    "Costos Regas",
+    "Gestion Conceptos"
+  ],
+  "registroInsumosOfertaEnabledTabNames": [
+    "Oferta Diaria",
+    "OEF Proyectada",
+    "Conceptos OC",
+    "Gestion Conceptos"
+  ],
+  "registroInsumosOfertaLockedTabNames": [
+    "Recursos Generción (AGR)",
+    "Parametros Regas",
+    "Diario Promigas",
+    "Horario Promigas",
+    "Costos Regas"
+  ],
+  "registroInsumosOfertaCalendarWeekdayHeaders": [
+    "Lun",
+    "Mar",
+    "Mié",
+    "Jue",
+    "Vie",
+    "Sáb",
+    "Dom"
+  ],
+  "registroInsumosOfertaCalendarAnoMonthCells": [
+    "Ene",
+    "Feb",
+    "Mar",
+    "Abr",
+    "May",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dic"
+  ],
+  "registroInsumosOfertaCalendarYearOptions": [
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025",
+    "2026",
+    "2027",
+    "2028"
+  ],
+  "registroInsumosOfertaCalendarMonthOptions": [
+    "ene",
+    "feb",
+    "mar",
+    "abr",
+    "may",
+    "jun",
+    "jul",
+    "ago",
+    "sep",
+    "oct"
+  ],
+  "registroInsumosOfertaCalendarMonthOptionsScroll": ["nov", "dic"],
+  "registroInsumosOfertaParametrosRegasColumns": [
+    "Fecha inicial",
+    "Fecha final",
+    "Capacidad regasificacion",
+    "Min gas",
+    "Max gas",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroInsumosOfertaOefProyectadaColumns": [
+    "Recurso",
+    "Fecha inicial",
+    "Fecha final",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroInsumosOfertaConceptosOcColumns": [
+    "Fecha inicial",
+    "Fecha final",
+    "Concepto",
+    "Valor Concepto",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroInsumosOfertaCostosRegasColumns": [
+    "Fecha inicial",
+    "Cantidad [MBTU]",
+    "Cantidad [MPCD]",
+    "Precio [USD/MBTU]",
+    "Precio [USD/MPCD]",
+    "Acciones"
+  ],
+  "registroInsumosOfertaGestionConceptosColumns": [
+    "Nombre Concepto",
+    "Unidad",
+    "Descripción Concepto",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroInsumosOfertaOefNuevoRegistroWizardSteps": [
+    "Nueva Vigencia Oef",
+    "Carga archivos"
+  ],
+  "registroInsumosOfertaOefWizardDropdownOptions": {
+    "Recurso": ["URRA"]
+  },
+  "registroInsumosOfertaConceptoUnidadOptions": [
+    "94",
+    "kWh",
+    "MBTU",
+    "COP",
+    "USD",
+    "TON",
+    "COP/TON",
+    "COP/MBTU",
+    "USD/TON",
+    "USD/MBTU",
+    "USD/KPC",
+    "COP/GAL",
+    "USD/GAL",
+    "BTU/LB",
+    "MJ/Kg",
+    "MJ/L",
+    "Kj/Kg",
+    "MBTU/KPC",
+    "MBTU/TON",
+    "UND",
+    "NA",
+    "COP/KPC",
+    "KPC",
+    "GAL"
+  ],
+  "registroInsumosOfertaConceptosOcRegistroDropdownOptions": {
+    "Concepto": ["DEMO TEST [kWh]", "testQA [MBTU]"]
+  },
+  "registroInsumosOfertaOefNuevoRegistroFields": [
+    { "label": "Recurso", "kind": "combobox" },
+    { "label": "Fecha inicial", "kind": "datepicker", "required": true },
+    { "label": "Fecha final", "kind": "datepicker", "required": true }
+  ],
+  "registroInsumosOfertaConceptoFormFields": [
+    { "label": "Nombre Concepto", "kind": "textbox", "required": true },
+    { "label": "Unidad", "kind": "combobox", "required": true },
+    { "label": "Descripción Concepto", "kind": "textbox", "required": true }
+  ],
+  "registroInsumosOfertaConceptosOcRegistroFields": [
+    { "label": "Concepto", "kind": "combobox", "required": true },
+    { "label": "Fecha inicial", "kind": "datepicker", "required": true },
+    { "label": "Fecha final", "kind": "datepicker", "required": true }
+  ],
+  "registroInsumosOfertaConceptosOcRegistroSpinbuttonLabels": ["Valor Concepto"],
+  "registroInsumosOfertaParametrosRegasFormLabels": [
+    "Fecha inicial",
+    "Fecha final",
+    "Capacidad regasificacion",
+    "Min gas",
+    "Max gas",
+    "K1",
+    "K2",
+    "Ipci",
+    "Ipcf"
+  ],
+  "registroInsumosOfertaTabSlugs": {
+    "Oferta Diaria": "plantas-y-consumos/oferta-diaria",
+    "Parametros Regas": "plantas-y-consumos/parametros-regasificacion",
+    "OEF Proyectada": "plantas-y-consumos/oef-proyectada",
+    "Conceptos OC": "plantas-y-consumos/otros-conceptos-oc",
+    "Diario Promigas": "plantas-y-consumos/diario-promigas",
+    "Horario Promigas": "plantas-y-consumos/horario-promigas",
+    "Costos Regas": "plantas-y-consumos/costos-regasificacion",
+    "Gestion Conceptos": "plantas-y-consumos/gestion-otros-conceptos"
+  },
+  "registroInsumosOfertaTabBreadcrumbs": {
+    "Oferta Diaria": "Oferta diaria",
+    "Parametros Regas": "Parametros regasificacion",
+    "OEF Proyectada": "Oef proyectada",
+    "Conceptos OC": "Otros conceptos oc",
+    "Diario Promigas": "Diario promigas",
+    "Horario Promigas": "Horario promigas",
+    "Costos Regas": "Costos regasificacion",
+    "Gestion Conceptos": "Gestion otros conceptos"
+  },
+  "registroInsumosOfertaSidebarHrefs": {
+    "Oferta Diaria": "/gestor-de-datos/plantas-y-consumos/oferta-diaria",
+    "OEF Proyectada": "/gestor-de-datos/plantas-y-consumos/oef-proyectada",
+    "Conceptos OC": "/gestor-de-datos/plantas-y-consumos/otros-conceptos-oc",
+    "Gestion Conceptos": "/gestor-de-datos/plantas-y-consumos/gestion-otros-conceptos"
+  }
+}

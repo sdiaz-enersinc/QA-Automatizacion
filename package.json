@@ -1,0 +1,21 @@
+{
+  "name": "new-testing-using-bypass",
+  "version": "1.0.0",
+  "description": "Suite Playwright importada de forma progresiva desde TestingWithByPass.",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.7.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}

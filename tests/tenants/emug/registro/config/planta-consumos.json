@@ -1,0 +1,292 @@
+{
+  "registroPlantaConsumosTabNames": [
+    "Oferta Diaria",
+    "Parametros Regas",
+    "OEF Proyectada",
+    "Conceptos OC",
+    "Diario Promigas",
+    "Horario Promigas",
+    "Costos Regas",
+    "Gestion Conceptos"
+  ],
+  "registroPlantaConsumosEnabledTabNames": [
+    "Oferta Diaria",
+    "OEF Proyectada",
+    "Conceptos OC",
+    "Gestion Conceptos"
+  ],
+  "registroPlantaConsumosLockedTabNames": [
+    "Parametros Regas",
+    "Diario Promigas",
+    "Horario Promigas",
+    "Costos Regas"
+  ],
+  "registroPlantaConsumosCalendarWeekdayHeaders": [
+    "Lun",
+    "Mar",
+    "Mié",
+    "Jue",
+    "Vie",
+    "Sáb",
+    "Dom"
+  ],
+  "registroPlantaConsumosCalendarAnoMonthCells": [
+    "Ene",
+    "Feb",
+    "Mar",
+    "Abr",
+    "May",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dic"
+  ],
+  "registroPlantaConsumosCalendarYearOptions": [
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025",
+    "2026",
+    "2027",
+    "2028"
+  ],
+  "registroPlantaConsumosCalendarMonthOptions": [
+    "ene",
+    "feb",
+    "mar",
+    "abr",
+    "may",
+    "jun",
+    "jul",
+    "ago",
+    "sep",
+    "oct"
+  ],
+  "registroPlantaConsumosCalendarMonthOptionsScroll": [
+    "nov",
+    "dic"
+  ],
+  "registroPlantaConsumosHeatRateColumns": [
+    "Planta",
+    "Combustible",
+    "Configuracion",
+    "Fecha inicial",
+    "Fecha final",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroPlantaConsumosParametrosRegasColumns": [
+    "Fecha inicial",
+    "Fecha final",
+    "Capacidad regasificacion",
+    "Min gas",
+    "Max gas",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroPlantaConsumosOefProyectadaColumns": [
+    "Recurso",
+    "Fecha inicial",
+    "Fecha final",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroPlantaConsumosConceptosOcColumns": [
+    "Fecha inicial",
+    "Fecha final",
+    "Concepto",
+    "Valor Concepto",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroPlantaConsumosCostosRegasColumns": [
+    "Fecha inicial",
+    "Cantidad [MBTU]",
+    "Cantidad [MPCD]",
+    "Precio [USD/MBTU]",
+    "Precio [USD/MPCD]",
+    "Acciones"
+  ],
+  "registroPlantaConsumosGestionConceptosColumns": [
+    "Nombre Concepto",
+    "Unidad",
+    "Descripción Concepto",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroPlantaConsumosHeatRateNuevoRegistroWizardSteps": [
+    "Nuevo Heat Rate",
+    "Carga archivos"
+  ],
+  "registroPlantaConsumosOefNuevoRegistroWizardSteps": [
+    "Nueva Vigencia Oef",
+    "Carga archivos"
+  ],
+  "registroPlantaConsumosHeatRateWizardDropdownOptions": {
+    "Planta": [
+      "AUTOG ARGOS CARTAGENA 1",
+      "AUTOG ARGOS SOGAMOSO 1",
+      "AUTOG ARGOS YUMBO",
+      "AUTOG CDS TM2500",
+      "AUTOG COCA-COLA FEMSA 1"
+    ],
+    "Combustible": [
+      "GAS",
+      "CARBON",
+      "ACPM",
+      "CALIZA",
+      "DIESEL MAR",
+      "BIOMASA"
+    ]
+  },
+  "registroPlantaConsumosOefWizardDropdownOptions": {
+    "Recurso": [
+      "URRA"
+    ]
+  },
+  "registroPlantaConsumosConceptoUnidadOptions": [
+    "94",
+    "kWh",
+    "MBTU",
+    "COP",
+    "USD",
+    "TON",
+    "COP/TON",
+    "COP/MBTU",
+    "USD/TON",
+    "USD/MBTU",
+    "USD/KPC",
+    "COP/GAL",
+    "USD/GAL",
+    "BTU/LB",
+    "MJ/Kg",
+    "MJ/L",
+    "Kj/Kg",
+    "MBTU/KPC",
+    "MBTU/TON",
+    "UND",
+    "NA",
+    "COP/KPC",
+    "KPC",
+    "GAL"
+  ],
+  "registroPlantaConsumosConceptosOcRegistroDropdownOptions": {
+    "Concepto": [
+      "DEMO TEST [kWh]",
+      "testQA [MBTU]"
+    ]
+  },
+  "registroPlantaConsumosHeatRateNuevoRegistroFields": [
+    {
+      "label": "Planta",
+      "kind": "combobox",
+      "required": true
+    },
+    {
+      "label": "Combustible",
+      "kind": "combobox",
+      "required": true
+    },
+    {
+      "label": "Fecha inicial",
+      "kind": "datepicker",
+      "required": true
+    },
+    {
+      "label": "Fecha final",
+      "kind": "datepicker",
+      "required": true
+    }
+  ],
+  "registroPlantaConsumosOefNuevoRegistroFields": [
+    {
+      "label": "Recurso",
+      "kind": "combobox"
+    },
+    {
+      "label": "Fecha inicial",
+      "kind": "datepicker",
+      "required": true
+    },
+    {
+      "label": "Fecha final",
+      "kind": "datepicker",
+      "required": true
+    }
+  ],
+  "registroPlantaConsumosConceptoFormFields": [
+    {
+      "label": "Nombre Concepto",
+      "kind": "textbox",
+      "required": true
+    },
+    {
+      "label": "Unidad",
+      "kind": "combobox",
+      "required": true
+    },
+    {
+      "label": "Descripción Concepto",
+      "kind": "textbox",
+      "required": true
+    }
+  ],
+  "registroPlantaConsumosConceptosOcRegistroFields": [
+    {
+      "label": "Concepto",
+      "kind": "combobox",
+      "required": true
+    },
+    {
+      "label": "Fecha inicial",
+      "kind": "datepicker",
+      "required": true
+    },
+    {
+      "label": "Fecha final",
+      "kind": "datepicker",
+      "required": true
+    }
+  ],
+  "registroPlantaConsumosConceptosOcRegistroSpinbuttonLabels": [
+    "Valor Concepto"
+  ],
+  "registroPlantaConsumosParametrosRegasFormLabels": [
+    "Fecha inicial",
+    "Fecha final",
+    "Capacidad regasificacion",
+    "Min gas",
+    "Max gas",
+    "K1",
+    "K2",
+    "Ipci",
+    "Ipcf"
+  ],
+  "registroPlantaConsumosTabSlugs": {
+    "Oferta Diaria": "plantas-y-consumos/oferta-diaria",
+    "Parametros Regas": "plantas-y-consumos/parametros-regasificacion",
+    "OEF Proyectada": "plantas-y-consumos/oef-proyectada",
+    "Conceptos OC": "plantas-y-consumos/otros-conceptos-oc",
+    "Diario Promigas": "plantas-y-consumos/diario-promigas",
+    "Horario Promigas": "plantas-y-consumos/horario-promigas",
+    "Costos Regas": "plantas-y-consumos/costos-regasificacion",
+    "Gestion Conceptos": "plantas-y-consumos/gestion-otros-conceptos"
+  },
+  "registroPlantaConsumosTabBreadcrumbs": {
+    "Oferta Diaria": "Oferta diaria",
+    "Parametros Regas": "Parametros regasificacion",
+    "OEF Proyectada": "Oef proyectada",
+    "Conceptos OC": "Otros conceptos oc",
+    "Diario Promigas": "Diario promigas",
+    "Horario Promigas": "Horario promigas",
+    "Costos Regas": "Costos regasificacion",
+    "Gestion Conceptos": "Gestion otros conceptos"
+  }
+}

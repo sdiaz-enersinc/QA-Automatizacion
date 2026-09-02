@@ -1,0 +1,55 @@
+{
+  "registroHistorialTabNames": [
+    "Operaciones multiples",
+    "Operaciones individuales",
+    "Archivos cargados"
+  ],
+  "registroHistorialEnabledTabNames": [
+    "Operaciones multiples",
+    "Operaciones individuales",
+    "Archivos cargados"
+  ],
+  "registroHistorialLockedTabNames": [],
+  "registroHistorialOperacionesMultiplesColumns": [
+    "ID",
+    "Fecha de Registro",
+    "Acción",
+    "Modelo",
+    "Usuario Ejecutor",
+    "Comentario",
+    "Acciones"
+  ],
+  "registroHistorialOperacionesIndividualesColumns": [
+    "ID",
+    "Fecha de Registro",
+    "Acción",
+    "Modelo",
+    "Responsable",
+    "Comentario",
+    "Acciones"
+  ],
+  "registroHistorialArchivosCargadosColumns": [
+    "ID",
+    "Fecha Creación",
+    "Producto",
+    "Contrato",
+    "Nombre Dado",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroHistorialTabSlugs": {
+    "Operaciones multiples": "gestor-de-datos/historial/datos-eliminados",
+    "Operaciones individuales": "gestor-de-datos/historial/datos-modificados",
+    "Archivos cargados": "gestor-de-datos/historial/archivos-cargados"
+  },
+  "registroHistorialTabBreadcrumbs": {
+    "Operaciones multiples": "Datos eliminados",
+    "Operaciones individuales": "Datos modificados",
+    "Archivos cargados": "Archivos cargados"
+  },
+  "registroHistorialSidebarHrefs": {
+    "Operaciones multiples": "/gestor-de-datos/historial/datos-eliminados",
+    "Operaciones individuales": "/gestor-de-datos/historial/datos-modificados",
+    "Archivos cargados": "/gestor-de-datos/historial/archivos-cargados"
+  }
+}

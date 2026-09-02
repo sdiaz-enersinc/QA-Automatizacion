@@ -1,0 +1,70 @@
+{
+  "registroOtrosDocumentosViewNames": [
+    "Hidrologia Horaria",
+    "Hidrologia Diaria",
+    "Contadores Frt",
+    "Contadores INTI"
+  ],
+  "registroOtrosDocumentosEnabledViewNames": [
+    "Hidrologia Horaria",
+    "Hidrologia Diaria",
+    "Contadores Frt",
+    "Contadores INTI"
+  ],
+  "registroOtrosDocumentosHidrologiaViews": [
+    "Hidrologia Horaria",
+    "Hidrologia Diaria"
+  ],
+  "registroOtrosDocumentosContadoresViews": [
+    "Contadores Frt",
+    "Contadores INTI"
+  ],
+  "registroOtrosDocumentosHidrologiaHorariaColumns": [
+    "Fecha",
+    "Nivel Embalse",
+    "Turbinado",
+    "Rio Sinu DS",
+    "Almacenado Embalse",
+    "Aportes"
+  ],
+  "registroOtrosDocumentosHidrologiaDiariaColumns": [
+    "Fecha",
+    "Nivel Emb",
+    "Volumen Emb",
+    "Aportes Emb",
+    "Turbinado",
+    "Rebosado"
+  ],
+  "registroOtrosDocumentosContadoresColumns": [
+    "Fecha",
+    "Frontera codsic",
+    "Energia kWh R",
+    "Energia kWh P",
+    "conteo P",
+    "Conteo R"
+  ],
+  "registroOtrosDocumentosViewSlugs": {
+    "Hidrologia Horaria": "otros-documentos/hidrologia-horaria",
+    "Hidrologia Diaria": "otros-documentos/hidrologia-diaria",
+    "Contadores Frt": "otros-documentos/contadores-frt",
+    "Contadores INTI": "otros-documentos/contadores-inti"
+  },
+  "registroOtrosDocumentosViewBreadcrumbs": {
+    "Hidrologia Horaria": "Hidrologia horaria",
+    "Hidrologia Diaria": "Hidrologia diaria",
+    "Contadores Frt": "Contadores frt",
+    "Contadores INTI": "Contadores inti"
+  },
+  "registroOtrosDocumentosNestedGroup": {
+    "Hidrologia Horaria": "Hidrologia",
+    "Hidrologia Diaria": "Hidrologia",
+    "Contadores Frt": "Contadores",
+    "Contadores INTI": "Contadores"
+  },
+  "registroOtrosDocumentosTabPairMate": {
+    "Hidrologia Horaria": "Hidrologia Diaria",
+    "Hidrologia Diaria": "Hidrologia Horaria",
+    "Contadores Frt": "Contadores INTI",
+    "Contadores INTI": "Contadores Frt"
+  }
+}
