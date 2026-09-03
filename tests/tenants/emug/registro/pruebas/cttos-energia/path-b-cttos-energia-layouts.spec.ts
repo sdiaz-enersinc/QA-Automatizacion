@@ -57,7 +57,7 @@ test.describe('Contratos de energía — Path B (tablero) — comprobación punt
           await expect(decTable.getByRole('columnheader', { name: col, exact: true })).toBeVisible();
         }
       },
-      '3. Layout C DEC — abrir DEC y validar toolbar y columnas sin Estado',
+      '3. Layout C DEC — abrir DEC y validar la barra de herramientas y columnas sin Estado',
     );
   });
 });

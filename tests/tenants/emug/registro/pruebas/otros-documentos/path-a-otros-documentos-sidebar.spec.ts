@@ -9,7 +9,7 @@ import {
   RegistroOtrosDocumentosNavigationPage,
 } from '../../../../../support/pages/registro/otros-documentos';
 
-test.describe('Scenario 2 — Sidebar Navigation & Tab Cross-Over', () => {
+test.describe('Escenario 2 — Navegación por menú lateral y cruce de pestañas', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosDocumentos);
     skipUnlessAnyTabEnabled(
@@ -18,19 +18,19 @@ test.describe('Scenario 2 — Sidebar Navigation & Tab Cross-Over', () => {
     );
   });
 
-  test.fixme('Acceso roto a Contadores lo daña /Path A — each Otros documentos view reachable via sidebar nested links', async ({
+  test.fixme('Acceso roto a Contadores lo daña / Path A — cada vista de Otros documentos accesible por enlaces anidados del menú lateral', async ({
     page,
     dashboardPage,
   }) => {
     test.setTimeout(120_000);
     const registro = new RegistroOtrosDocumentosNavigationPage(page);
 
-    // 1. Arrange: expand sidebar Registro until Otros documentos nested flyout is visible.
+    // 1. Preparar: expandir menú lateral Registro hasta que el submenú desplegable anidado de Otros documentos sea visible.
     await dashboardPage.expectLoaded();
     await registro.expectOtrosDocumentosSubmenuGroupsVisible();
 
     for (const viewName of REGISTRO_OTROS_DOCUMENTOS_ENABLED_VIEW_NAMES) {
-      // 2–5. Act + Assert: open each view via sidebar and verify URL, breadcrumb, tab, and grid.
+      // 2–5. Actuar + verificar: abrir cada vista por menú lateral y verificar URL, breadcrumb, pestaña y grilla.
       await registro.openOtrosDocumentosFromSidebar(viewName);
       await registro.expectOtrosDocumentosViewActive(viewName);
       await registro.expectOtrosDocumentosPairTabVisible(viewName);

@@ -6,18 +6,18 @@ import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-gu
 import { test } from '../../../../../support/fixtures';
 import { RegistroNavigationPage } from '../../../../../support/pages/registro/navigation';
 
-test.describe('Registro navigation harvest', () => {
+test.describe('Registro — recolección de navegación', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroNavigation);
   });
 
-  test('Sidebar Registro submenu labels match live order including new and renamed modules', async ({
+  test('Las etiquetas del submenú Registro en el menú lateral coinciden con el orden en vivo, incluyendo módulos nuevos y renombrados', async ({
     page,
     dashboardPage,
   }) => {
     const registro = new RegistroNavigationPage(page);
 
-    // 1. From the authenticated dashboard, expand the sidebar if it is collapsed, then expand the Registro menuitem.
+    // 1. Desde el tablero autenticado, expandir el menú lateral si está colapsado y expandir el menuitem Registro.
     await dashboardPage.expectLoaded();
     await registro.expectRegistroSubmenuOrderAndLockState();
   });

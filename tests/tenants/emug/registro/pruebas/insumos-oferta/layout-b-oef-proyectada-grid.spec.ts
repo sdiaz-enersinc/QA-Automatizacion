@@ -24,7 +24,7 @@ test.describe('Insumos oferta', () => {
     await registro.openInsumosOfertaFromSidebar('OEF Proyectada');
     await registro.expectInsumosOfertaTabActive('OEF Proyectada');
 
-    // 2. Inspeccionar toolbar y columnas Recurso, Fecha inicial, Fecha final, Usuario, Acciones.
+    // 2. Inspeccionar barra de herramientas y columnas Recurso, Fecha inicial, Fecha final, Usuario, Acciones.
     await registro.expectLayoutBTableToolbar(['Nuevo Registro']);
     await registro.expectGridColumnHeaders(REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_COLUMNS);
 

@@ -16,7 +16,7 @@ test.describe('Contratos de energía — Botones de diálogo (Path A)', () => {
   });
 
   for (const tabName of REGISTRO_CTTS_ENERGIA_LAYOUT_B_STANDARD_TABS) {
-    test(`Layout B standard — Pie de página y desplegables del asistente Nuevo Contrato en ${tabName}`, async ({
+    test(`Layout B estándar — Pie de página y desplegables del asistente Nuevo Contrato en ${tabName}`, async ({
       page,
       dashboardPage,
     }) => {
@@ -31,7 +31,7 @@ test.describe('Contratos de energía — Botones de diálogo (Path A)', () => {
         await registro.expectGestorDeDatosCttosEnergiaShell();
       });
 
-      await test.step(`2. Abrir la pestaña ${tabName} y validar toolbar y columnas de la grilla`, async () => {
+      await test.step(`2. Abrir la pestaña ${tabName} y validar la barra de herramientas y columnas de la grilla`, async () => {
         await registro.openContratosEnergiaTab(tabName);
         await registro.expectLayoutBStandardToolbar();
         await registro.expectContractGridColumnHeaders(REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS, {

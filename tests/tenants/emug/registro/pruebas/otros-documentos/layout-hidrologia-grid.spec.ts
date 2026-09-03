@@ -16,7 +16,7 @@ import {
   type RegistroOtrosDocumentosViewName,
 } from '../../../../../support/pages/registro/otros-documentos';
 
-/** Per-view column headers and optional grid assertions for the Hidrologia layout family. */
+/** Encabezados de columnas por vista y aserciones opcionales de grilla para la familia de layouts Hidrologia. */
 const HIDROLOGIA_LAYOUT_CASES: ReadonlyArray<{
   view: RegistroOtrosDocumentosViewName;
   columns: readonly string[];
@@ -38,7 +38,7 @@ const HIDROLOGIA_LAYOUT_CASES: ReadonlyArray<{
   },
 ];
 
-test.describe('Scenario 3 — Component Validation & UI Interactivity', () => {
+test.describe('Escenario 3 — Validación de componentes e interactividad UI', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosDocumentos);
     skipUnlessAnyTabEnabled(
@@ -47,7 +47,7 @@ test.describe('Scenario 3 — Component Validation & UI Interactivity', () => {
     );
   });
 
-  test('Hidrologia — grid shell, filters, and Cargar archivo dialog (Horaria + Diaria)', async ({
+  test('Hidrologia — shell de grilla, filtros y diálogo Cargar archivo (Horaria + Diaria)', async ({
     page,
     dashboardPage,
   }) => {
@@ -61,19 +61,19 @@ test.describe('Scenario 3 — Component Validation & UI Interactivity', () => {
         MODULE_IDS.registroOtrosDocumentos,
         view,
         async () => {
-          // 1. Arrange: navigate to view via sidebar.
+          // 1. Preparar: navegar a la vista por menú lateral.
           await registro.openOtrosDocumentosFromSidebar(view);
           await registro.expectOtrosDocumentosViewActive(view);
           await registro.expectOtrosDocumentosToolbar();
 
-          // 2. Assert table structure (view-specific columns and extras).
+          // 2. Verificar estructura de tabla (columnas específicas de la vista y extras).
           await registro.expectGridColumnHeaders(columns);
           await assertViewSpecific(registro);
 
-          // 3. Interact with Modo Yo filter: toggle on then off.
+          // 3. Interactuar con filtro Modo Yo: activar y desactivar.
           // await registro.expectModoYoFilterToggle();
 
-          // 4. Upload dialog only — Hidrologia toolbar has no Estado/Usuarios filter chips.
+          // 4. Solo diálogo de carga — la barra de herramientas de Hidrologia no tiene chips de filtro Estado/Usuarios.
           await registro.expectCargarArchivoDialogOpensAndCloses();
         },
         `view: ${view}`,

@@ -10,16 +10,16 @@ import {
   RegistroOtrosContratosNavigationPage,
 } from '../../../../../support/pages/registro/otros-contratos';
 
-test.describe('Otros contratos toolbar', () => {
+test.describe('Otros contratos — barra de herramientas', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosContratos);
     skipUnlessTabEnabled(MODULE_IDS.registroOtrosContratos, 'Miscelaneos');
   });
 
-  test('Miscelaneos toolbar keeps Filtros; chips gone', async ({ page, dashboardPage }) => {
+  test('Miscelaneos mantiene Filtros; chips eliminados', async ({ page, dashboardPage }) => {
     const registro = new RegistroOtrosContratosNavigationPage(page);
 
-    // 1. Open Otros contratos Miscelaneos.
+    // 1. Abrir Otros contratos Miscelaneos.
     await dashboardPage.expectLoaded();
     await registro.openOtrosContratosFromSidebar('Miscelaneos');
     await registro.expectGestorDeDatosOtrosContratosShell();

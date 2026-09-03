@@ -6,18 +6,18 @@ import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../su
 import { test } from '../../../../../support/fixtures';
 import { RegistroOtrosDocumentosNavigationPage } from '../../../../../support/pages/registro/otros-documentos';
 
-test.describe('Views that already lacked chips stay chip-free', () => {
+test.describe('Vistas que ya carecían de chips permanecen sin chips', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosDocumentos);
   });
 
-  test('Otros documentos hidrologia and contadores have no Filtros and no chips', async ({
+  test('Otros documentos hidrología y contadores sin Filtros ni chips', async ({
     page,
     dashboardPage,
   }) => {
     const registro = new RegistroOtrosDocumentosNavigationPage(page);
 
-    // 1. Open Hidrologia Horaria and Contadores Frt.
+    // 1. Abrir Hidrologia Horaria y Contadores Frt.
     skipUnlessTabEnabled(MODULE_IDS.registroOtrosDocumentos, 'Hidrologia Horaria');
     await dashboardPage.expectLoaded();
     await registro.openOtrosDocumentosFromSidebar('Hidrologia Horaria');

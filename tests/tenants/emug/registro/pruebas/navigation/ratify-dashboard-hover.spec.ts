@@ -6,22 +6,22 @@ import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-gu
 import { test } from '../../../../../support/fixtures';
 import { RegistroNavigationPage } from '../../../../../support/pages/registro/navigation';
 
-test.describe('Registro navigation harvest', () => {
+test.describe('Registro — recolección de navegación', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroNavigation);
   });
 
-  test('Dashboard Registro card lists new and renamed submodules on hover', async ({
+  test('La tarjeta Registro del tablero lista submódulos nuevos y renombrados en hover', async ({
     page,
     dashboardPage,
   }) => {
     const registro = new RegistroNavigationPage(page);
 
-    // 1. From the dashboard, locate the Registro module card without hovering.
+    // 1. Desde el tablero, localizar la tarjeta del módulo Registro sin hacer hover.
     await dashboardPage.expectLoaded();
     await registro.expectRegistroDashboardPreviewRows();
 
-    // 2. Hover the Registro dashboard card and wait for the full submodule list.
+    // 2. Hacer hover en la tarjeta Registro del tablero y esperar la lista completa de submódulos.
     await registro.expectRegistroDashboardHoverSubmodules();
     await registro.expectRegistroLegacySubmoduleAbsentOnCard();
   });

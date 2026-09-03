@@ -9,13 +9,13 @@ import {
   RegistroOtrosContratosNavigationPage,
 } from '../../../../../support/pages/registro/otros-contratos';
 
-test.describe('Otros contratos — Miscelaneos grid', () => {
+test.describe('Otros contratos — grilla Miscelaneos', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosContratos);
     skipUnlessTabEnabled(MODULE_IDS.registroOtrosContratos, 'Miscelaneos');
   });
 
-  test('Layout B MISC — Nuevo Registro simplified footer and dropdowns', async ({
+  test('Layout B MISC — pie de página simplificado de Nuevo Registro y desplegables', async ({
     page,
     dashboardPage,
   }) => {
@@ -26,7 +26,7 @@ test.describe('Otros contratos — Miscelaneos grid', () => {
     await registro.openOtrosContratosFromSidebar('Miscelaneos');
     await registro.expectGestorDeDatosOtrosContratosShell();
 
-    // 1. Miscelaneos tab: MISC-specific columns, Nuevo Registro CTA (not Nuevo Contrato).
+    // 1. Pestaña Miscelaneos: columnas específicas de MISC, CTA Nuevo Registro (no Nuevo Contrato).
     await registro.expectOtrosContratosTabActive('Miscelaneos');
     await registro.expectContractGridColumnHeaders(REGISTRO_OTROS_CONTRATOS_MISC_CONTRACT_COLUMNS);
     await expect(
@@ -35,7 +35,7 @@ test.describe('Otros contratos — Miscelaneos grid', () => {
 
     await registro.expectOtrosContratosToolbar();
 
-    // 2. Nuevo Registro dialog fields and dropdowns (no wizard steps).
+    // 2. Campos y desplegables del diálogo Nuevo Registro (sin pasos de wizard).
     await registro.expectMiscNuevoRegistroDialogOpensAndCloses();
   });
 });

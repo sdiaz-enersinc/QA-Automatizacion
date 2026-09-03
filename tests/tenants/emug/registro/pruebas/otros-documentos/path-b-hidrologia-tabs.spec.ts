@@ -9,7 +9,7 @@ import {
   RegistroOtrosDocumentosNavigationPage,
 } from '../../../../../support/pages/registro/otros-documentos';
 
-test.describe('Scenario 2 — Sidebar Navigation & Tab Cross-Over', () => {
+test.describe('Escenario 2 — Navegación por menú lateral y cruce de pestañas', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosDocumentos);
     skipUnlessAllTabsEnabled(
@@ -18,24 +18,24 @@ test.describe('Scenario 2 — Sidebar Navigation & Tab Cross-Over', () => {
     );
   });
 
-  test('Path B — Pair A tab cross-navigation (Hidrologia Horaria ↔ Hidrologia Diaria)', async ({
+  test('Path B — Cruce de pestañas Par A (Hidrologia Horaria ↔ Hidrologia Diaria)', async ({
     page,
     dashboardPage,
   }) => {
     test.setTimeout(90_000);
     const registro = new RegistroOtrosDocumentosNavigationPage(page);
 
-    // 1. Arrange: open Hidrologia Horaria via sidebar.
+    // 1. Preparar: abrir Hidrologia Horaria por menú lateral.
     await dashboardPage.expectLoaded();
     await registro.openOtrosDocumentosFromSidebar('Hidrologia Horaria');
     await registro.expectOtrosDocumentosViewActive('Hidrologia Horaria');
 
-    // 2. Act: click the Hidrologia Diaria tab.
+    // 2. Actuar: pulsar la pestaña Hidrologia Diaria.
     await registro.openOtrosDocumentosTab('Hidrologia Diaria');
     await expect(page.getByRole('main')).toBeVisible();
     await registro.expectOtrosDocumentosPairTabVisible('Hidrologia Diaria');
 
-    // 3. Act: click the Hidrologia Horaria tab to return.
+    // 3. Actuar: pulsar la pestaña Hidrologia Horaria para volver.
     await registro.openOtrosDocumentosTab('Hidrologia Horaria');
     await expect(page.getByRole('tab', { name: 'Hidrologia Horaria' })).toHaveAttribute(
       'aria-selected',

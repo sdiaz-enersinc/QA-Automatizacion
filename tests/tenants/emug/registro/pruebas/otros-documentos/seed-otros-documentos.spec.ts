@@ -8,7 +8,7 @@ test.beforeEach(() => {
   skipUnlessTabEnabled(MODULE_IDS.registroOtrosDocumentos, 'Hidrologia Horaria');
 });
 
-test('seed', async ({ page, dashboardPage }) => {
+test('Seed — shell de Otros documentos en Hidrologia Horaria', async ({ page, dashboardPage }) => {
   const registro = new RegistroOtrosDocumentosNavigationPage(page);
   await dashboardPage.expectLoaded();
   await registro.openOtrosDocumentosFromSidebar('Hidrologia Horaria');

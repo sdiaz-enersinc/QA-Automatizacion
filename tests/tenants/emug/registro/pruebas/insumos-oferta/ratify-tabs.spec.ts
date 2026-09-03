@@ -9,26 +9,26 @@ import {
   RegistroInsumosOfertaNavigationPage,
 } from '../../../../../support/pages/registro/insumos-oferta';
 
-test.describe('Insumos oferta rename ratification', () => {
+test.describe('Insumos oferta — ratificación de renombre', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroInsumosOferta);
   });
 
-  test('Insumos oferta replaces Planta y consumos; Heat Rate removed; locked tabs populated', async ({
+  test('Insumos oferta reemplaza Planta y consumos; Heat Rate eliminado; pestañas bloqueadas con contenido', async ({
     page,
     dashboardPage,
   }) => {
     const registro = new RegistroInsumosOfertaNavigationPage(page);
 
-    // 1. Expand Registro and confirm Insumos oferta is present and Planta y consumos is absent.
+    // 1. Expandir Registro y confirmar que Insumos oferta está presente y Planta y consumos está ausente.
     await dashboardPage.expectLoaded();
     await registro.expectInsumosOfertaSubmenuPresentAndLegacyAbsent();
 
-    // 2. Expand Insumos oferta and list nested items and hrefs.
+    // 2. Expandir Insumos oferta y listar ítems anidados y hrefs.
     await registro.expectInsumosOfertaEnabledSidebarHrefs();
     await registro.expectInsumosOfertaNestedSidebarItems();
 
-    // 3. Open Oferta Diaria and read the gestor shell breadcrumb and tab strip.
+    // 3. Abrir Oferta Diaria y leer el breadcrumb y la tira de pestañas del shell del gestor.
     await registro.openInsumosOfertaFromSidebar(REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB);
     await registro.expectGestorDeDatosInsumosOfertaShell();
     await registro.expectHeatRateAbsentFromTabs();

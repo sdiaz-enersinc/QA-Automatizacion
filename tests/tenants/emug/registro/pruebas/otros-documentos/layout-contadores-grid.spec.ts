@@ -16,7 +16,7 @@ import {
   type RegistroOtrosDocumentosViewName,
 } from '../../../../../support/pages/registro/otros-documentos';
 
-/** Per-view optional grid assertions for the Contadores layout family. */
+/** Aserciones opcionales de grilla por vista para la familia de layouts Contadores. */
 const CONTADORES_LAYOUT_CASES: ReadonlyArray<{
   view: RegistroOtrosDocumentosViewName;
   assertViewSpecific: (
@@ -40,7 +40,7 @@ const CONTADORES_LAYOUT_CASES: ReadonlyArray<{
   },
 ];
 
-test.describe('Scenario 3 — Component Validation & UI Interactivity', () => {
+test.describe('Escenario 3 — Validación de componentes e interactividad UI', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosDocumentos);
     skipUnlessAnyTabEnabled(
@@ -49,7 +49,7 @@ test.describe('Scenario 3 — Component Validation & UI Interactivity', () => {
     );
   });
 
-  test.fixme('Acceso roto a Contadores lo daña / Contadores — grid shell, filters, and Cargar archivo dialog (Frt + INTI)', async ({
+  test.fixme('Acceso roto a Contadores lo daña / Contadores — shell de grilla, filtros y diálogo Cargar archivo (Frt + INTI)', async ({
     page,
     dashboardPage,
   }) => {
@@ -63,16 +63,16 @@ test.describe('Scenario 3 — Component Validation & UI Interactivity', () => {
         MODULE_IDS.registroOtrosDocumentos,
         view,
         async () => {
-          // 1. Arrange: navigate to view via sidebar.
+          // 1. Preparar: navegar a la vista por menú lateral.
           await registro.openOtrosDocumentosFromSidebar(view);
           await registro.expectOtrosDocumentosViewActive(view);
           await registro.expectOtrosDocumentosToolbar();
 
-          // 2. Assert table structure (shared columns + view-specific extras).
+          // 2. Verificar estructura de tabla (columnas compartidas + extras específicos de la vista).
           await registro.expectGridColumnHeaders(REGISTRO_OTROS_DOCUMENTOS_CONTADORES_COLUMNS);
           await assertViewSpecific(registro, page);
 
-          // 3–6. Shared filter and upload dialog interactions.
+          // 3–6. Interacciones compartidas de filtros y diálogo de carga.
           await registro.expectOtrosDocumentosSharedFilterAndUploadDialogs();
         },
         `view: ${view}`,

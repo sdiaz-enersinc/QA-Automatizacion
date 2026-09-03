@@ -6,18 +6,18 @@ import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-gu
 import { test } from '../../../../../support/fixtures';
 import { RegistroNavigationPage } from '../../../../../support/pages/registro/navigation';
 
-test.describe('Negative coverage and shared helpers', () => {
+test.describe('Cobertura negativa y helpers compartidos', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroNavigation);
   });
 
-  test('Locked Registro modules are out of scope for this EMUG live pass', async ({
+  test('Módulos bloqueados de Registro fuera de alcance en este paso EMUG en vivo', async ({
     page,
     dashboardPage,
   }) => {
     const registro = new RegistroNavigationPage(page);
 
-    // 1. Expand Registro and record locked items without force-navigating.
+    // 1. Expandir Registro y registrar ítems bloqueados sin forzar navegación.
     await dashboardPage.expectLoaded();
     await registro.expectRegistroLockedSubmenuItemsVisible();
   });

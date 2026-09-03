@@ -6,8 +6,8 @@ import { VALID_EMAIL } from '../../../../../support/env';
 
 const WHITESPACE_PASSWORD = '     ';
 
-test.describe('Post-email login (password authentication)', () => {
-  test('Whitespace-only password is rejected with a generic error', async ({
+test.describe('Inicio de sesión post-correo (autenticación por contraseña)', () => {
+  test('Contraseña solo con espacios en blanco es rechazada con error genérico', async ({
     passwordStepPage,
     page,
   }) => {
@@ -16,16 +16,16 @@ test.describe('Post-email login (password authentication)', () => {
     const unexpectedErrorAlert = page.getByText('Ocurrió un error inesperado, intenta nuevamente.');
     const closeAlertBtn = page.getByRole('button', { name: 'close' });
 
-    // 1. Start on credentials view via passwordStepPage fixture (email already submitted with VALID_EMAIL).
+    // 1. Iniciar en la vista de credenciales vía fixture passwordStepPage (correo ya enviado con VALID_EMAIL).
     await expect(entrarBtn).toBeVisible();
     await expect(entrarBtn).toBeDisabled();
 
-    // 2. Fill password with whitespace-only - the form does not trim client-side, so Entrar enables.
+    // 2. Rellenar contraseña solo con espacios — el formulario no recorta en cliente, por lo que Entrar se habilita.
     await passwordInput.fill(WHITESPACE_PASSWORD);
     await expect(entrarBtn).toBeEnabled();
     await expect(unexpectedErrorAlert).not.toBeVisible();
 
-    // 3. Submit whitespace-only password and verify generic error (NOT 'Credenciales inválidas').
+    // 3. Enviar contraseña solo con espacios y verificar error genérico (NO 'Credenciales inválidas').
     await entrarBtn.click();
     await expect(unexpectedErrorAlert).toBeVisible();
     await expect(page.getByText('Credenciales inválidas')).not.toBeVisible();
@@ -33,7 +33,7 @@ test.describe('Post-email login (password authentication)', () => {
     await expect(passwordInput).toBeVisible();
     await expect(page.getByText('Bienvenido a Enersinc')).not.toBeVisible();
 
-    // 4. Click the close button on the inline alert to dismiss it.
+    // 4. Pulsar el botón de cerrar en la alerta en línea para descartarla.
     await closeAlertBtn.click();
     await expect(unexpectedErrorAlert).not.toBeVisible();
   });

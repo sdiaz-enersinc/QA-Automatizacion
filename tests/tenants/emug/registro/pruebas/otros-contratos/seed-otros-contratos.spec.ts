@@ -9,9 +9,9 @@ test.beforeEach(() => {
 });
 
 /**
- * Opens Otros contratos on Miscelaneos so generator and layout specs start from a known shell.
+ * Abre Otros contratos en Miscelaneos para que los specs de generador y layout partan de un shell conocido.
  */
-test('seed', async ({ page, dashboardPage }) => {
+test('Seed — shell de Otros contratos en Miscelaneos', async ({ page, dashboardPage }) => {
   const registro = new RegistroOtrosContratosNavigationPage(page);
   await dashboardPage.expectLoaded();
   await registro.openOtrosContratosFromSidebar('Miscelaneos');

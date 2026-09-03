@@ -9,7 +9,7 @@ import {
   RegistroOtrosDocumentosNavigationPage,
 } from '../../../../../support/pages/registro/otros-documentos';
 
-test.describe('Scenario 2 — Sidebar Navigation & Tab Cross-Over', () => {
+test.describe('Escenario 2 — Navegación por menú lateral y cruce de pestañas', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosDocumentos);
     skipUnlessAllTabsEnabled(
@@ -18,23 +18,23 @@ test.describe('Scenario 2 — Sidebar Navigation & Tab Cross-Over', () => {
     );
   });
 
-  test.fixme('Acceso roto a Contadores lo daña / Path B — Pair B tab cross-navigation (Contadores Frt ↔ Contadores INTI)', async ({
+  test.fixme('Acceso roto a Contadores lo daña / Path B — Cruce de pestañas Par B (Contadores Frt ↔ Contadores INTI)', async ({
     page,
     dashboardPage,
   }) => {
     test.setTimeout(90_000);
     const registro = new RegistroOtrosDocumentosNavigationPage(page);
 
-    // 1. Arrange: open Contadores Frt via sidebar.
+    // 1. Preparar: abrir Contadores Frt por menú lateral.
     await dashboardPage.expectLoaded();
     await registro.openOtrosDocumentosFromSidebar('Contadores Frt');
     await registro.expectOtrosDocumentosViewActive('Contadores Frt');
 
-    // 2. Act: click the Contadores INTI tab.
+    // 2. Actuar: pulsar la pestaña Contadores INTI.
     await registro.openOtrosDocumentosTab('Contadores INTI');
     await expect(page.getByRole('main').getByRole('table').first()).toBeVisible();
 
-    // 3. Act: click the Contadores Frt tab to return.
+    // 3. Actuar: pulsar la pestaña Contadores Frt para volver.
     await registro.openOtrosDocumentosTab('Contadores Frt');
     await expect(page.getByRole('tab', { name: 'Contadores Frt' })).toHaveAttribute(
       'aria-selected',

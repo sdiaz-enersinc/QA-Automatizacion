@@ -9,31 +9,31 @@ import {
   RegistroPlantaConsumosNavigationPage,
 } from '../../../../../support/pages/registro/planta-consumos';
 
-test.describe('Planta y consumos — Layout B standard data-table grid', () => {
+test.describe('Planta y consumos — Layout B grilla', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroPlantaConsumos);
     skipUnlessTabEnabled(MODULE_IDS.registroPlantaConsumos, 'Heat Rate');
   });
 
-  test('Layout B — Heat Rate grid, filters, and Nuevo Registro wizard', async ({
+  test('Layout B — Heat Rate grilla, filtros y wizard Nuevo Registro', async ({
     page,
     dashboardPage,
   }) => {
     test.setTimeout(180_000);
     const registro = new RegistroPlantaConsumosNavigationPage(page);
 
-    // 1. Open Heat Rate via sidebar.
+    // 1. Abrir Heat Rate por menú lateral.
     await dashboardPage.expectLoaded();
     await registro.openPlantaConsumosFromSidebar('Heat Rate');
     await registro.expectPlantaConsumosTabActive('Heat Rate');
 
-    // 2. Assert toolbar controls.
+    // 2. Verificar controles de la barra de herramientas.
     await registro.expectLayoutBTableToolbar();
 
-    // 3. Assert Heat Rate grid column headers.
+    // 3. Verificar encabezados de columnas de la grilla Heat Rate.
     await registro.expectGridColumnHeaders(REGISTRO_PLANTA_CONSUMOS_HEAT_RATE_COLUMNS);
 
-    // 4. Open and validate Heat Rate Nuevo Registro wizard fields and dropdowns.
+    // 4. Abrir y validar campos y desplegables del wizard Nuevo Registro de Heat Rate.
     await registro.expectHeatRateWizardDialog();
   });
 });

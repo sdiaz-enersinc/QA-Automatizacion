@@ -9,16 +9,16 @@ import {
   RegistroOtrosContratosNavigationPage,
 } from '../../../../../support/pages/registro/otros-contratos';
 
-test.describe('Otros contratos toolbar', () => {
+test.describe('Otros contratos — barra de herramientas', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosContratos);
     skipUnlessTabEnabled(MODULE_IDS.registroOtrosContratos, 'AGR');
   });
 
-  test('AGR toolbar keeps Filtros; chips gone', async ({ page, dashboardPage }) => {
+  test('AGR mantiene Filtros; chips eliminados', async ({ page, dashboardPage }) => {
     const registro = new RegistroOtrosContratosNavigationPage(page);
 
-    // 1. From Miscelaneos, click the AGR tab.
+    // 1. Desde Miscelaneos, pulsar la pestaña AGR.
     await dashboardPage.expectLoaded();
     await registro.openOtrosContratosFromSidebar('Miscelaneos');
     await registro.openOtrosContratosTab('AGR');

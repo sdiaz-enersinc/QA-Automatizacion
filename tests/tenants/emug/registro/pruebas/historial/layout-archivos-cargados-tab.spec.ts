@@ -15,7 +15,7 @@ test.describe('Historial — Pestaña Archivos cargados', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroHistorial, 'Archivos cargados');
   });
 
-  test('Archivos cargados — Pestañas, breadcrumb alineado, filtros de toolbar (modal Filtros sin Añadir filtro) y columnas de grilla', async ({
+  test('Archivos cargados — Pestañas, breadcrumb alineado, filtros de barra de herramientas (modal Filtros sin Añadir filtro) y columnas de grilla', async ({
     page,
     dashboardPage,
   }) => {

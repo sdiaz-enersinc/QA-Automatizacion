@@ -9,7 +9,7 @@ import {
   RegistroPlantaConsumosNavigationPage,
 } from '../../../../../support/pages/registro/planta-consumos';
 
-test.describe('Planta y consumos — Path A (sidebar)', () => {
+test.describe('Planta y consumos — Path A (menú lateral)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroPlantaConsumos);
     skipUnlessAnyTabEnabled(
@@ -18,21 +18,21 @@ test.describe('Planta y consumos — Path A (sidebar)', () => {
     );
   });
 
-  test('Path A — each submodule via sidebar Registro → Insumos oferta dropdown', async ({
+  test('Path A — cada submódulo por menú lateral Registro → Insumos oferta', async ({
     page,
     dashboardPage,
   }) => {
     test.setTimeout(120_000);
     const registro = new RegistroPlantaConsumosNavigationPage(page);
 
-    // 1. Arrange: authenticated dashboard shell before sidebar interaction.
+    // 1. Preparar: shell del tablero autenticado antes de interactuar con el menú lateral.
     await dashboardPage.expectLoaded();
 
     for (const tabName of REGISTRO_PLANTA_CONSUMOS_ENABLED_TAB_NAMES) {
-      // 2. Act: expand Registro → Insumos oferta and open nested sidebar link.
+      // 2. Actuar: expandir Registro → Insumos oferta y abrir enlace anidado del menú lateral.
       await registro.openPlantaConsumosFromSidebar(tabName);
 
-      // 3. Assert: URL slug, breadcrumb, aria-selected tab, and shell on first iteration.
+      // 3. Verificar: slug de URL, breadcrumb, pestaña aria-selected y shell en la primera iteración.
       await registro.expectPlantaConsumosTabActive(tabName);
       if (tabName === REGISTRO_PLANTA_CONSUMOS_ENABLED_TAB_NAMES[0]) {
         await registro.expectGestorDeDatosPlantaConsumosShell();

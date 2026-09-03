@@ -15,7 +15,7 @@ test.describe('Historial — Pestaña Operaciones multiples', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroHistorial, 'Operaciones multiples');
   });
 
-  test('Operaciones multiples — Pestañas, discrepancia del breadcrumb, filtros de toolbar y columnas de grilla', async ({
+  test('Operaciones multiples — Pestañas, discrepancia del breadcrumb, filtros de barra de herramientas y columnas de grilla', async ({
     page,
     dashboardPage,
   }) => {

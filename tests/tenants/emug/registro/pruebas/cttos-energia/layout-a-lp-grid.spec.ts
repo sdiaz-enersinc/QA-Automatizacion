@@ -28,7 +28,7 @@ test.describe('Contratos de energía — Botones de diálogo (Path A)', () => {
       await registro.expectGestorDeDatosCttosEnergiaShell();
     });
 
-    await test.step('2. Abrir la pestaña Largo plazo y validar toolbar y columnas de la grilla', async () => {
+    await test.step('2. Abrir la pestaña Largo plazo y validar la barra de herramientas y columnas de la grilla', async () => {
       await registro.openContratosEnergiaTab('Largo plazo');
       await registro.expectLayoutBStandardToolbar();
       await registro.expectSelectAllColumnVisible();

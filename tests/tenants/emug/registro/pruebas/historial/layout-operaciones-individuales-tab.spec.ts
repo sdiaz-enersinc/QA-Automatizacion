@@ -15,7 +15,7 @@ test.describe('Historial — Pestaña Operaciones individuales', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroHistorial, 'Operaciones individuales');
   });
 
-  test('Operaciones individuales — Pestañas, discrepancia del breadcrumb, filtros de toolbar y columnas de grilla', async ({
+  test('Operaciones individuales — Pestañas, discrepancia del breadcrumb, filtros de barra de herramientas y columnas de grilla', async ({
     page,
     dashboardPage,
   }) => {

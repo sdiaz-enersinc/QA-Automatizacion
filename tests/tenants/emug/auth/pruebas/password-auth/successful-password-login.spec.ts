@@ -5,8 +5,8 @@ import { VALID_EMAIL, VALID_PASSWORD } from '../../../../../support/env';
 import { DashboardPage } from '../../../../../support/pages/DashboardPage';
 import { DASHBOARD_LOAD_TIMEOUT_MS } from '../../../../../support/timeouts';
 
-test.describe('Post-email login (password authentication)', () => {
-  test('Successful login (valid email and valid password)', async ({ passwordStepPage, page }) => {
+test.describe('Inicio de sesión post-correo (autenticación por contraseña)', () => {
+  test('Inicio de sesión exitoso (correo y contraseña válidos)', async ({ passwordStepPage, page }) => {
     await expect(passwordStepPage.usernameInput()).toHaveValue(VALID_EMAIL);
     await expect(passwordStepPage.passwordInput()).toBeVisible();
     await expect(passwordStepPage.entrarBtn()).toBeDisabled();

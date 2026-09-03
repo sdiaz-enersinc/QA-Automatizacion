@@ -16,19 +16,19 @@ const CHIP_LOOKALIKE_COLUMNS = REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS.f
   (name) => name === 'Estado' || name === 'Usuario',
 );
 
-test.describe('Negative coverage and shared helpers', () => {
+test.describe('Cobertura negativa y helpers compartidos', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosEnergia);
     skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, DEFAULT_TAB);
   });
 
-  test('Toolbar chip locators must not match grid columns or Usuarios NR', async ({
+  test('Los localizadores de chips de la barra de herramientas no deben coincidir con columnas de grilla ni Usuarios NR', async ({
     page,
     dashboardPage,
   }) => {
     const registro = new RegistroCttosEnergiaNavigationPage(page);
 
-    // 1. On Largo plazo, query the toolbar region, not the whole main table.
+    // 1. En Largo plazo, consultar la región de la barra de herramientas, no la tabla principal completa.
     await dashboardPage.expectLoaded();
     await registro.openCttosEnergiaFromSidebar(DEFAULT_TAB);
     await registro.expectContratosEnergiaTabActive(DEFAULT_TAB);

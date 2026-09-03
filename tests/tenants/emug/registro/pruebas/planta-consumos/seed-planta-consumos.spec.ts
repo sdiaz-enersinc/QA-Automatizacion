@@ -1,5 +1,5 @@
 import { test } from '../../../../../support/fixtures';
 
-test('seed', async ({ dashboardPage }) => {
+test('Seed — dashboard autenticado', async ({ dashboardPage }) => {
   await dashboardPage.expectLoaded();
 });

@@ -27,7 +27,7 @@ test.describe('Contratos de energía — Botones de diálogo (Path A)', () => {
       await registro.expectContratosEnergiaTabActive('DEC');
     });
 
-    await test.step('2. Validar toolbar de DEC, CTAs duales y columnas de la grilla sin Estado', async () => {
+    await test.step('2. Validar barra de herramientas de DEC, CTAs duales y columnas de la grilla sin Estado', async () => {
       await registro.expectLayoutCDecToolbar();
       await registro.expectContractGridColumnHeaders(REGISTRO_CTTS_ENERGIA_DEC_CONTRACT_COLUMNS);
       const table = page.getByRole('main').getByRole('table').first();
