@@ -33,9 +33,5 @@ test.describe('Insumos oferta', () => {
     await registro.expectInsumosOfertaTabActive(REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB);
     await expect(page.getByRole('navigation')).toContainText('Gestor de datos');
     await registro.expectLegacyPlantasYConsumosBreadcrumb();
-    await expect(page.getByRole('tab', { name: REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB })).toHaveAttribute(
-      'aria-selected',
-      'true',
-    );
   });
 });

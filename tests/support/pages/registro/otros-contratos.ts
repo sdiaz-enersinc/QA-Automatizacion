@@ -104,6 +104,64 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
+   * Path B: asserts the Registro card pinned rows, hovers to reveal Otros contratos, opens it, and lands on Miscelaneos.
+   */
+  async openOtrosContratosFromDashboardHover(): Promise<void> {
+    const card = this.registroDashboardCard();
+    await expect(card).toBeVisible();
+    for (const label of ['Empresas', 'Cttos energía', 'Cttos combustible'] as const) {
+      await expect(card.getByText(label)).toBeVisible();
+      await expect(
+        card.getByRole('listitem').filter({ hasText: label }).getByLabel('eye'),
+      ).toBeVisible();
+    }
+    await this.expectOtrosContratosVisibleOnDashboardHover();
+    await this.openOtrosContratosFromDashboardGrid();
+    await this.expectGestorDeDatosOtrosContratosShell();
+    await this.expectOtrosContratosTabActive('Miscelaneos');
+  }
+
+  /**
+   * Asserts nested Otros contratos sidebar items: Miscelaneos href, AGR enabled, locked tabs, Contratos MISC absent.
+   */
+  async expectOtrosContratosNestedSidebarItems(): Promise<void> {
+    await this.expandOtrosContratosSidebar();
+    const submenu = this.registroSubmenu();
+    await expect(submenu.getByRole('link', { name: 'Miscelaneos' })).toHaveAttribute(
+      'href',
+      '/gestor-de-datos/otros-contratos/miscelaneos',
+    );
+    await expect(submenu.getByRole('menuitem', { name: 'AGR' })).toBeVisible();
+    await expect(submenu.getByRole('menuitem', { name: 'AGR', disabled: true })).toHaveCount(0);
+    for (const tabName of REGISTRO_OTROS_CONTRATOS_LOCKED_TAB_NAMES) {
+      await expect(submenu.getByRole('menuitem', { name: tabName, disabled: true })).toBeVisible();
+    }
+    await expect(submenu.getByRole('link', { name: 'Contratos MISC', exact: true })).toHaveCount(0);
+    await expect(submenu.getByRole('menuitem', { name: 'Contratos MISC', exact: true })).toHaveCount(0);
+  }
+
+  /**
+   * Asserts Otros contratos is listed on the Registro dashboard hover card with an eye affordance.
+   */
+  async expectOtrosContratosVisibleOnDashboardHover(): Promise<void> {
+    await this.hoverRegistroDashboardCard();
+    const row = this.registroDashboardCard()
+      .getByRole('listitem')
+      .filter({ hasText: 'Otros contratos' });
+    await expect(row).toBeVisible();
+    await expect(row.getByLabel('eye')).toBeVisible();
+  }
+
+  /**
+   * Asserts the first main contract table has no Select all column header.
+   */
+  async expectSelectAllColumnAbsent(): Promise<void> {
+    await expect(
+      this.gestorMain().getByRole('table').first().getByRole('columnheader', { name: 'Select all' }),
+    ).toHaveCount(0);
+  }
+
+  /**
    * Asserts Otros contratos gestor shell: URL, breadcrumb, and enabled/locked tab strip.
    */
   async expectGestorDeDatosOtrosContratosShell(): Promise<void> {
@@ -177,6 +235,33 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
       stepTitle: 'Registrar Información',
       fields: cfg.registroOtrosContratosMiscNuevoRegistroFields,
       dropdownOptions: cfg.registroOtrosContratosMiscNuevoRegistroFieldsDropdownOptions,
+      footerVariant: 'misc',
+      absentWizardSteps: ['Código SIC', 'Datos macro', 'Carga archivos'],
+    });
+  }
+
+  /**
+   * Opens AGR Nuevo Registro, validates fields without Producto Facturable (no wizard steps), then closes.
+   */
+  async expectAgrNuevoRegistroDialogOpensAndCloses(): Promise<void> {
+    const fields = cfg.registroOtrosContratosMiscNuevoRegistroFields.filter(
+      (field) => field.label !== 'Producto Facturable',
+    );
+    const dropdownOptions = Object.fromEntries(
+      Object.entries(cfg.registroOtrosContratosMiscNuevoRegistroFieldsDropdownOptions).filter(
+        ([label]) => label !== 'Producto Facturable',
+      ),
+    );
+
+    await this.expectRegistroWizardDialogOpensAndCloses({
+      fieldAssertOptions: {
+        ...REGISTRO_WIZARD_FIELD_ASSERT_ENERGIA,
+        allowExtraDropdownOptions: true,
+      },
+      ctaName: 'Nuevo Registro',
+      stepTitle: 'Registrar Información',
+      fields,
+      dropdownOptions,
       footerVariant: 'misc',
       absentWizardSteps: ['Código SIC', 'Datos macro', 'Carga archivos'],
     });

@@ -6,7 +6,6 @@
     "registroCttosEnergia": { "enabled": true },
     "registroCttosCombustible": { "enabled": false },
     "registroOtrosContratos": { "enabled": true },
-    "registroPlantaConsumos": { "enabled": true },
     "registroInsumosOferta": { "enabled": true },
     "registroOtrosDocumentos": { "enabled": true },
     "registroRpm": { "enabled": false },

@@ -1,41 +1,41 @@
-// spec: specs/Registro/emug-registro-restructure-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/otros-contratos/seed-otros-contratos.spec.ts
+// spec: specs/Registro/otros-contratos-agr-navigation-playwright-test.plan.md
+// seed: tests/tenants/emug/registro/pruebas/otros-contratos/seed-otros-contratos.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
-import { expect, test } from '../../../../../support/fixtures';
+import { test } from '../../../../../support/fixtures';
 import {
   REGISTRO_OTROS_CONTRATOS_MISC_CONTRACT_COLUMNS,
   RegistroOtrosContratosNavigationPage,
 } from '../../../../../support/pages/registro/otros-contratos';
 
-test.describe('Otros contratos — grilla Miscelaneos', () => {
+test.describe('Otros contratos — layouts (toolbar chips integrados; AGR incluida)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosContratos);
     skipUnlessTabEnabled(MODULE_IDS.registroOtrosContratos, 'Miscelaneos');
   });
 
-  test('Layout B MISC — pie de página simplificado de Nuevo Registro y desplegables', async ({
+  test('Layout Miscelaneos — barra sin chips, grilla MISC y diálogo Nuevo Registro', async ({
     page,
     dashboardPage,
   }) => {
     test.setTimeout(180_000);
     const registro = new RegistroOtrosContratosNavigationPage(page);
 
+    // 1. Desde el dashboard, abrir Miscelaneos por Registro → Otros contratos en el menú lateral.
     await dashboardPage.expectLoaded();
     await registro.openOtrosContratosFromSidebar('Miscelaneos');
     await registro.expectGestorDeDatosOtrosContratosShell();
-
-    // 1. Pestaña Miscelaneos: columnas específicas de MISC, CTA Nuevo Registro (no Nuevo Contrato).
     await registro.expectOtrosContratosTabActive('Miscelaneos');
-    await registro.expectContractGridColumnHeaders(REGISTRO_OTROS_CONTRATOS_MISC_CONTRACT_COLUMNS);
-    await expect(
-      page.getByRole('main').getByRole('table').first().getByRole('columnheader', { name: 'Select all' }),
-    ).toHaveCount(0);
 
+    // 2. Inspeccionar la barra de herramientas de Miscelaneos (absorbe toolbar-chips-removed-misc).
     await registro.expectOtrosContratosToolbar();
 
-    // 2. Campos y desplegables del diálogo Nuevo Registro (sin pasos de wizard).
+    // 3. Inspeccionar la grilla de contratos Miscelaneos.
+    await registro.expectContractGridColumnHeaders(REGISTRO_OTROS_CONTRATOS_MISC_CONTRACT_COLUMNS);
+    await registro.expectSelectAllColumnAbsent();
+
+    // 4. Abrir Nuevo Registro, validar campos y desplegables (sin pasos de wizard) y cerrar el diálogo.
     await registro.expectMiscNuevoRegistroDialogOpensAndCloses();
   });
 });

@@ -3,7 +3,7 @@
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessAnyTabEnabled, skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
-import { expect, test } from '../../../../../support/fixtures';
+import { test } from '../../../../../support/fixtures';
 import {
   REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES,
   RegistroInsumosOfertaNavigationPage,
@@ -28,7 +28,6 @@ test.describe('Insumos oferta', () => {
     for (const tabName of REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES) {
       await registro.openInsumosOfertaFromSidebar(tabName);
       await registro.expectInsumosOfertaTabActive(tabName);
-      await expect(page.getByRole('tab', { name: tabName })).toHaveAttribute('aria-selected', 'true');
 
       if (tabName === REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES[0]) {
         await registro.expectGestorDeDatosInsumosOfertaShell();

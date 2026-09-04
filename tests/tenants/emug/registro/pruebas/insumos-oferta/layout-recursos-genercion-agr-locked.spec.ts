@@ -29,9 +29,9 @@ test.describe('Insumos oferta', () => {
     await registro.clickInsumosOfertaSidebarLink(REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB);
     await registro.expectInsumosOfertaTabActive(REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB);
     await registro.expectLegacyPlantasYConsumosBreadcrumb();
+    await registro.expectGestorDeDatosInsumosOfertaShell();
     await registro.expectAgrTabLocked();
     await registro.expectHeatRateAbsentFromTabs();
-    await registro.expectLockedTabsDisabled();
 
     // 3. Intentar activar la pestaña Recursos Generción (AGR) (clic o teclado).
     await registro.expectAgrTabDoesNotNavigate();

@@ -41,7 +41,6 @@ test.describe('Insumos oferta', () => {
     await registro.expectGestorDeDatosInsumosOfertaShell();
     for (const tabName of REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES) {
       await registro.openInsumosOfertaTab(tabName);
-      await expect(page.getByRole('main')).toBeVisible();
     }
   });
 });
