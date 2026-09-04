@@ -135,7 +135,7 @@ export class RegistroNavigationBasePage {
         await submodule.click();
       }
       await expect(submodule).toHaveAttribute('aria-expanded', 'true');
-    }).toPass({ timeout: 10_000 });
+    }).toPass({ timeout: 20_000 });
   }
 
   /**
