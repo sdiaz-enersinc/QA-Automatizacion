@@ -554,14 +554,21 @@ export class RegistroNavigationBasePage {
     strategy: RegistroWizardDismissDropdownStrategy = 'escape',
   ): Promise<void> {
     const openDropdown = this.page.locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)');
-    if (await openDropdown.count()) {
-      if (strategy === 'heading-click') {
-        await dialog.getByRole('heading', { name: 'Registrar Información' }).click();
-      } else {
-        await this.page.keyboard.press('Escape');
-      }
-      await expect(openDropdown).toHaveCount(0);
+    if (!(await openDropdown.count())) {
+      return;
     }
+
+    const dialogHeading = dialog.getByRole('heading', { name: 'Registrar Información' });
+    if (strategy === 'heading-click') {
+      await dialogHeading.click();
+    } else {
+      await this.page.keyboard.press('Escape');
+      if (await openDropdown.count()) {
+        await dialogHeading.click();
+      }
+    }
+
+    await expect(openDropdown).toHaveCount(0, { timeout: 10_000 });
   }
 
   /**
