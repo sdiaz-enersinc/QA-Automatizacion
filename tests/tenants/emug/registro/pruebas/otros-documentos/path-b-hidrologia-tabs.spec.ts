@@ -1,9 +1,9 @@
 // spec: specs/Registro/otros-documentos-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/otros-documentos/seed-otros-documentos.spec.ts
+// seed: tests/tenants/emug/registro/pruebas/otros-documentos/seed-otros-documentos.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessAllTabsEnabled, skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
-import { test, expect } from '../../../../../support/fixtures';
+import { test } from '../../../../../support/fixtures';
 import {
   REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS,
   RegistroOtrosDocumentosNavigationPage,
@@ -24,22 +24,15 @@ test.describe('Escenario 2 — Navegación por menú lateral y cruce de pestaña
   }) => {
     test.setTimeout(90_000);
     const registro = new RegistroOtrosDocumentosNavigationPage(page);
+    const [origen, pareja] = REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS;
 
     // 1. Preparar: abrir Hidrologia Horaria por menú lateral.
     await dashboardPage.expectLoaded();
-    await registro.openOtrosDocumentosFromSidebar('Hidrologia Horaria');
-    await registro.expectOtrosDocumentosViewActive('Hidrologia Horaria');
+    await registro.openOtrosDocumentosFromSidebar(origen);
 
-    // 2. Actuar: pulsar la pestaña Hidrologia Diaria.
-    await registro.openOtrosDocumentosTab('Hidrologia Diaria');
-    await expect(page.getByRole('main')).toBeVisible();
-    await registro.expectOtrosDocumentosPairTabVisible('Hidrologia Diaria');
-
-    // 3. Actuar: pulsar la pestaña Hidrologia Horaria para volver.
-    await registro.openOtrosDocumentosTab('Hidrologia Horaria');
-    await expect(page.getByRole('tab', { name: 'Hidrologia Horaria' })).toHaveAttribute(
-      'aria-selected',
-      'true',
-    );
+    // 2. Actuar: pulsar la pestaña pareja y volver al origen.
+    await registro.openOtrosDocumentosTab(pareja);
+    await registro.expectOtrosDocumentosPairTabVisible(pareja);
+    await registro.openOtrosDocumentosTab(origen);
   });
 });

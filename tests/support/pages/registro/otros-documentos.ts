@@ -70,6 +70,8 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
 
   /**
    * Expands a nested sidebar group (Hidrologia or Contadores) under Otros documentos.
+   *
+   * @param group - Nested flyout group under Otros documentos.
    */
   async expandOtrosDocumentosNestedGroup(group: OtrosDocumentosNestedGroup): Promise<void> {
     await this.expandOtrosDocumentosSidebar();
@@ -93,6 +95,8 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
 
   /**
    * Opens an Otros documentos view via sidebar nested menuitems.
+   *
+   * @param viewName - Enabled view label.
    */
   async openOtrosDocumentosFromSidebar(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     const group =
@@ -112,6 +116,8 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
 
   /**
    * Opens an in-module tab and asserts URL, breadcrumb, and aria-selected state.
+   *
+   * @param viewName - Target tab label.
    */
   async openOtrosDocumentosTab(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     await this.page.getByRole('tab', { name: viewName }).click();
@@ -120,6 +126,8 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
 
   /**
    * Asserts the view tab is selected, breadcrumb matches, URL slug matches, and main grid is visible.
+   *
+   * @param viewName - Expected active view label.
    */
   async expectOtrosDocumentosViewActive(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     await expect(this.page).toHaveURL(
@@ -139,6 +147,8 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
 
   /**
    * Asserts the cross-navigation partner tab is visible but not selected.
+   *
+   * @param viewName - Active view whose pair mate must be visible.
    */
   async expectOtrosDocumentosPairTabVisible(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     const mate = RegistroOtrosDocumentosNavigationPage.REGISTRO_OTROS_DOCUMENTOS_TAB_PAIR_MATE[viewName];
@@ -159,11 +169,65 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
+   * Opens an Otros documentos view by deep-linking the tenant slug (sidebar workaround).
+   *
+   * @param viewName - Enabled view label.
+   */
+  async openOtrosDocumentosByUrl(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
+    const slug = cfg.registroOtrosDocumentosViewSlugs[viewName];
+    await this.page.goto(`/gestor-de-datos/${slug}`);
+    await expect(this.page).toHaveURL(
+      RegistroOtrosDocumentosNavigationPage.REGISTRO_OTROS_DOCUMENTOS_VIEW_SLUGS[viewName],
+      { timeout: 15_000 },
+    );
+  }
+
+  /**
+   * Asserts Otros documentos gestor shell: URL, breadcrumb, and the active pair's tabs.
+   */
+  async expectGestorDeDatosOtrosDocumentosShell(): Promise<void> {
+    await expect(this.page).toHaveURL(/gestor-de-datos\/otros-documentos\//);
+    await expect(this.page.getByRole('navigation')).toContainText('Gestor de datos');
+    for (const tabName of this.activeOtrosDocumentosPairViews()) {
+      const tab = this.page.getByRole('tab', { name: tabName });
+      await expect(tab).toBeVisible();
+      await expect(tab).toBeEnabled();
+    }
+  }
+
+  /**
    * Asserts data-table column headers in the first main grid.
+   *
+   * @param columnNames - Expected column header labels.
    */
   async expectGridColumnHeaders(columnNames: readonly string[]): Promise<void> {
     const table = this.gestorMain().getByRole('table').first();
     await assertTableColumnHeadersMatchConfig(table, columnNames);
+  }
+
+  /**
+   * Asserts grid columns and view-specific extras for an Otros documentos layout.
+   *
+   * @param viewName - Active Hidrologia or Contadores view label.
+   */
+  async expectOtrosDocumentosLayout(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
+    await this.expectGridColumnHeaders(this.columnsForView(viewName));
+    if (viewName === REGISTRO_OTROS_DOCUMENTOS_CONTADORES_VIEWS[0]) {
+      await this.expectOtrosDocumentosPairTabVisible(viewName);
+      await this.expectContadoresFrtSampleRows();
+      return;
+    }
+    if (viewName === REGISTRO_OTROS_DOCUMENTOS_CONTADORES_VIEWS[1]) {
+      await this.expectNoErrorBanner();
+      return;
+    }
+    if (viewName === REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS[0]) {
+      await this.expectGridPaginationFooter();
+      return;
+    }
+    if (viewName === REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS[1]) {
+      await this.expectGridHasDataOrEmptyState();
+    }
   }
 
   /**
@@ -202,36 +266,6 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Opens Estado filter dialog, asserts combobox fields, then dismisses with Close.
-   */
-  async expectEstadoFilterDialogWithComboboxes(): Promise<void> {
-    await this.dismissNotificationToasts();
-    await this.filterChip('Estado').click();
-    const dialog = this.page.getByRole('dialog');
-    await expect(dialog).toContainText('Filtrar por Estado de simulación');
-    await expect(dialog.getByText('Estado').first()).toBeVisible();
-    await expect(dialog.getByText('Seleccione una opción')).toBeVisible();
-    await this.dismissNotificationToasts();
-    await dialog.getByRole('button', { name: 'Close' }).click();
-    await expect(dialog).not.toBeVisible();
-  }
-
-  /**
-   * Opens Usuarios filter dialog, asserts combobox fields, then dismisses with Close.
-   */
-  async expectUsuariosFilterDialogWithComboboxes(): Promise<void> {
-    await this.dismissNotificationToasts();
-    await this.filterChip('Usuarios').click();
-    const dialog = this.page.getByRole('dialog');
-    await expect(dialog).toContainText('Filtrar por usuarios');
-    await expect(dialog.getByText('Usuario').first()).toBeVisible();
-    await expect(dialog.getByText('Seleccione una opción')).toBeVisible();
-    await this.dismissNotificationToasts();
-    await dialog.getByRole('button', { name: 'Close' }).click();
-    await expect(dialog).not.toBeVisible();
-  }
-
-  /**
    * Opens Cargar archivo upload dialog, validates content, and closes it.
    */
   async expectCargarArchivoDialogOpensAndCloses(): Promise<void> {
@@ -249,13 +283,6 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Exercises the Cargar archivo dialog shared by Otros documentos grid views (filter chips removed).
-   */
-  async expectOtrosDocumentosSharedFilterAndUploadDialogs(): Promise<void> {
-    await this.expectCargarArchivoDialogOpensAndCloses();
-  }
-
-  /**
    * Hovers the Registro dashboard card and asserts Otros documentos appears with an eye icon.
    */
   async expectOtrosDocumentosVisibleOnDashboardHover(): Promise<void> {
@@ -269,6 +296,22 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
+   * Path B: asserts pinned Registro card rows, hovers to reveal Otros documentos, and clicks the eye.
+   */
+  async openOtrosDocumentosFromDashboardHover(): Promise<void> {
+    const card = this.registroDashboardCard();
+    await expect(card).toBeVisible();
+    for (const label of ['Empresas', 'Cttos energía', 'Cttos combustible'] as const) {
+      await expect(card.getByText(label)).toBeVisible();
+      await expect(
+        card.getByRole('listitem').filter({ hasText: label }).getByLabel('eye'),
+      ).toBeVisible();
+    }
+    await this.expectOtrosDocumentosVisibleOnDashboardHover();
+    await this.openOtrosDocumentosFromDashboardGrid();
+  }
+
+  /**
    * Clicks the Otros documentos eye icon on the Registro dashboard card.
    */
   async openOtrosDocumentosFromDashboardGrid(): Promise<void> {
@@ -278,6 +321,41 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
       .filter({ hasText: 'Otros documentos' })
       .getByLabel('eye')
       .click();
+  }
+
+  /**
+   * Returns Hidrologia or Contadores views matching the current gestor URL.
+   */
+  private activeOtrosDocumentosPairViews(): readonly string[] {
+    const url = this.page.url();
+    const isHidrologia = REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS.some((viewName) =>
+      RegistroOtrosDocumentosNavigationPage.REGISTRO_OTROS_DOCUMENTOS_VIEW_SLUGS[viewName].test(url),
+    );
+    return isHidrologia
+      ? REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS
+      : REGISTRO_OTROS_DOCUMENTOS_CONTADORES_VIEWS;
+  }
+
+  /**
+   * Returns tenant-configured column headers for an Otros documentos view.
+   *
+   * @param viewName - Hidrologia or Contadores view label.
+   */
+  private columnsForView(viewName: RegistroOtrosDocumentosViewName): readonly string[] {
+    const columnsByView: Record<string, readonly string[]> = {
+      [REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS[0]]:
+        REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_HORARIA_COLUMNS,
+      [REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS[1]]:
+        REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_DIARIA_COLUMNS,
+    };
+    for (const contadoresView of REGISTRO_OTROS_DOCUMENTOS_CONTADORES_VIEWS) {
+      columnsByView[contadoresView] = REGISTRO_OTROS_DOCUMENTOS_CONTADORES_COLUMNS;
+    }
+    const columns = columnsByView[viewName];
+    if (!columns) {
+      throw new Error(`No column config for Otros documentos view: ${viewName}`);
+    }
+    return columns;
   }
 
   /**

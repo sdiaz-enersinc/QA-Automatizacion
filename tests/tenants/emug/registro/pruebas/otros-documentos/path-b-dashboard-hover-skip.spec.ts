@@ -1,9 +1,9 @@
 // spec: specs/Registro/otros-documentos-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/otros-documentos/seed-otros-documentos.spec.ts
+// seed: tests/tenants/emug/registro/pruebas/otros-documentos/seed-otros-documentos.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
-import { test, expect } from '../../../../../support/fixtures';
+import { test } from '../../../../../support/fixtures';
 import { RegistroOtrosDocumentosNavigationPage } from '../../../../../support/pages/registro/otros-documentos';
 
 test.describe('Escenario 1 — Acceso por hover del tablero (problema conocido)', () => {
@@ -21,18 +21,11 @@ test.describe('Escenario 1 — Acceso por hover del tablero (problema conocido)'
 
     const registro = new RegistroOtrosDocumentosNavigationPage(page);
 
-    // 1. Preparar: autenticar y llegar al tablero. Verificar que la tarjeta del módulo Registro es visible.
+    // 1. Preparar: autenticar y llegar al tablero. Hover y pulsar el icono de ojo.
     await dashboardPage.expectLoaded();
-    await expect(registro.registroDashboardCard()).toBeVisible();
-    await expect(registro.registroDashboardCard().getByText('Empresas')).toBeVisible();
-    await expect(registro.registroDashboardCard().getByText('Cttos energía')).toBeVisible();
-    await expect(registro.registroDashboardCard().getByText('Cttos combustible')).toBeVisible();
+    await registro.openOtrosDocumentosFromDashboardHover();
 
-    // 2. Actuar: hover en la tarjeta Registro del tablero para revelar la lista extendida de submódulos.
-    await registro.expectOtrosDocumentosVisibleOnDashboardHover();
-
-    // 3. Actuar (comportamiento roto documentado): pulsar el icono de ojo de Otros documentos.
-    await registro.openOtrosDocumentosFromDashboardGrid();
+    // 2. Verificar el 404 conocido en la raíz de Otros documentos.
     await registro.expectOtrosDocumentosDashboard404();
   });
 });
