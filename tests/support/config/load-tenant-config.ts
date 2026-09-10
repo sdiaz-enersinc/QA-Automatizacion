@@ -8,6 +8,7 @@ import {
   MODULE_IDS,
   type ModuleId,
 } from './module-registry';
+import type { RegistroCttosCombustibleTenantConfig } from './types/registro-cttos-combustible';
 import type { RegistroCttosEnergiaTenantConfig } from './types/registro-cttos-energia';
 import type { RegistroEmpresasTenantConfig } from './types/registro-empresas';
 import type { RegistroHistorialTenantConfig } from './types/registro-historial';
@@ -15,6 +16,8 @@ import type { RegistroInsumosOfertaTenantConfig } from './types/registro-insumos
 import type { RegistroNavigationTenantConfig } from './types/registro-navigation';
 import type { RegistroOtrosContratosTenantConfig } from './types/registro-otros-contratos';
 import type { RegistroOtrosDocumentosTenantConfig } from './types/registro-otros-documentos';
+import type { RegistroRpmTenantConfig } from './types/registro-rpm';
+import type { RegistroSireciTenantConfig } from './types/registro-sireci';
 import type { TenantBreadcrumbMatcher } from './types/tenant-breadcrumb';
 import type {
   TenantManifest,
@@ -25,11 +28,14 @@ import type {
 
 let cachedTenantManifest: TenantManifest | undefined;
 let cachedRegistroNavigationConfig: RegistroNavigationTenantConfig | undefined;
+let cachedRegistroCttosCombustibleConfig: RegistroCttosCombustibleTenantConfig | undefined;
 let cachedRegistroCttosEnergiaConfig: RegistroCttosEnergiaTenantConfig | undefined;
 let cachedRegistroOtrosContratosConfig: RegistroOtrosContratosTenantConfig | undefined;
 let cachedRegistroInsumosOfertaConfig: RegistroInsumosOfertaTenantConfig | undefined;
 let cachedRegistroOtrosDocumentosConfig: RegistroOtrosDocumentosTenantConfig | undefined;
 let cachedRegistroHistorialConfig: RegistroHistorialTenantConfig | undefined;
+let cachedRegistroSireciConfig: RegistroSireciTenantConfig | undefined;
+let cachedRegistroRpmConfig: RegistroRpmTenantConfig | undefined;
 let cachedRegistroEmpresasConfig: RegistroEmpresasTenantConfig | undefined;
 
 /**
@@ -177,6 +183,17 @@ export function getRegistroNavigationConfig(): RegistroNavigationTenantConfig {
 }
 
 /**
+ * Returns the cached Registro Contratos combustible config for the active tenant.
+ */
+export function getRegistroCttosCombustibleConfig(): RegistroCttosCombustibleTenantConfig {
+  cachedRegistroCttosCombustibleConfig ??=
+    loadTenantJsonConfig<RegistroCttosCombustibleTenantConfig>(
+      MODULE_CONFIG_PATHS.registroCttosCombustible,
+    );
+  return cachedRegistroCttosCombustibleConfig;
+}
+
+/**
  * Returns the cached Registro Contratos energía config for the active tenant.
  */
 export function getRegistroCttosEnergiaConfig(): RegistroCttosEnergiaTenantConfig {
@@ -227,6 +244,26 @@ export function getRegistroHistorialConfig(): RegistroHistorialTenantConfig {
 }
 
 /**
+ * Returns the cached Registro Sireci config for the active tenant.
+ */
+export function getRegistroSireciConfig(): RegistroSireciTenantConfig {
+  cachedRegistroSireciConfig ??= loadTenantJsonConfig<RegistroSireciTenantConfig>(
+    MODULE_CONFIG_PATHS.registroSireci,
+  );
+  return cachedRegistroSireciConfig;
+}
+
+/**
+ * Returns the cached Registro RPM config for the active tenant.
+ */
+export function getRegistroRpmConfig(): RegistroRpmTenantConfig {
+  cachedRegistroRpmConfig ??= loadTenantJsonConfig<RegistroRpmTenantConfig>(
+    MODULE_CONFIG_PATHS.registroRpm,
+  );
+  return cachedRegistroRpmConfig;
+}
+
+/**
  * Returns the cached Registro Empresas config for the active tenant.
  */
 export function getRegistroEmpresasConfig(): RegistroEmpresasTenantConfig {
@@ -243,6 +280,8 @@ export function getRegistroEmpresasConfig(): RegistroEmpresasTenantConfig {
  */
 export function getModuleAllTabNames(moduleId: ModuleId | string): readonly string[] {
   switch (moduleId) {
+    case MODULE_IDS.registroCttosCombustible:
+      return getRegistroCttosCombustibleConfig().registroCttosCombustibleTabNames;
     case MODULE_IDS.registroCttosEnergia:
       return getRegistroCttosEnergiaConfig().registroCttosEnergiaTabNames;
     case MODULE_IDS.registroOtrosContratos:
@@ -253,6 +292,10 @@ export function getModuleAllTabNames(moduleId: ModuleId | string): readonly stri
       return getRegistroOtrosDocumentosConfig().registroOtrosDocumentosViewNames;
     case MODULE_IDS.registroHistorial:
       return getRegistroHistorialConfig().registroHistorialTabNames;
+    case MODULE_IDS.registroSireci:
+      return getRegistroSireciConfig().registroSireciTabNames;
+    case MODULE_IDS.registroRpm:
+      return getRegistroRpmConfig().registroRpmTabNames;
     default:
       throw new Error(`Unknown module ID: ${moduleId}`);
   }
@@ -265,6 +308,8 @@ export function getModuleAllTabNames(moduleId: ModuleId | string): readonly stri
  */
 function getModulePartialEnabledTabNames(moduleId: ModuleId | string): readonly string[] {
   switch (moduleId) {
+    case MODULE_IDS.registroCttosCombustible:
+      return getRegistroCttosCombustibleConfig().registroCttosCombustibleEnabledTabNames;
     case MODULE_IDS.registroCttosEnergia:
       return getRegistroCttosEnergiaConfig().registroCttosEnergiaEnabledTabNames;
     case MODULE_IDS.registroOtrosContratos:
@@ -275,6 +320,10 @@ function getModulePartialEnabledTabNames(moduleId: ModuleId | string): readonly 
       return getRegistroOtrosDocumentosConfig().registroOtrosDocumentosEnabledViewNames;
     case MODULE_IDS.registroHistorial:
       return getRegistroHistorialConfig().registroHistorialEnabledTabNames;
+    case MODULE_IDS.registroSireci:
+      return getRegistroSireciConfig().registroSireciEnabledTabNames;
+    case MODULE_IDS.registroRpm:
+      return getRegistroRpmConfig().registroRpmEnabledTabNames;
     default:
       throw new Error(`Unknown module ID: ${moduleId}`);
   }

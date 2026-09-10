@@ -39,6 +39,8 @@ export interface RegistroWizardFieldAssertOptions {
   allowExtraDropdownOptions?: boolean;
   /** When true, only assert config fields exist in UI (subset). Default: exact field set match. */
   allowExtraFields?: boolean;
+  /** When true, open the wizard with the retrying Registrar Información click helper. */
+  retryOpen?: boolean;
 }
 
 /** Field assert profile for Contratos combustible wizards. */
@@ -715,7 +717,11 @@ export class RegistroNavigationBasePage {
     const fieldAssertOptions = options.fieldAssertOptions ?? {};
 
     await this.expectNoVisibleModals();
-    await this.gestorMain().getByRole('button', { name: options.ctaName }).click();
+    if (fieldAssertOptions.retryOpen) {
+      await this.openRegistrarInformacionDialog(options.ctaName);
+    } else {
+      await this.gestorMain().getByRole('button', { name: options.ctaName }).click();
+    }
 
     const dialog = this.registroWizardDialog(options.stepTitle);
     await expect(dialog).toBeVisible({ timeout: 15_000 });
