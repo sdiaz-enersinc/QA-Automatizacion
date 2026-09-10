@@ -201,7 +201,38 @@ Definiciones de agente y MCP `playwright-test` para planner / generator / healer
 
 Los planes generados van a `specs/` (ya en `.gitignore`). Los seeds de módulo ya existen bajo `tests/tenants/<tenant>/…/seed-*.spec.ts`.
 
+## Paso 7 — tenant gecg (hecho)
+
+Auth + Registro de gecg. Support compartido; JSON y specs bajo `tests/tenants/gecg/`. Combustible, RPM y SIRECI entran a `support/` porque emug no los trajo.
+
+Para correr gecg: `TEST_TENANT=gecg` y credenciales gecg en `.env`. Si `VALID_PASSWORD` contiene apóstrofos, usa comillas dobles (`VALID_PASSWORD="..."`); las comillas simples de dotenv cortan el valor.
+
+| Destino en `New` | Origen / acción |
+| --- | --- |
+| `tests/tenants/gecg/tenant.json` | `tests/config/tenants/gecg/tenant.json` |
+| `tests/tenants/gecg/registro/config/navigation.json` | submenu gecg + schema New (enabled/locked/legacy/preview) |
+| `tests/tenants/gecg/auth/pruebas/` | 6 specs (imports a `support/`) |
+| `tests/tenants/gecg/registro/config/{empresas,cttos-energia,historial,cttos-combustible,rpm,sireci}.json` | JSON del original |
+| `tests/tenants/gecg/registro/pruebas/{empresas,historial,cttos-energia,cttos-combustible,rpm,sireci}/` | 37 specs Registro (seed de energía restaurado con tab `Contratos LP`) |
+| `tests/support/config/types/registro-{cttos-combustible,rpm,sireci}.ts` | tipos |
+| `tests/support/config/load-tenant-config.ts` | getters + switch de tabs combustible/RPM/SIRECI |
+| `tests/support/pages/registro/{cttos-combustible,rpm,sireci}.ts` | POM (imports a `support/config`) |
+| `tests/support/pages/registro/cttos-energia.ts` | `waitForDecTabToolbarReady` usa el label DEC del JSON del tenant |
+
+### Qué se dejó fuera a propósito
+
+- `tests/tenants/gecg/support/` (fixtures, login POM, Despacho).
+- Planta y consumos / Otros documentos (disabled y sin specs).
+- Harvest, `_archive/gecg-harvest-data.json`, reporters CSV.
+- Specs de `navigation/` (gecg no los tenía).
+- JSON de combustible/RPM/SIRECI en **emug** (loader lazy).
+
+`layout-d-respaldos-grid` usa el tab locked `Contratos Respaldos` → skip.
+`layout-resumen-tab` permanece `test.fixme` como en el original.
+
+Verificación Chromium (`TEST_TENANT=gecg`): el loader lista 8 módulos enabled; `--list` carga 6 specs unauth + 39 casos Registro. El correo autorizado y los casos negativos de contraseña vacía/inválida pasan. El login válido y el caso de solo espacios fallan hoy en QA (el formulario no entra al dashboard; espacios navega a `/privacy-policy`), así que los seeds autenticados no se pudieron ejercer hasta actualizar la contraseña gecg.
+
 ## Siguientes pasos (aún no copiados)
 
-1. Otros tenants (`tbsg`, `gecg`) y/o reporters CSV.
+1. Tenant `tbsg` y/o reporters CSV.
 2. Módulos Registro disabled, si se habilitan en `tenant.json`.

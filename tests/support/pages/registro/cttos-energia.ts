@@ -302,17 +302,25 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   }
 
   /**
+   * Returns the DEC tab label from tenant config (`DEC` or `Contratos DEC`).
+   */
+  private decTabName(): RegistroCttosEnergiaTabName {
+    return REGISTRO_CTTS_ENERGIA_TAB_NAMES.find((name) => /DEC/i.test(name)) ?? 'DEC';
+  }
+
+  /**
    * Espera a que la pestaña DEC renderice su barra de CTAs duales (evita un flash de la toolbar de LP).
    */
   async waitForDecTabToolbarReady(): Promise<void> {
     const main = this.gestorMain();
     const uploadButton = main.getByRole('button', { name: 'Cargar archivos' });
     const newContractButton = main.getByRole('button', { name: /Nuevo[n]? contrato/i });
+    const decTab = this.decTabName();
 
     await expect(async () => {
       if (!(await uploadButton.isVisible())) {
-        await this.page.getByRole('tab', { name: 'DEC' }).click();
-        await this.expectContratosEnergiaTabActive('DEC');
+        await this.page.getByRole('tab', { name: decTab }).click();
+        await this.expectContratosEnergiaTabActive(decTab);
       }
       await expect(uploadButton).toBeVisible();
       await expect(newContractButton).toBeVisible();
@@ -484,23 +492,16 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   }
 
   /**
-   * Abre un diálogo solo de carga, comprueba el texto .xlsx, los CTAs del pie y que no hay comboboxes.
+   * Abre un diálogo solo de carga, comprueba dropzone, Guardar, plantilla y que no hay comboboxes.
+   *
+   * @param options - Toolbar button name and whether Descargar plantilla must be present.
    */
   private async expectEnergiaUploadDialogOpensAndCloses(options: {
     buttonName: string;
     assertDescargarPlantilla: boolean;
   }): Promise<void> {
-    await this.expectNoVisibleModals();
-    const uploadButton = this.gestorMain().getByRole('button', { name: options.buttonName });
-    const dialog = this.page.getByRole('dialog').filter({ hasText: /\.xlsx/i }).last();
-
-    await expect(async () => {
-      await uploadButton.click();
-      await expect(dialog).toBeVisible();
-    }).toPass({ timeout: 15_000 });
-
-    await expect(dialog).toContainText(/\.xlsx/i);
-    await expect(dialog.getByRole('button', { name: 'Guardar' })).toBeVisible();
+    const dialog = await this.openRegistrarInformacionDialog(options.buttonName);
+    await this.expectCargarArchivoDropzone(dialog);
     if (options.assertDescargarPlantilla) {
       await expect(dialog.getByRole('button', { name: 'Descargar plantilla' })).toBeVisible();
     } else {

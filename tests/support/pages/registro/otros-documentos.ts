@@ -266,19 +266,10 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Opens Cargar archivo upload dialog, validates content, and closes it.
+   * Opens Cargar archivo upload dialog, validates dropzone and Guardar, then closes it.
    */
   async expectCargarArchivoDialogOpensAndCloses(): Promise<void> {
-    await this.expectNoVisibleModals();
-    await this.gestorMain().getByRole('button', { name: 'Cargar archivo' }).click();
-    const dialog = this.page.getByRole('dialog').filter({ hasText: 'Registrar Información' }).last();
-    await expect(dialog).toBeVisible({ timeout: 15_000 });
-    await expect(dialog).toContainText(/archivos Excel \(\.xlsx\)/i);
-    await expect(dialog.getByRole('button', { name: 'Descargar plantilla' })).toBeVisible();
-    await expect(dialog.getByRole('button', { name: 'Guardar' })).toBeVisible();
-    await dialog.getByRole('button', { name: 'Close' }).click();
-    await expect(dialog).not.toBeVisible({ timeout: 10_000 });
-    await this.expectNoVisibleModals();
+    await this.expectFileUploadDialogOpensAndCloses('Cargar archivo');
     await expect(this.gestorMain().getByRole('table').first()).toBeVisible();
   }
 

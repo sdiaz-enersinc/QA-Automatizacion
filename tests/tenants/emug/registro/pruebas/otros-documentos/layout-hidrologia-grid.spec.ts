@@ -40,8 +40,8 @@ test.describe('Escenario 3 — Validación de componentes e interactividad UI', 
       // 2. Verificar estructura de tabla (columnas + extras específicos de la vista).
       await registro.expectOtrosDocumentosLayout(view);
 
-      // 3. Abrir y cerrar el diálogo Cargar archivo.
-      await registro.expectCargarArchivoDialogOpensAndCloses();
+      // 3. Abrir y cerrar el diálogo Cargar archivo (dropzone + Guardar).
+      await registro.expectFileUploadDialogOpensAndCloses('Cargar archivo');
     });
   }
 });

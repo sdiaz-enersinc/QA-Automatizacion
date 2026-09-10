@@ -19,6 +19,10 @@ const navigationCfg = getRegistroNavigationConfig();
 /** Exact submenu labels under Registro in QA (sidebar and dashboard copy). */
 export const REGISTRO_NAVIGATION_SUBMENU_LABELS = navigationCfg.registroNavigationSubmenuLabels;
 
+/** Dropzone copy shown in Registrar Información file-upload dialogs (singular or plural). */
+export const REGISTRO_CARGAR_ARCHIVO_DROPZONE_TEXT =
+  /Haga clic aquí o arrastre (?:un archivo|los archivos) a esta área para preparar la carga/;
+
 /** How to close an open Ant Design select without dismissing the wizard modal. */
 export type RegistroWizardDismissDropdownStrategy = 'heading-click' | 'escape';
 
@@ -260,6 +264,47 @@ export class RegistroNavigationBasePage {
     }).toPass({ timeout: 20_000 });
 
     return dialog;
+  }
+
+  /**
+   * Asserts a file-upload dialog shows the shared dropzone copy and Guardar CTA.
+   *
+   * @param dialog - Visible Registrar Información dialog locator.
+   */
+  protected async expectCargarArchivoDropzone(dialog: Locator): Promise<void> {
+    await expect(dialog.getByText(REGISTRO_CARGAR_ARCHIVO_DROPZONE_TEXT)).toBeVisible();
+    await expect(dialog.getByRole('button', { name: 'Guardar', exact: true })).toBeVisible();
+  }
+
+  /**
+   * Asserts Registrar Información file-upload dialog content, then closes it.
+   *
+   * @param options - Optional template-download assertion.
+   */
+  async expectFileUploadDialog(options?: { withTemplate?: boolean }): Promise<void> {
+    const dialog = this.page.getByRole('dialog').filter({ hasText: 'Registrar Información' }).last();
+    await expect(dialog).toBeVisible({ timeout: 15_000 });
+    await this.expectCargarArchivoDropzone(dialog);
+    if (options?.withTemplate) {
+      await expect(dialog.getByRole('button', { name: 'Descargar plantilla' })).toBeVisible();
+    }
+    await dialog.getByRole('button', { name: 'Close' }).click();
+    await expect(dialog).not.toBeVisible({ timeout: 10_000 });
+    await this.expectNoVisibleModals();
+  }
+
+  /**
+   * Clicks a CTA, opens the file-upload dialog, validates dropzone and Guardar, then closes.
+   *
+   * @param buttonName - Toolbar button that opens Registrar Información.
+   * @param options - Optional template-download assertion.
+   */
+  async expectFileUploadDialogOpensAndCloses(
+    buttonName: string | RegExp,
+    options?: { withTemplate?: boolean },
+  ): Promise<void> {
+    await this.openRegistrarInformacionDialog(buttonName);
+    await this.expectFileUploadDialog(options);
   }
 
   /**

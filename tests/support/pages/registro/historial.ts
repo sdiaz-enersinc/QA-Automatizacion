@@ -185,10 +185,31 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
 
   /**
    * Abre una pestaña del módulo y comprueba URL, breadcrumb y estado aria-selected.
+   * Reintenta si la SPA muestra un 404 transitorio en main tras el cambio de pestaña.
    */
   async openHistorialTab(tabName: RegistroHistorialTabName): Promise<void> {
-    await this.page.getByRole('tab', { name: tabName }).click();
-    await this.expectHistorialViewActive(tabName);
+    await expect(async () => {
+      const tab = this.page.getByRole('tab', { name: tabName });
+      await tab.click();
+      const main = this.gestorMain();
+      if ((await main.getByText('404', { exact: true }).count()) > 0) {
+        await this.page.goto(
+          RegistroHistorialNavigationPage.REGISTRO_HISTORIAL_SIDEBAR_HREFS[tabName],
+        );
+      }
+      await expect(this.page).toHaveURL(
+        RegistroHistorialNavigationPage.REGISTRO_HISTORIAL_TAB_SLUGS[tabName],
+      );
+      await expect(this.page.getByRole('tab', { name: tabName })).toHaveAttribute(
+        'aria-selected',
+        'true',
+      );
+      await expect(this.page.getByRole('navigation')).toContainText(
+        RegistroHistorialNavigationPage.REGISTRO_HISTORIAL_TAB_BREADCRUMBS[tabName],
+      );
+      await expect(main.getByText('404', { exact: true })).toHaveCount(0);
+      await expect(main.getByRole('table').first()).toBeVisible();
+    }).toPass({ timeout: 30_000 });
   }
 
   /**

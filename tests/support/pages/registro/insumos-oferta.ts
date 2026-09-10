@@ -541,38 +541,6 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Registrar Información file-upload dialog content, then closes it.
-   *
-   * @param options - Optional template-download assertion.
-   */
-  async expectFileUploadDialog(options?: { withTemplate?: boolean }): Promise<void> {
-    const dialog = this.page.getByRole('dialog').filter({ hasText: 'Registrar Información' }).last();
-    await expect(dialog).toBeVisible({ timeout: 15_000 });
-    await expect(dialog).toContainText(/archivos Excel \(\.xlsx\)/i);
-    await expect(dialog.getByRole('button', { name: 'Guardar' })).toBeVisible();
-    if (options?.withTemplate) {
-      await expect(dialog.getByRole('button', { name: 'Descargar plantilla' })).toBeVisible();
-    }
-    await dialog.getByRole('button', { name: 'Close' }).click();
-    await expect(dialog).not.toBeVisible({ timeout: 10_000 });
-    await this.expectNoVisibleModals();
-  }
-
-  /**
-   * Clicks a CTA, opens file-upload dialog, validates, and closes.
-   *
-   * @param buttonName - Toolbar button that opens Registrar Información.
-   * @param options - Optional template-download assertion.
-   */
-  async expectFileUploadDialogOpensAndCloses(
-    buttonName: string | RegExp,
-    options?: { withTemplate?: boolean },
-  ): Promise<void> {
-    await this.openRegistrarInformacionDialog(buttonName);
-    await this.expectFileUploadDialog(options);
-  }
-
-  /**
    * Opens OEF Proyectada Nuevo Registro, validates wizard fields, then closes.
    */
   async expectOefProyectadaWizardDialog(): Promise<void> {
