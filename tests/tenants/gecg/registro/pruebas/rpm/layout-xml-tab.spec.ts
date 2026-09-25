@@ -1,0 +1,42 @@
+// spec: specs/Registro/gecg-empresas-rpm-integration.plan.md
+// seed: tests/tenants/gecg/registro/pruebas/rpm/seed-rpm.spec.ts
+
+import { MODULE_IDS } from '../../../../../support/config/module-registry';
+import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
+import { test } from '../../../../../support/fixtures';
+import {
+  REGISTRO_RPM_XML_COLUMNS,
+  RegistroRpmNavigationPage,
+} from '../../../../../support/pages/registro/rpm';
+
+test.describe('RPM XML — Grilla y diálogos', () => {
+  test.beforeEach(() => {
+    skipUnlessModuleEnabled(MODULE_IDS.registroRpm);
+    skipUnlessTabEnabled(MODULE_IDS.registroRpm, 'XML');
+  });
+
+  test('XML — Grilla, barra de herramientas, filtros, Crear Registro y Cargar Archivo', async ({
+    page,
+    dashboardPage,
+  }) => {
+    test.setTimeout(300_000);
+    const registro = new RegistroRpmNavigationPage(page);
+
+    await test.step('1. Abrir RPM XML desde el menú lateral', async () => {
+      await dashboardPage.expectLoaded();
+      await registro.openRpmFromSidebar('XML');
+      await registro.expectRpmViewActive('XML');
+    });
+
+    await test.step('2. Validar columnas, barra, filtros y diálogos', async () => {
+      await registro.expectRpmXmlGridColumnHeaders(REGISTRO_RPM_XML_COLUMNS);
+      await registro.expectRpmXmlToolbar();
+      await registro.expectFiltrosModalOpensAndCloses();
+      await registro.expectModoYoFilterToggle();
+      await registro.expectEstadoFilterDialog();
+      await registro.expectUsuariosFilterDialog();
+      await registro.expectCrearRegistroDialogOpensAndCloses();
+      await registro.expectCargarArchivoDialogOpensAndCloses();
+    });
+  });
+});

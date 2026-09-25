@@ -58,10 +58,9 @@
       "COMPRA",
       "VENTA"
     ],
-    "Negocio": [
-      "COMERCIALIZADOR",
-      "GENERADOR"
-    ],
+    "Negocio": {
+      "minimum": ["COMERCIALIZADOR", "GENERADOR"]
+    },
     "Contraparte del Contrato": [
       "TRANSMISORA COLOMBIANA DE ENERGIA S.A.S. E.S.P.",
       "AMERICANA DE ENERGIA S.A.S. E.S.P.",
@@ -320,10 +319,9 @@
       "COMPRA",
       "VENTA"
     ],
-    "Negocio": [
-      "COMERCIALIZADOR",
-      "GENERADOR"
-    ],
+    "Negocio": {
+      "minimum": ["COMERCIALIZADOR", "GENERADOR"]
+    },
     "Contraparte del Contrato": [
       "TRANSMISORA COLOMBIANA DE ENERGIA S.A.S. E.S.P.",
       "AMERICANA DE ENERGIA S.A.S. E.S.P.",

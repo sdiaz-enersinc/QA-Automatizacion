@@ -1,0 +1,32 @@
+{
+  "registroRpmTabNames": ["XML"],
+  "registroRpmEnabledTabNames": ["XML"],
+  "registroRpmLockedTabNames": [],
+  "registroRpmXmlColumns": [
+    "ID",
+    "Cargado",
+    "Producto",
+    "Fecha Operación",
+    "Versión",
+    "Estado de Reporte",
+    "Estado de Carga",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroRpmCrearRegistroFields": [
+    { "label": "Producto", "kind": "combobox", "required": true },
+    { "label": "Fecha Operación", "kind": "datepicker", "required": true },
+    { "label": "Versión", "kind": "combobox", "required": true },
+    { "label": "Nombre Archivo", "kind": "textbox" }
+  ],
+  "registroRpmCrearRegistroFieldsDropdownOptions": {
+    "Producto": ["COMB", "CSTDIA", "CSTMES", "PME"],
+    "Versión": ["TXT"]
+  },
+  "registroRpmTabSlugs": {
+    "XML": "gestor-de-datos/rpm/xml"
+  },
+  "registroRpmTabBreadcrumbs": {
+    "XML": "Xml"
+  }
+}

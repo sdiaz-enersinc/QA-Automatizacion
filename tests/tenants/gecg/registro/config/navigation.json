@@ -1,0 +1,30 @@
+{
+  "registroNavigationSubmenuLabels": [
+    "Empresas",
+    "Cttos energía",
+    "Cttos combustible",
+    "Planta y consumos",
+    "RPM",
+    "Otros documentos",
+    "SIRECI",
+    "Historial"
+  ],
+  "registroNavigationEnabledSubmenuLabels": [
+    "Empresas",
+    "Cttos energía",
+    "Cttos combustible",
+    "RPM",
+    "SIRECI",
+    "Historial"
+  ],
+  "registroNavigationLockedSubmenuLabels": [
+    "Planta y consumos",
+    "Otros documentos"
+  ],
+  "registroNavigationLegacySubmoduleLabels": [],
+  "registroNavigationDashboardPreviewLabels": [
+    "Empresas",
+    "Cttos energía",
+    "Cttos combustible"
+  ]
+}
