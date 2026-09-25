@@ -8,6 +8,9 @@ export interface RegistroOtrosContratosTenantConfig {
   registroOtrosContratosTabNames: readonly string[];
   registroOtrosContratosEnabledTabNames: readonly string[];
   registroOtrosContratosLockedTabNames: readonly string[];
+  registroOtrosContratosDefaultTab: string;
+  registroOtrosContratosMiscTab: string;
+  registroOtrosContratosAgrTab: string;
   registroOtrosContratosMiscContractColumns: readonly string[];
   registroOtrosContratosAgrContractColumns: readonly string[];
   registroOtrosContratosMiscNuevoRegistroFields: readonly RegistroWizardFieldDefinition[];

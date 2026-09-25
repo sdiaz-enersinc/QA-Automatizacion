@@ -4,6 +4,8 @@ import { MODULE_IDS } from '../../config/module-registry';
 import type { RegistroOtrosDocumentosViewName } from '../../config/types/registro-otros-documentos';
 import { RegistroNavigationBasePage } from './registro-navigation-base';
 import { assertTableColumnHeadersMatchConfig } from '../../registro/table-column-headers';
+import { assertTabStripMatchesConfig } from '../../registro/tab-strip';
+import { assertSidebarLabelsMatchConfig } from '../../registro/sidebar-labels';
 
 export type { RegistroOtrosDocumentosViewName };
 
@@ -19,6 +21,9 @@ export const REGISTRO_OTROS_DOCUMENTOS_VIEW_NAMES = cfg.registroOtrosDocumentosV
 export const REGISTRO_OTROS_DOCUMENTOS_ENABLED_VIEW_NAMES = getModuleEnabledTabNames(
   MODULE_IDS.registroOtrosDocumentos,
 );
+
+/** Landing view used as sidebar anchor and seed. */
+export const REGISTRO_OTROS_DOCUMENTOS_DEFAULT_VIEW = cfg.registroOtrosDocumentosDefaultView;
 
 /** Hidrologia views under Otros documentos (tenant config). */
 export const REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS = cfg.registroOtrosDocumentosHidrologiaViews;
@@ -37,6 +42,11 @@ export const REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_DIARIA_COLUMNS =
 /** Contadores Frt / INTI grid column headers (tenant config). */
 export const REGISTRO_OTROS_DOCUMENTOS_CONTADORES_COLUMNS =
   cfg.registroOtrosDocumentosContadoresColumns;
+
+/** Nested sidebar group labels under Otros documentos (unique values from tenant config). */
+export const REGISTRO_OTROS_DOCUMENTOS_NESTED_GROUPS = [
+  ...new Set(Object.values(cfg.registroOtrosDocumentosNestedGroup)),
+];
 
 type OtrosDocumentosNestedGroup = 'Hidrologia' | 'Contadores';
 
@@ -85,12 +95,15 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts Otros documentos exposes Hidrologia and Contadores nested groups in the sidebar.
+   * Asserts Otros documentos nested groups match tenant config exactly (Hidrologia / Contadores).
    */
   async expectOtrosDocumentosSubmenuGroupsVisible(): Promise<void> {
     await this.expandOtrosDocumentosSidebar();
-    await expect(this.registroSubmenu().getByRole('menuitem', { name: 'Hidrologia' }).first()).toBeVisible();
-    await expect(this.registroSubmenu().getByRole('menuitem', { name: 'Contadores' }).first()).toBeVisible();
+    await assertSidebarLabelsMatchConfig(
+      this.registroSubmoduleNestedItems(),
+      REGISTRO_OTROS_DOCUMENTOS_NESTED_GROUPS,
+      { context: 'Otros documentos nested groups' },
+    );
   }
 
   /**
@@ -120,7 +133,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
    * @param viewName - Target tab label.
    */
   async openOtrosDocumentosTab(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
-    await this.page.getByRole('tab', { name: viewName }).click();
+    await this.page.getByRole('tab', { name: viewName, exact: true }).click();
     await this.expectOtrosDocumentosViewActive(viewName);
   }
 
@@ -136,7 +149,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
         timeout: 15_000,
       },
     );
-    const tab = this.page.getByRole('tab', { name: viewName });
+    const tab = this.page.getByRole('tab', { name: viewName, exact: true });
     await expect(tab).toBeVisible();
     await expect(tab).toHaveAttribute('aria-selected', 'true');
     await expect(this.page.getByRole('navigation')).toContainText(
@@ -146,13 +159,17 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts the cross-navigation partner tab is visible but not selected.
+   * Asserts the tab strip matches the active pair and the partner tab is visible but not selected.
    *
    * @param viewName - Active view whose pair mate must be visible.
    */
   async expectOtrosDocumentosPairTabVisible(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
+    await assertTabStripMatchesConfig(this.page, {
+      enabledTabs: this.activeOtrosDocumentosPairViews(),
+      context: 'Otros documentos',
+    });
     const mate = RegistroOtrosDocumentosNavigationPage.REGISTRO_OTROS_DOCUMENTOS_TAB_PAIR_MATE[viewName];
-    const mateTab = this.page.getByRole('tab', { name: mate });
+    const mateTab = this.page.getByRole('tab', { name: mate, exact: true });
     await expect(mateTab).toBeVisible();
     await expect(mateTab).toHaveAttribute('aria-selected', 'false');
   }
@@ -188,11 +205,10 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   async expectGestorDeDatosOtrosDocumentosShell(): Promise<void> {
     await expect(this.page).toHaveURL(/gestor-de-datos\/otros-documentos\//);
     await expect(this.page.getByRole('navigation')).toContainText('Gestor de datos');
-    for (const tabName of this.activeOtrosDocumentosPairViews()) {
-      const tab = this.page.getByRole('tab', { name: tabName });
-      await expect(tab).toBeVisible();
-      await expect(tab).toBeEnabled();
-    }
+    await assertTabStripMatchesConfig(this.page, {
+      enabledTabs: this.activeOtrosDocumentosPairViews(),
+      context: 'Otros documentos',
+    });
   }
 
   /**

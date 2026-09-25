@@ -16,6 +16,8 @@ import {
 } from './registro-navigation-base';
 import { assertRegistroWizardFieldsMatchConfig } from '../../registro/form-field-labels';
 import { assertTableColumnHeadersMatchConfig } from '../../registro/table-column-headers';
+import { assertTabStripMatchesConfig } from '../../registro/tab-strip';
+import { assertSidebarLabelsMatchConfig } from '../../registro/sidebar-labels';
 
 export type { RegistroInsumosOfertaTabName };
 
@@ -61,7 +63,20 @@ export const REGISTRO_INSUMOS_OFERTA_LOCKED_TAB_NAMES = cfg.registroInsumosOfert
 export const REGISTRO_INSUMOS_OFERTA_LOCKED_NESTED_LABELS = REGISTRO_INSUMOS_OFERTA_LOCKED_TAB_NAMES;
 
 /** Default enabled tab used as sidebar anchor and landing view. */
-export const REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB = REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES[0];
+export const REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB = cfg.registroInsumosOfertaDefaultTab;
+
+/** Layout A tab (Oferta Diaria calendar). */
+export const REGISTRO_INSUMOS_OFERTA_LAYOUT_A_TAB = cfg.registroInsumosOfertaLayoutATab;
+
+/** Layout B OEF Proyectada tab. */
+export const REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_TAB = cfg.registroInsumosOfertaOefProyectadaTab;
+
+/** Layout B Conceptos OC tab. */
+export const REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_TAB = cfg.registroInsumosOfertaConceptosOcTab;
+
+/** Layout B Gestion Conceptos tab. */
+export const REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_TAB =
+  cfg.registroInsumosOfertaGestionConceptosTab;
 
 /** Calendar weekday column headers (Mes view). */
 export const REGISTRO_INSUMOS_OFERTA_CALENDAR_WEEKDAY_HEADERS =
@@ -214,12 +229,12 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts nested Insumos oferta sidebar items: AGR first and locked, enabled links, locked menuitems, Heat Rate absent.
+   * Asserts nested Insumos oferta sidebar items match tenant config exactly, with AGR first and locked.
    */
   async expectInsumosOfertaNestedSidebarItems(): Promise<void> {
     await this.expandInsumosOfertaSidebar();
     const submenu = this.registroSubmenu();
-    const nestedItems = submenu.locator('[role=menu]').first().getByRole('menuitem');
+    const nestedItems = this.registroSubmoduleNestedItems();
     await expect(nestedItems.first()).toContainText(REGISTRO_INSUMOS_OFERTA_AGR_LABEL);
     await expect(
       submenu.getByRole('menuitem', { name: REGISTRO_INSUMOS_OFERTA_AGR_LABEL, disabled: true }),
@@ -230,7 +245,11 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
     for (const label of REGISTRO_INSUMOS_OFERTA_LOCKED_NESTED_LABELS) {
       await expect(submenu.getByRole('menuitem', { name: label, disabled: true })).toBeVisible();
     }
-    await expect(nestedItems).toHaveCount(REGISTRO_INSUMOS_OFERTA_NESTED_SIDEBAR_LABELS.length);
+    await assertSidebarLabelsMatchConfig(
+      nestedItems,
+      REGISTRO_INSUMOS_OFERTA_NESTED_SIDEBAR_LABELS,
+      { context: 'Insumos oferta nested sidebar' },
+    );
     await this.expectHeatRateAbsentFromSidebar();
   }
 
@@ -262,7 +281,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
    */
   async expectHeatRateAbsentFromTabs(): Promise<void> {
     for (const label of REGISTRO_INSUMOS_OFERTA_ABSENT_LABELS) {
-      await expect(this.page.getByRole('tab', { name: label })).toHaveCount(0);
+      await expect(this.page.getByRole('tab', { name: label, exact: true })).toHaveCount(0);
     }
   }
 
@@ -287,7 +306,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
    * Asserts Recursos Generción (AGR) is the first tab and is disabled.
    */
   async expectAgrTabLocked(): Promise<void> {
-    const agrTab = this.page.getByRole('tab', { name: REGISTRO_INSUMOS_OFERTA_AGR_LABEL });
+    const agrTab = this.page.getByRole('tab', { name: REGISTRO_INSUMOS_OFERTA_AGR_LABEL, exact: true });
     await expect(this.page.getByRole('tab').first()).toHaveText(REGISTRO_INSUMOS_OFERTA_AGR_LABEL);
     await expect(agrTab).toBeVisible();
     await expect(agrTab).toBeDisabled();
@@ -297,7 +316,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
    * Asserts a forced click on Recursos Generción (AGR) does not navigate or open a dialog.
    */
   async expectAgrTabDoesNotNavigate(): Promise<void> {
-    const agrTab = this.page.getByRole('tab', { name: REGISTRO_INSUMOS_OFERTA_AGR_LABEL });
+    const agrTab = this.page.getByRole('tab', { name: REGISTRO_INSUMOS_OFERTA_AGR_LABEL, exact: true });
     await agrTab.click({ force: true });
     await expect(this.page).toHaveURL(
       RegistroInsumosOfertaNavigationPage.REGISTRO_INSUMOS_OFERTA_TAB_SLUGS[
@@ -305,7 +324,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
       ],
     );
     await expect(
-      this.page.getByRole('tab', { name: REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB }),
+      this.page.getByRole('tab', { name: REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB, exact: true }),
     ).toHaveAttribute('aria-selected', 'true');
     await expect(this.page.getByRole('dialog')).toHaveCount(0);
   }
@@ -315,7 +334,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
    */
   async expectLockedTabsDisabled(): Promise<void> {
     for (const tabName of REGISTRO_INSUMOS_OFERTA_LOCKED_TAB_NAMES) {
-      const tab = this.page.getByRole('tab', { name: tabName });
+      const tab = this.page.getByRole('tab', { name: tabName, exact: true });
       await expect(tab).toBeVisible();
       await expect(tab).toBeDisabled();
     }
@@ -329,11 +348,11 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
     const breadcrumb = this.page.getByRole('navigation');
     await expect(breadcrumb).toContainText('Gestor de datos');
     await expect(breadcrumb).toContainText(REGISTRO_INSUMOS_OFERTA_LEGACY_BREADCRUMB);
-    for (const tabName of REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES) {
-      await expect(this.page.getByRole('tab', { name: tabName })).toBeVisible();
-      await expect(this.page.getByRole('tab', { name: tabName })).toBeEnabled();
-    }
-    await this.expectLockedTabsDisabled();
+    await assertTabStripMatchesConfig(this.page, {
+      enabledTabs: REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES,
+      lockedTabs: REGISTRO_INSUMOS_OFERTA_LOCKED_TAB_NAMES,
+      context: 'Insumos oferta',
+    });
   }
 
   /**
@@ -342,7 +361,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
    * @param tabName - Enabled tab label.
    */
   async openInsumosOfertaTab(tabName: RegistroInsumosOfertaTabName): Promise<void> {
-    await this.page.getByRole('tab', { name: tabName }).click();
+    await this.page.getByRole('tab', { name: tabName, exact: true }).click();
     await this.expectInsumosOfertaTabActive(tabName);
   }
 
@@ -356,7 +375,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
       RegistroInsumosOfertaNavigationPage.REGISTRO_INSUMOS_OFERTA_TAB_SLUGS[tabName],
       { timeout: 15_000 },
     );
-    const tab = this.page.getByRole('tab', { name: tabName });
+    const tab = this.page.getByRole('tab', { name: tabName, exact: true });
     await expect(tab).toBeVisible();
     await expect(tab).toHaveAttribute('aria-selected', 'true');
     await expect(this.page.getByRole('navigation')).toContainText(
@@ -436,7 +455,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Opens the calendar year dropdown and validates options; selects the given year.
+   * Opens the calendar year dropdown, asserts options match tenant config exactly, then selects the given year.
    *
    * @param selectYear - Year option to select after listing all years.
    */
@@ -445,18 +464,16 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
     await yearCombo.click();
     const dropdown = this.page.locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)').last();
     await expect(dropdown).toBeVisible();
-    for (const year of REGISTRO_INSUMOS_OFERTA_CALENDAR_YEAR_OPTIONS) {
-      await expect(
-        dropdown.locator('.ant-select-item-option-content').getByText(year, { exact: true }),
-      ).toBeVisible();
-    }
+    await this.expectWizardSelectOptionsMatch(dropdown, REGISTRO_INSUMOS_OFERTA_CALENDAR_YEAR_OPTIONS, {
+      fieldLabel: 'calendar year',
+    });
     await dropdown.locator('.ant-select-item-option-content').getByText(selectYear, { exact: true }).click();
     await expect(this.calendarYearSelect()).toContainText(selectYear);
     await expect(this.page.locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)')).toHaveCount(0);
   }
 
   /**
-   * Opens the calendar month dropdown and validates options; selects the given month.
+   * Opens the calendar month dropdown, asserts the full option set matches tenant config, then selects the given month.
    *
    * @param selectMonth - Month option to select after listing visible months.
    */
@@ -465,32 +482,17 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
     await monthCombo.click();
     const dropdown = this.page.locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)').last();
     await expect(dropdown).toBeVisible();
-    for (const month of REGISTRO_INSUMOS_OFERTA_CALENDAR_MONTH_OPTIONS) {
-      await expect(
-        dropdown.locator('.ant-select-item-option-content').getByText(month, { exact: true }),
-      ).toBeVisible();
-    }
+    await this.expectWizardSelectOptionsMatch(
+      dropdown,
+      [
+        ...REGISTRO_INSUMOS_OFERTA_CALENDAR_MONTH_OPTIONS,
+        ...REGISTRO_INSUMOS_OFERTA_CALENDAR_MONTH_OPTIONS_SCROLL,
+      ],
+      { fieldLabel: 'calendar month' },
+    );
     await dropdown.locator('.ant-select-item-option-content').getByText(selectMonth, { exact: true }).click();
     await expect(this.calendarMonthSelect()).toContainText(selectMonth);
     await expect(this.page.locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)')).toHaveCount(0);
-
-    await monthCombo.click();
-    await this.page.waitForTimeout(300);
-    const scrollDropdown = this.page
-      .locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)')
-      .last();
-    const scrollHolder = scrollDropdown.locator('.rc-virtual-list-holder');
-    if (await scrollHolder.count()) {
-      await scrollHolder.evaluate((el) => {
-        el.scrollTop = el.scrollHeight;
-      });
-    }
-    for (const month of REGISTRO_INSUMOS_OFERTA_CALENDAR_MONTH_OPTIONS_SCROLL) {
-      await expect(
-        scrollDropdown.locator('.ant-select-item-option-content').getByText(month, { exact: true }),
-      ).toBeVisible();
-    }
-    await this.page.keyboard.press('Escape');
   }
 
   /**

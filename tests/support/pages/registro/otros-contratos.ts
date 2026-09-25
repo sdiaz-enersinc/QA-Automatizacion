@@ -12,6 +12,9 @@ import {
   RegistroNavigationBasePage,
 } from './registro-navigation-base';
 import { assertTableColumnHeadersMatchConfig } from '../../registro/table-column-headers';
+import { assertTabStripMatchesConfig } from '../../registro/tab-strip';
+import { assertSidebarLabelsMatchConfig } from '../../registro/sidebar-labels';
+import { REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS } from './navigation';
 
 const cfg = getRegistroOtrosContratosConfig();
 
@@ -27,6 +30,15 @@ export const REGISTRO_OTROS_CONTRATOS_ENABLED_TAB_NAMES = getModuleEnabledTabNam
 );
 
 export const REGISTRO_OTROS_CONTRATOS_LOCKED_TAB_NAMES = cfg.registroOtrosContratosLockedTabNames;
+
+/** Landing tab used as sidebar anchor and seed. */
+export const REGISTRO_OTROS_CONTRATOS_DEFAULT_TAB = cfg.registroOtrosContratosDefaultTab;
+
+/** Miscelaneos tab label (tenant config). */
+export const REGISTRO_OTROS_CONTRATOS_MISC_TAB = cfg.registroOtrosContratosMiscTab;
+
+/** AGR tab label (tenant config). */
+export const REGISTRO_OTROS_CONTRATOS_AGR_TAB = cfg.registroOtrosContratosAgrTab;
 
 /** Miscelaneos grid columns (standard set plus Producto Facturable). */
 export const REGISTRO_OTROS_CONTRATOS_MISC_CONTRACT_COLUMNS =
@@ -60,7 +72,10 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
    * Re-expands Registro and Otros contratos when navigation collapsed the sidebar flyouts.
    */
   async ensureOtrosContratosSidebarExpanded(): Promise<void> {
-    await this.ensureRegistroSubmoduleNestedLinksVisible('Otros contratos', 'Miscelaneos');
+    await this.ensureRegistroSubmoduleNestedLinksVisible(
+      'Otros contratos',
+      REGISTRO_OTROS_CONTRATOS_DEFAULT_TAB,
+    );
   }
 
   /**
@@ -83,9 +98,11 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
 
   /**
    * Opens an Otros contratos tab via sidebar nested links under Otros contratos.
+   *
+   * @param entryLink - Sidebar nested link to open; defaults to the tenant landing tab.
    */
   async openOtrosContratosFromSidebar(
-    entryLink: RegistroOtrosContratosTabName = 'Miscelaneos',
+    entryLink: RegistroOtrosContratosTabName = REGISTRO_OTROS_CONTRATOS_DEFAULT_TAB,
   ): Promise<void> {
     await this.expandOtrosContratosSidebar();
     await this.clickOtrosContratosSidebarLink(entryLink);
@@ -109,7 +126,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   async openOtrosContratosFromDashboardHover(): Promise<void> {
     const card = this.registroDashboardCard();
     await expect(card).toBeVisible();
-    for (const label of ['Empresas', 'Cttos energía', 'Cttos combustible'] as const) {
+    for (const label of REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS) {
       await expect(card.getByText(label)).toBeVisible();
       await expect(
         card.getByRole('listitem').filter({ hasText: label }).getByLabel('eye'),
@@ -118,23 +135,32 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
     await this.expectOtrosContratosVisibleOnDashboardHover();
     await this.openOtrosContratosFromDashboardGrid();
     await this.expectGestorDeDatosOtrosContratosShell();
-    await this.expectOtrosContratosTabActive('Miscelaneos');
+    await this.expectOtrosContratosTabActive(REGISTRO_OTROS_CONTRATOS_DEFAULT_TAB);
   }
 
   /**
-   * Asserts nested Otros contratos sidebar items: Miscelaneos href, AGR enabled, locked tabs, Contratos MISC absent.
+   * Asserts nested Otros contratos sidebar items match tenant config exactly, plus href and legacy absences.
    */
   async expectOtrosContratosNestedSidebarItems(): Promise<void> {
     await this.expandOtrosContratosSidebar();
     const submenu = this.registroSubmenu();
-    await expect(submenu.getByRole('link', { name: 'Miscelaneos' })).toHaveAttribute(
+    await assertSidebarLabelsMatchConfig(
+      this.registroSubmoduleNestedItems(),
+      REGISTRO_OTROS_CONTRATOS_TAB_NAMES,
+      { context: 'Otros contratos nested sidebar' },
+    );
+    await expect(submenu.getByRole('link', { name: REGISTRO_OTROS_CONTRATOS_MISC_TAB, exact: true })).toHaveAttribute(
       'href',
       '/gestor-de-datos/otros-contratos/miscelaneos',
     );
-    await expect(submenu.getByRole('menuitem', { name: 'AGR' })).toBeVisible();
-    await expect(submenu.getByRole('menuitem', { name: 'AGR', disabled: true })).toHaveCount(0);
+    await expect(submenu.getByRole('menuitem', { name: REGISTRO_OTROS_CONTRATOS_AGR_TAB, exact: true })).toBeVisible();
+    await expect(
+      submenu.getByRole('menuitem', { name: REGISTRO_OTROS_CONTRATOS_AGR_TAB, exact: true, disabled: true }),
+    ).toHaveCount(0);
     for (const tabName of REGISTRO_OTROS_CONTRATOS_LOCKED_TAB_NAMES) {
-      await expect(submenu.getByRole('menuitem', { name: tabName, disabled: true })).toBeVisible();
+      await expect(
+        submenu.getByRole('menuitem', { name: tabName, disabled: true }).first(),
+      ).toBeVisible();
     }
     await expect(submenu.getByRole('link', { name: 'Contratos MISC', exact: true })).toHaveCount(0);
     await expect(submenu.getByRole('menuitem', { name: 'Contratos MISC', exact: true })).toHaveCount(0);
@@ -168,22 +194,18 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
     await expect(this.page).toHaveURL(/gestor-de-datos\/(otros-contratos|contratos-energia)\//);
     const breadcrumb = this.page.getByRole('navigation');
     await expect(breadcrumb).toContainText('Gestor de datos');
-    for (const tabName of REGISTRO_OTROS_CONTRATOS_ENABLED_TAB_NAMES) {
-      await expect(this.page.getByRole('tab', { name: tabName })).toBeVisible();
-      await expect(this.page.getByRole('tab', { name: tabName })).toBeEnabled();
-    }
-    for (const tabName of REGISTRO_OTROS_CONTRATOS_LOCKED_TAB_NAMES) {
-      const tab = this.page.getByRole('tab', { name: tabName });
-      await expect(tab).toBeVisible();
-      await expect(tab).toBeDisabled();
-    }
+    await assertTabStripMatchesConfig(this.page, {
+      enabledTabs: REGISTRO_OTROS_CONTRATOS_ENABLED_TAB_NAMES,
+      lockedTabs: REGISTRO_OTROS_CONTRATOS_LOCKED_TAB_NAMES,
+      context: 'Otros contratos',
+    });
   }
 
   /**
    * Opens an Otros contratos tab and asserts selection, breadcrumb, and URL slug.
    */
   async openOtrosContratosTab(tabName: RegistroOtrosContratosTabName): Promise<void> {
-    await this.page.getByRole('tab', { name: tabName }).click();
+    await this.page.getByRole('tab', { name: tabName, exact: true }).click();
     await this.expectOtrosContratosTabActive(tabName);
   }
 
@@ -195,7 +217,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
       RegistroOtrosContratosNavigationPage.REGISTRO_OTROS_CONTRATOS_TAB_SLUGS[tabName],
       { timeout: 15_000 },
     );
-    const tab = this.page.getByRole('tab', { name: tabName });
+    const tab = this.page.getByRole('tab', { name: tabName, exact: true });
     await expect(tab).toBeVisible();
     await expect(tab).toHaveAttribute('aria-selected', 'true');
     await expect(this.page.getByRole('navigation')).toContainText(
@@ -254,10 +276,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
     );
 
     await this.expectRegistroWizardDialogOpensAndCloses({
-      fieldAssertOptions: {
-        ...REGISTRO_WIZARD_FIELD_ASSERT_ENERGIA,
-        allowExtraDropdownOptions: true,
-      },
+      fieldAssertOptions: REGISTRO_WIZARD_FIELD_ASSERT_ENERGIA,
       ctaName: 'Nuevo Registro',
       stepTitle: 'Registrar Información',
       fields,

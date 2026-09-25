@@ -3,6 +3,10 @@ export interface RegistroHistorialTenantConfig {
   registroHistorialTabNames: readonly string[];
   registroHistorialEnabledTabNames: readonly string[];
   registroHistorialLockedTabNames: readonly string[];
+  registroHistorialDefaultTab: string;
+  registroHistorialOperacionesMultiplesTab: string;
+  registroHistorialOperacionesIndividualesTab: string;
+  registroHistorialArchivosCargadosTab: string;
   registroHistorialOperacionesMultiplesColumns: readonly string[];
   registroHistorialOperacionesIndividualesColumns: readonly string[];
   registroHistorialArchivosCargadosColumns: readonly string[];

@@ -1,11 +1,13 @@
 import { Locator, Page, expect } from '@playwright/test';
 import { getRegistroNavigationConfig } from '../../config/load-tenant-config';
 import { collectAntSelectDropdownOptionsInBrowser } from '../../ant-select-collect-options';
-import type {
-  RegistroWizardFieldDefinition,
-  RegistroWizardDropdownOptionsMap,
+import {
+  isRegistroWizardDropdownMinimum,
+  type RegistroWizardFieldDefinition,
+  type RegistroWizardDropdownOptionsMap,
 } from '../../config/types/registro-wizard';
 import { assertRegistroWizardFieldsMatchConfig } from '../../registro/form-field-labels';
+import { assertSidebarLabelsMatchConfig } from '../../registro/sidebar-labels';
 
 export type {
   RegistroWizardFieldKind,
@@ -35,8 +37,6 @@ export interface RegistroWizardFieldAssertOptions {
   assertFooterAfterCombobox?: boolean;
   /** Force-click disabled combobox and assert dropdown stays closed (energía). */
   assertDisabledComboboxNoDropdown?: boolean;
-  /** When true, only assert config options exist in UI (subset mode). Default: exact set match. */
-  allowExtraDropdownOptions?: boolean;
   /** When true, only assert config fields exist in UI (subset). Default: exact field set match. */
   allowExtraFields?: boolean;
   /** When true, open the wizard with the retrying Registrar Información click helper. */
@@ -54,6 +54,7 @@ export const REGISTRO_WIZARD_FIELD_ASSERT_ENERGIA: RegistroWizardFieldAssertOpti
   dismissDropdownStrategy: 'escape',
   assertFooterAfterCombobox: true,
   assertDisabledComboboxNoDropdown: true,
+  retryOpen: true,
 };
 
 /** Options for opening a wizard, validating step-1 fields and dropdowns, then closing. */
@@ -182,13 +183,21 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts every expected Registro submenu entry is visible with exact labels.
+   * Nested flyout menuitems under an expanded Registro submodule row.
+   */
+  protected registroSubmoduleNestedItems(): Locator {
+    return this.registroSubmenu().locator('[role=menu]').first().getByRole('menuitem');
+  }
+
+  /**
+   * Asserts the Registro sidebar submenu labels match tenant config exactly (no extras).
    */
   async expectRegistroSubmenuLabelsVisible(): Promise<void> {
-    const submenu = this.registroSubmenu();
-    for (const label of REGISTRO_NAVIGATION_SUBMENU_LABELS) {
-      await expect(submenu.getByRole('menuitem', { name: label }).first()).toBeVisible();
-    }
+    await assertSidebarLabelsMatchConfig(
+      this.registroSubmenu().getByRole('menuitem'),
+      REGISTRO_NAVIGATION_SUBMENU_LABELS,
+      { context: 'Registro submenu' },
+    );
   }
 
   /**
@@ -526,14 +535,26 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Scrolls a virtual Ant Design select once and returns all option labels.
+   * Collects unique option labels from an Ant Design select, scrolling the virtual list when present.
+   *
+   * @param dropdown - Visible Ant Design select dropdown locator.
    */
-  protected async collectWizardSelectOptions(dropdown: Locator): Promise<string[]> {
+  async collectWizardSelectOptions(dropdown: Locator): Promise<string[]> {
     const scrollHolder = dropdown.locator('.rc-virtual-list-holder');
 
     if (!(await scrollHolder.count())) {
       const texts = await dropdown.locator('.ant-select-item-option-content').allTextContents();
-      return texts.map((text) => text.trim()).filter(Boolean);
+      const seen = new Set<string>();
+      const unique: string[] = [];
+      for (const text of texts) {
+        const normalized = text.trim();
+        if (!normalized || seen.has(normalized)) {
+          continue;
+        }
+        seen.add(normalized);
+        unique.push(normalized);
+      }
+      return unique;
     }
 
     return dropdown.evaluate(collectAntSelectDropdownOptionsInBrowser);
@@ -541,6 +562,11 @@ export class RegistroNavigationBasePage {
 
   /**
    * Asserts dropdown options match the expected list after one virtual-list pass.
+   * Extra UI options not listed in tenant JSON fail unless `allowExtra` is set.
+   *
+   * @param dropdown - Visible Ant Design select dropdown locator.
+   * @param expectedOptions - Option labels registered in tenant JSON.
+   * @param options - Optional field label and subset mode.
    */
   protected async expectWizardSelectOptionsMatch(
     dropdown: Locator,
@@ -663,13 +689,19 @@ export class RegistroNavigationBasePage {
       const expectedOptions = dropdownOptions[field.label];
       if (expectedOptions === 'conditional') {
         await this.expectWizardSelectHasOptionsOrEmptyState(dropdown);
-      } else if (Array.isArray(expectedOptions) && expectedOptions.length > 0) {
+      } else if (isRegistroWizardDropdownMinimum(expectedOptions)) {
+        await this.expectWizardSelectOptionsMatch(dropdown, expectedOptions.minimum, {
+          fieldLabel: field.label,
+          allowExtra: true,
+        });
+      } else if (Array.isArray(expectedOptions)) {
         await this.expectWizardSelectOptionsMatch(dropdown, expectedOptions, {
           fieldLabel: field.label,
-          allowExtra: fieldAssertOptions.allowExtraDropdownOptions,
         });
-      } else if (expectedOptions === undefined) {
-        await expect(dropdown.locator('.ant-select-item-option').first()).toBeVisible();
+      } else {
+        throw new Error(
+          `Missing dropdown options in tenant config for combobox "${field.label}"`,
+        );
       }
       await this.dismissOpenWizardSelectDropdown(
         dialog,
@@ -781,5 +813,55 @@ export class RegistroNavigationBasePage {
     await dialog.getByRole('button', { name: 'Close' }).click();
     await expect(dialog).not.toBeVisible({ timeout: 10_000 });
     await this.expectNoVisibleModals();
+  }
+
+  /**
+   * Opens a wizard CTA, collects combobox option labels for JSON array fields, then closes.
+   * Skips disabled fields, `"conditional"` maps, and `{ minimum }` maps. Used by the dropdown refresh script.
+   *
+   * @param options - CTA name, wizard fields, current dropdown map, and field-assert profile.
+   */
+  async harvestWizardDropdownOptions(options: {
+    ctaName: string | RegExp;
+    fields: readonly RegistroWizardFieldDefinition[];
+    dropdownOptions: RegistroWizardDropdownOptionsMap;
+    fieldAssertOptions?: RegistroWizardFieldAssertOptions;
+  }): Promise<Record<string, string[]>> {
+    const fieldAssertOptions = options.fieldAssertOptions ?? {};
+    await this.expectNoVisibleModals();
+    const dialog = await this.openRegistrarInformacionDialog(options.ctaName);
+    await expect(dialog).toBeVisible({ timeout: 15_000 });
+
+    const harvested: Record<string, string[]> = {};
+    for (const field of options.fields) {
+      if (field.kind !== 'combobox' || field.disabled) {
+        continue;
+      }
+      const expected = options.dropdownOptions[field.label];
+      if (!Array.isArray(expected)) {
+        continue;
+      }
+
+      const control = this.wizardFieldControl(dialog, field, fieldAssertOptions);
+      if (field.requiresScroll) {
+        await control.scrollIntoViewIfNeeded();
+      }
+      await control.click();
+      await expect(control).toHaveAttribute('aria-expanded', 'true');
+      const dropdown = this.page
+        .locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)')
+        .last();
+      await expect(dropdown).toBeVisible();
+      harvested[field.label] = await this.collectWizardSelectOptions(dropdown);
+      await this.dismissOpenWizardSelectDropdown(
+        dialog,
+        fieldAssertOptions.dismissDropdownStrategy ?? 'escape',
+      );
+    }
+
+    await dialog.getByRole('button', { name: 'Close' }).click();
+    await expect(dialog).not.toBeVisible({ timeout: 10_000 });
+    await this.expectNoVisibleModals();
+    return harvested;
   }
 }

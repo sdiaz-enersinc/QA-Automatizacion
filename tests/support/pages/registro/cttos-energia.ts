@@ -16,11 +16,16 @@ import {
   type RegistroWizardFieldKind,
 } from './registro-navigation-base';
 import { assertTableColumnHeadersMatchConfig } from '../../registro/table-column-headers';
+import { assertTabStripMatchesConfig } from '../../registro/tab-strip';
+import { assertSidebarLabelsMatchConfig } from '../../registro/sidebar-labels';
 
 export type EnergiaWizardFieldKind = RegistroWizardFieldKind;
 export type EnergiaWizardFieldDefinition = RegistroWizardFieldDefinition;
 export type EnergiaWizardDropdownOptionsMap = RegistroWizardDropdownOptionsMap;
 export type { RegistroCttosEnergiaTabName };
+
+/** Visible submenu and dashboard-card label for Cttos energía. */
+export const REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL = 'Cttos energía';
 
 const cfg = getRegistroCttosEnergiaConfig();
 
@@ -37,9 +42,34 @@ export const REGISTRO_CTTS_ENERGIA_ENABLED_TAB_NAMES = getModuleEnabledTabNames(
 
 export const REGISTRO_CTTS_ENERGIA_LOCKED_TAB_NAMES = cfg.registroCttosEnergiaLockedTabNames;
 
+/** Landing tab used as sidebar anchor and seed. */
+export const REGISTRO_CTTS_ENERGIA_DEFAULT_TAB = cfg.registroCttosEnergiaDefaultTab;
+
+/** Layout A tab (LP grid with Select all). */
+export const REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB = cfg.registroCttosEnergiaLayoutATab;
+
+/** Layout C tab (DEC dual-CTA toolbar). */
+export const REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB = cfg.registroCttosEnergiaLayoutCTab;
+
+/** Layout D tab (Respaldos file register); empty when the tenant has no Respaldos view. */
+export const REGISTRO_CTTS_ENERGIA_LAYOUT_D_TAB = cfg.registroCttosEnergiaLayoutDTab;
+
+/** Layout B MISC tab; empty when the tenant has no Contratos MISC view. */
+export const REGISTRO_CTTS_ENERGIA_LAYOUT_MISC_TAB = cfg.registroCttosEnergiaLayoutMiscTab;
+
+/** One tab per layout family for Path B spot-checks. */
+export const REGISTRO_CTTS_ENERGIA_LAYOUT_SPOT_CHECK_TABS =
+  cfg.registroCttosEnergiaLayoutSpotCheckTabs.filter((tabName) => tabName.length > 0);
+
 /** Columnas de la grilla de contratos estándar (Layout A/B), incluido Estado. */
 export const REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS =
   cfg.registroCttosEnergiaStandardContractColumns;
+
+/** Standard-grid columns whose headers look like the old toolbar chips (Estado / Usuario). */
+export const REGISTRO_CTTS_ENERGIA_TOOLBAR_CHIP_LOOKALIKE_COLUMNS =
+  REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS.filter(
+    (name) => name === 'Estado' || name === 'Usuario',
+  );
 
 /** Columnas de la grilla de Contratos MISC (conjunto estándar más Producto Facturable). */
 export const REGISTRO_CTTS_ENERGIA_MISC_CONTRACT_COLUMNS =
@@ -142,32 +172,66 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
    * Expande Registro y el desplegable del submódulo Cttos energía en el menú lateral.
    */
   async expandCttosEnergiaSidebar(): Promise<void> {
-    await this.expandRegistroSubmodule('Cttos energía');
+    await this.expandRegistroSubmodule(REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL);
   }
 
   /**
-   * Comprueba que cada enlace habilitado de Contratos energía es visible en el submenú expandido.
+   * Comprueba que los ítems anidados de Contratos energía coinciden exactamente con enabled + locked.
    */
   async expectCttosEnergiaSidebarLinksVisible(): Promise<void> {
+    await this.expandCttosEnergiaSidebar();
+    await assertSidebarLabelsMatchConfig(
+      this.registroSubmoduleNestedItems(),
+      [...REGISTRO_CTTS_ENERGIA_ENABLED_TAB_NAMES, ...REGISTRO_CTTS_ENERGIA_LOCKED_TAB_NAMES],
+      { context: 'Contratos energía nested sidebar' },
+    );
     for (const tabName of REGISTRO_CTTS_ENERGIA_ENABLED_TAB_NAMES) {
-      await expect(this.registroSubmenu().getByRole('link', { name: tabName })).toBeVisible();
+      await expect(this.registroSubmenu().getByRole('link', { name: tabName, exact: true })).toBeVisible();
     }
     for (const tabName of REGISTRO_CTTS_ENERGIA_LOCKED_TAB_NAMES) {
       await expect(
-        this.registroSubmenu().getByRole('menuitem', { name: tabName, disabled: true }),
+        this.registroSubmenu().getByRole('menuitem', { name: tabName, exact: true, disabled: true }),
       ).toBeVisible();
     }
   }
 
   /**
-   * Hace clic en el enlace de una pestaña de Contratos energía dentro del submenú expandido de Cttos energía.
+   * Hace clic en el enlace anidado de una pestaña de Contratos energía.
+   *
+   * Si esa pestaña no tiene enlace en el menú (mismo patrón que Inventarios en combustible),
+   * abre la pestaña de aterrizaje y cambia desde la tira de pestañas.
+   *
+   * @param tabName - Etiqueta de pestaña del JSON del tenant.
    */
   async clickCttosEnergiaSidebarLink(tabName: RegistroCttosEnergiaTabName): Promise<void> {
     await this.ensureCttosEnergiaSidebarExpanded();
-    await this.clickRegistroSubmenuLink(tabName);
-    await expect(this.page).toHaveURL(
-      RegistroCttosEnergiaNavigationPage.REGISTRO_CTTS_ENERGIA_TAB_SLUGS[tabName],
-      { timeout: 15_000 },
+    const submenu = this.registroSubmenu();
+    const nestedLink = submenu.getByRole('link', { name: tabName });
+    const targetSlug = RegistroCttosEnergiaNavigationPage.REGISTRO_CTTS_ENERGIA_TAB_SLUGS[tabName];
+
+    if (await nestedLink.isVisible()) {
+      await this.clickRegistroSubmenuLink(tabName);
+      await expect(this.page).toHaveURL(targetSlug, { timeout: 15_000 });
+      return;
+    }
+
+    const landingLink = submenu.getByRole('link', { name: REGISTRO_CTTS_ENERGIA_DEFAULT_TAB });
+    if (await landingLink.isVisible()) {
+      await this.clickRegistroSubmenuLink(REGISTRO_CTTS_ENERGIA_DEFAULT_TAB);
+      await expect(this.page).toHaveURL(
+        RegistroCttosEnergiaNavigationPage.REGISTRO_CTTS_ENERGIA_TAB_SLUGS[
+          REGISTRO_CTTS_ENERGIA_DEFAULT_TAB
+        ],
+        { timeout: 15_000 },
+      );
+      if (tabName !== REGISTRO_CTTS_ENERGIA_DEFAULT_TAB) {
+        await this.openContratosEnergiaTab(tabName);
+      }
+      return;
+    }
+
+    throw new Error(
+      `No hay enlace anidado de Cttos energía para «${tabName}» ni para la pestaña de aterrizaje «${REGISTRO_CTTS_ENERGIA_DEFAULT_TAB}»`,
     );
   }
 
@@ -175,14 +239,26 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
    * Vuelve a expandir Registro y Cttos energía cuando la navegación plegó los menús laterales.
    */
   async ensureCttosEnergiaSidebarExpanded(): Promise<void> {
-    await this.ensureRegistroSubmoduleNestedLinksVisible('Cttos energía', 'Largo plazo');
+    await this.expandCttosEnergiaSidebar();
+    const landingLink = this.registroSubmenu()
+      .getByRole('link', { name: REGISTRO_CTTS_ENERGIA_DEFAULT_TAB })
+      .first();
+    if (await landingLink.isVisible()) {
+      return;
+    }
+    await this.ensureRegistroSubmoduleNestedLinksVisible(
+      REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL,
+      REGISTRO_CTTS_ENERGIA_DEFAULT_TAB,
+    );
   }
 
   /**
    * Abre una pestaña de Contratos energía por los enlaces anidados del menú lateral bajo Cttos energía.
+   *
+   * @param entryLink - Sidebar nested link to open; defaults to the tenant landing tab.
    */
   async openCttosEnergiaFromSidebar(
-    entryLink: RegistroCttosEnergiaTabName = 'Largo plazo',
+    entryLink: RegistroCttosEnergiaTabName = REGISTRO_CTTS_ENERGIA_DEFAULT_TAB,
   ): Promise<void> {
     await this.expandCttosEnergiaSidebar();
     await this.clickCttosEnergiaSidebarLink(entryLink);
@@ -192,11 +268,15 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
    * Abre Cttos energía desde la grilla del tablero (icono ojo bajo la tarjeta Registro).
    */
   async openCttosEnergiaFromDashboardGrid(): Promise<void> {
-    await this.registroDashboardCard()
-      .getByRole('listitem')
-      .filter({ hasText: 'Cttos energía' })
-      .getByLabel('eye')
-      .click();
+    await expect(async () => {
+      await this.hoverRegistroDashboardCard();
+      const eye = this.registroDashboardCard()
+        .getByRole('listitem')
+        .filter({ hasText: REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL })
+        .getByLabel('eye');
+      await expect(eye).toBeVisible();
+      await eye.click();
+    }).toPass({ timeout: 15_000 });
   }
 
   /**
@@ -207,22 +287,18 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
     const breadcrumb = this.page.getByRole('navigation');
     await expect(breadcrumb).toContainText('Gestor de datos');
     await expect(breadcrumb).toContainText('Contratos energia');
-    for (const tabName of REGISTRO_CTTS_ENERGIA_ENABLED_TAB_NAMES) {
-      await expect(this.page.getByRole('tab', { name: tabName })).toBeVisible();
-      await expect(this.page.getByRole('tab', { name: tabName })).toBeEnabled();
-    }
-    for (const tabName of REGISTRO_CTTS_ENERGIA_LOCKED_TAB_NAMES) {
-      const tab = this.page.getByRole('tab', { name: tabName });
-      await expect(tab).toBeVisible();
-      await expect(tab).toBeDisabled();
-    }
+    await assertTabStripMatchesConfig(this.page, {
+      enabledTabs: REGISTRO_CTTS_ENERGIA_ENABLED_TAB_NAMES,
+      lockedTabs: REGISTRO_CTTS_ENERGIA_LOCKED_TAB_NAMES,
+      context: 'Contratos energía',
+    });
   }
 
   /**
    * Abre una pestaña de Contratos energía y comprueba selección, breadcrumb y slug de URL.
    */
   async openContratosEnergiaTab(tabName: RegistroCttosEnergiaTabName): Promise<void> {
-    await this.page.getByRole('tab', { name: tabName }).click();
+    await this.page.getByRole('tab', { name: tabName, exact: true }).click();
     await this.expectContratosEnergiaTabActive(tabName);
   }
 
@@ -234,7 +310,7 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
       RegistroCttosEnergiaNavigationPage.REGISTRO_CTTS_ENERGIA_TAB_SLUGS[tabName],
       { timeout: 15_000 },
     );
-    const tab = this.page.getByRole('tab', { name: tabName });
+    const tab = this.page.getByRole('tab', { name: tabName, exact: true });
     await expect(tab).toBeVisible();
     await expect(tab).toHaveAttribute('aria-selected', 'true');
     await expect(this.page.getByRole('navigation')).toContainText(
@@ -251,6 +327,17 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
     await this.expectFiltrosControlVisible();
     await this.expectToolbarFilterChipsAbsent();
     await expect(this.page.getByRole('button', { name: 'Nuevo Contrato' })).toBeVisible();
+  }
+
+  /**
+   * Comprueba la barra de DDV/RMS en gecg: Layout B más adjudicaciones y Cargar archivos.
+   */
+  async expectLayoutBAdjudicacionesToolbar(): Promise<void> {
+    await this.expectLayoutBStandardToolbar();
+    const main = this.gestorMain();
+    await expect(main.getByRole('button', { name: 'Descargar Adjudicaciones', exact: true })).toBeVisible();
+    await expect(main.getByRole('button', { name: 'Cargar Adjudicaciones', exact: true })).toBeVisible();
+    await expect(main.getByRole('button', { name: 'Cargar archivos', exact: true })).toBeVisible();
   }
 
   /**
@@ -302,10 +389,10 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   }
 
   /**
-   * Returns the DEC tab label from tenant config (`DEC` or `Contratos DEC`).
+   * Returns the DEC tab label from tenant config.
    */
   private decTabName(): RegistroCttosEnergiaTabName {
-    return REGISTRO_CTTS_ENERGIA_TAB_NAMES.find((name) => /DEC/i.test(name)) ?? 'DEC';
+    return REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB;
   }
 
   /**
@@ -319,7 +406,7 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
 
     await expect(async () => {
       if (!(await uploadButton.isVisible())) {
-        await this.page.getByRole('tab', { name: decTab }).click();
+        await this.page.getByRole('tab', { name: decTab, exact: true }).click();
         await this.expectContratosEnergiaTabActive(decTab);
       }
       await expect(uploadButton).toBeVisible();
@@ -346,11 +433,12 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   async waitForRespaldosTabToolbarReady(): Promise<void> {
     const main = this.gestorMain();
     const uploadButton = main.getByRole('button', { name: 'Cargar Archivo' });
+    const respaldosTab = REGISTRO_CTTS_ENERGIA_LAYOUT_D_TAB;
 
     await expect(async () => {
       if (!(await uploadButton.isVisible())) {
-        await this.page.getByRole('tab', { name: 'Contratos Respaldos' }).click();
-        await this.expectContratosEnergiaTabActive('Contratos Respaldos');
+        await this.page.getByRole('tab', { name: respaldosTab, exact: true }).click();
+        await this.expectContratosEnergiaTabActive(respaldosTab);
       }
       await expect(uploadButton).toBeVisible();
       await expect(main.getByText('Modo Enfoque', { exact: true })).toBeVisible();
@@ -399,44 +487,71 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   }
 
   /**
-   * Abre Nuevo Contrato DDV, valida los campos y desplegables del paso 1, y cierra el asistente.
+   * Abre Nuevo Contrato DDV, valida campos y desplegables, y cierra.
+   *
+   * Si el tenant declara pasos de asistente, valida el pie estándar (Cancelar / Siguiente).
+   * Si no hay pasos, el formulario es plano como MISC (solo Limpiar / Guardar).
    */
   async expectDdvNuevoContratoDialogOpensAndCloses(): Promise<void> {
+    const wizardSteps = REGISTRO_CTTS_ENERGIA_DDV_NUEVO_CONTRATO_WIZARD_STEPS;
+    const hasWizardSteps = wizardSteps.length > 0;
     await this.expectRegistroWizardDialogOpensAndCloses({
       fieldAssertOptions: REGISTRO_WIZARD_FIELD_ASSERT_ENERGIA,
       ctaName: 'Nuevo Contrato',
-      stepTitle: /Nuevo contrato DDV/i,
-      wizardSteps: REGISTRO_CTTS_ENERGIA_DDV_NUEVO_CONTRATO_WIZARD_STEPS,
+      stepTitle: hasWizardSteps ? /Nuevo contrato DDV/i : 'Registrar Información',
+      wizardSteps: hasWizardSteps ? wizardSteps : undefined,
       fields: REGISTRO_CTTS_ENERGIA_DDV_NUEVO_CONTRATO_FIELDS,
       dropdownOptions: REGISTRO_CTTS_ENERGIA_DDV_NUEVO_CONTRATO_FIELDS_DROPDOWN_OPTIONS,
+      footerVariant: hasWizardSteps ? 'standard' : 'misc',
+      absentWizardSteps: hasWizardSteps
+        ? undefined
+        : ['Nuevo contrato DDV', 'Código SIC', 'Datos macro', 'Carga archivos'],
     });
   }
 
   /**
-   * Abre Nuevo Contrato RMS, valida los campos y desplegables del paso 1, y cierra el asistente.
+   * Abre Nuevo Contrato RMS, valida campos y desplegables, y cierra.
+   *
+   * Si el tenant declara pasos de asistente, valida el pie estándar (Cancelar / Siguiente).
+   * Si no hay pasos, el formulario es plano como MISC (solo Limpiar / Guardar).
    */
   async expectRmsNuevoContratoDialogOpensAndCloses(): Promise<void> {
+    const wizardSteps = REGISTRO_CTTS_ENERGIA_RMS_NUEVO_CONTRATO_WIZARD_STEPS;
+    const hasWizardSteps = wizardSteps.length > 0;
     await this.expectRegistroWizardDialogOpensAndCloses({
       fieldAssertOptions: REGISTRO_WIZARD_FIELD_ASSERT_ENERGIA,
       ctaName: 'Nuevo Contrato',
-      stepTitle: /Nuevo contrato RMS/i,
-      wizardSteps: REGISTRO_CTTS_ENERGIA_RMS_NUEVO_CONTRATO_WIZARD_STEPS,
+      stepTitle: hasWizardSteps ? /Nuevo contrato RMS/i : 'Registrar Información',
+      wizardSteps: hasWizardSteps ? wizardSteps : undefined,
       fields: REGISTRO_CTTS_ENERGIA_RMS_NUEVO_CONTRATO_FIELDS,
       dropdownOptions: REGISTRO_CTTS_ENERGIA_RMS_NUEVO_CONTRATO_FIELDS_DROPDOWN_OPTIONS,
+      footerVariant: hasWizardSteps ? 'standard' : 'misc',
+      absentWizardSteps: hasWizardSteps
+        ? undefined
+        : ['Nuevo contrato RMS', 'Código SIC', 'Datos macro', 'Carga archivos'],
     });
   }
 
   /**
-   * Abre Nuevon contrato DEC, valida los campos y desplegables del paso 1, y cierra el asistente.
+   * Abre Nuevo contrato DEC, valida campos y desplegables, y cierra.
+   *
+   * Si el tenant declara pasos de asistente, valida el pie estándar (Cancelar / Siguiente).
+   * Si no hay pasos, el formulario es plano como MISC (solo Limpiar / Guardar).
    */
   async expectDecNuevonContratoDialogOpensAndCloses(): Promise<void> {
+    const wizardSteps = REGISTRO_CTTS_ENERGIA_DEC_NUEVO_CONTRATO_WIZARD_STEPS;
+    const hasWizardSteps = wizardSteps.length > 0;
     await this.expectRegistroWizardDialogOpensAndCloses({
       fieldAssertOptions: REGISTRO_WIZARD_FIELD_ASSERT_ENERGIA,
       ctaName: /Nuevo[n]? contrato/i,
-      stepTitle: /Nuevo contrato DEC/i,
-      wizardSteps: REGISTRO_CTTS_ENERGIA_DEC_NUEVO_CONTRATO_WIZARD_STEPS,
+      stepTitle: hasWizardSteps ? /Nuevo contrato DEC/i : 'Registrar Información',
+      wizardSteps: hasWizardSteps ? wizardSteps : undefined,
       fields: REGISTRO_CTTS_ENERGIA_DEC_NUEVO_CONTRATO_FIELDS,
       dropdownOptions: REGISTRO_CTTS_ENERGIA_DEC_NUEVO_CONTRATO_FIELDS_DROPDOWN_OPTIONS,
+      footerVariant: hasWizardSteps ? 'standard' : 'misc',
+      absentWizardSteps: hasWizardSteps
+        ? undefined
+        : ['Nuevo contrato DEC', 'Código SIC', 'Datos macro', 'Carga archivos'],
     });
   }
 
@@ -457,18 +572,31 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
 
   /**
    * Despacha la aserción correcta del diálogo Nuevo Contrato para una pestaña estándar Layout B.
+   *
+   * Empareja por la familia de contrato que aparece en la etiqueta, no por igualdad exacta, porque
+   * cada tenant nombra la misma pestaña de forma distinta (`DDV` en emug, `Contratos DDV` en gecg).
+   *
+   * @param tabName - Etiqueta de pestaña estándar Layout B del JSON del tenant.
    */
   async expectStandardTabNuevoContratoDialogOpensAndCloses(
     tabName: (typeof REGISTRO_CTTS_ENERGIA_LAYOUT_B_STANDARD_TABS)[number],
   ): Promise<void> {
-    switch (tabName) {
-      case 'DDV':
-        await this.expectDdvNuevoContratoDialogOpensAndCloses();
-        break;
-      case 'RMS':
-        await this.expectRmsNuevoContratoDialogOpensAndCloses();
-        break;
+    if (/UNR|Usuarios\s+NR/i.test(tabName)) {
+      await this.expectUnrNuevoContratoDialogOpensAndCloses();
+      return;
     }
+    if (/DDV/i.test(tabName)) {
+      await this.expectDdvNuevoContratoDialogOpensAndCloses();
+      return;
+    }
+    if (/RMS/i.test(tabName)) {
+      await this.expectRmsNuevoContratoDialogOpensAndCloses();
+      return;
+    }
+
+    throw new Error(
+      `No hay aserción de asistente Nuevo Contrato mapeada para la pestaña «${tabName}»`,
+    );
   }
 
   /**

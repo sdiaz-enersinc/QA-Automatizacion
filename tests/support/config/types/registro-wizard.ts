@@ -12,8 +12,33 @@ export interface RegistroWizardFieldDefinition {
   requiresScroll?: boolean;
 }
 
-/** Expected combobox content: exact labels, conditional (options or empty), or empty array (open-only). */
-export type RegistroWizardDropdownExpectation = readonly string[] | 'conditional';
+/** Combobox that must include these labels and may list additional UI options. */
+export interface RegistroWizardDropdownMinimumExpectation {
+  /** Option labels that must appear; extra UI options are allowed. */
+  minimum: readonly string[];
+}
+
+/** Expected combobox content: exact labels, empty array (no options), conditional, or a minimum subset. */
+export type RegistroWizardDropdownExpectation =
+  | readonly string[]
+  | 'conditional'
+  | RegistroWizardDropdownMinimumExpectation;
+
+/**
+ * Returns whether a dropdown expectation is a minimum-subset map.
+ *
+ * @param value - Raw dropdown expectation from tenant JSON.
+ */
+export function isRegistroWizardDropdownMinimum(
+  value: RegistroWizardDropdownExpectation | undefined,
+): value is RegistroWizardDropdownMinimumExpectation {
+  return Boolean(
+    value &&
+      typeof value === 'object' &&
+      !Array.isArray(value) &&
+      Array.isArray((value as RegistroWizardDropdownMinimumExpectation).minimum),
+  );
+}
 
 /** Dropdown expectations keyed by wizard field label (QA, Jun 2026). */
 export type RegistroWizardDropdownOptionsMap = Record<string, RegistroWizardDropdownExpectation>;

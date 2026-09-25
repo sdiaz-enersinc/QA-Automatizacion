@@ -9,6 +9,12 @@ export interface RegistroCttosEnergiaTenantConfig {
   registroCttosEnergiaTabNames: readonly string[];
   registroCttosEnergiaEnabledTabNames: readonly string[];
   registroCttosEnergiaLockedTabNames: readonly string[];
+  registroCttosEnergiaDefaultTab: string;
+  registroCttosEnergiaLayoutATab: string;
+  registroCttosEnergiaLayoutCTab: string;
+  registroCttosEnergiaLayoutDTab: string;
+  registroCttosEnergiaLayoutMiscTab: string;
+  registroCttosEnergiaLayoutSpotCheckTabs: readonly string[];
   registroCttosEnergiaStandardContractColumns: readonly string[];
   registroCttosEnergiaMiscContractColumns: readonly string[];
   registroCttosEnergiaDecContractColumns: readonly string[];

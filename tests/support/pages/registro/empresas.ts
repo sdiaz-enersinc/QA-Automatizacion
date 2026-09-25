@@ -8,6 +8,7 @@ import {
   type RegistroWizardFieldDefinition,
 } from './registro-navigation-base';
 import { assertTableColumnHeadersMatchConfig } from '../../registro/table-column-headers';
+import { assertTabStripMatchesConfig } from '../../registro/tab-strip';
 
 const cfg = getRegistroEmpresasConfig();
 
@@ -80,7 +81,7 @@ export class RegistroEmpresasNavigationPage extends RegistroNavigationBasePage {
    */
   async expectEmpresasViewActive(): Promise<void> {
     await expect(this.page).toHaveURL(REGISTRO_EMPRESAS_VIEW_URL, { timeout: 15_000 });
-    const tab = this.page.getByRole('tab', { name: 'Empresas' });
+    const tab = this.page.getByRole('tab', { name: 'Empresas', exact: true });
     await expect(tab).toBeVisible();
     await expect(tab).toHaveAttribute('aria-selected', 'true');
     const breadcrumb = this.page.getByRole('navigation');
@@ -94,7 +95,7 @@ export class RegistroEmpresasNavigationPage extends RegistroNavigationBasePage {
    * Comprueba la discrepancia conocida entre pestaña y breadcrumb (pestaña Empresas, breadcrumb Empresa).
    */
   async expectEmpresasTabBreadcrumbDiscrepancy(): Promise<void> {
-    await expect(this.page.getByRole('tab', { name: 'Empresas' })).toBeVisible();
+    await expect(this.page.getByRole('tab', { name: 'Empresas', exact: true })).toBeVisible();
     await expect(this.page.getByRole('navigation')).toContainText('Empresa');
     await expect(this.page).toHaveURL(REGISTRO_EMPRESAS_VIEW_URL);
   }
@@ -107,9 +108,14 @@ export class RegistroEmpresasNavigationPage extends RegistroNavigationBasePage {
     const breadcrumb = this.page.getByRole('navigation');
     await expect(breadcrumb).toContainText('Gestor de datos');
     await expect(breadcrumb).toContainText('Empresas');
-    await expect(this.page.getByRole('tab', { name: 'Empresas' })).toBeVisible();
-    await expect(this.page.getByRole('searchbox', { name: /Buscar/i })).toBeVisible();
-    await expect(this.page.getByRole('main').getByRole('table').first()).toBeVisible();
+    await assertTabStripMatchesConfig(this.page, {
+      enabledTabs: ['Empresas'],
+      context: 'Empresas',
+    });
+    await expect(this.gestorMain().getByRole('searchbox', { name: /Buscar/i })).toBeVisible({
+      timeout: 15_000,
+    });
+    await expect(this.gestorMain().getByRole('table').first()).toBeVisible({ timeout: 15_000 });
   }
 
   /**

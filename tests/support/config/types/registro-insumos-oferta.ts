@@ -13,6 +13,11 @@ export interface RegistroInsumosOfertaTenantConfig {
   registroInsumosOfertaTabNames: readonly string[];
   registroInsumosOfertaEnabledTabNames: readonly string[];
   registroInsumosOfertaLockedTabNames: readonly string[];
+  registroInsumosOfertaDefaultTab: string;
+  registroInsumosOfertaLayoutATab: string;
+  registroInsumosOfertaOefProyectadaTab: string;
+  registroInsumosOfertaConceptosOcTab: string;
+  registroInsumosOfertaGestionConceptosTab: string;
   registroInsumosOfertaCalendarWeekdayHeaders: readonly string[];
   registroInsumosOfertaCalendarAnoMonthCells: readonly string[];
   registroInsumosOfertaCalendarYearOptions: readonly string[];

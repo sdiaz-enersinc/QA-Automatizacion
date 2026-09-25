@@ -8,6 +8,8 @@ import {
 import { MODULE_IDS } from '../../config/module-registry';
 import type { RegistroCttosCombustibleTabName } from '../../config/types/registro-cttos-combustible';
 import { assertTableColumnHeadersMatchConfig } from '../../registro/table-column-headers';
+import { assertTabStripMatchesConfig } from '../../registro/tab-strip';
+import { assertSidebarLabelsMatchConfig } from '../../registro/sidebar-labels';
 import {
   REGISTRO_WIZARD_FIELD_ASSERT_COMBUSTIBLE,
   RegistroNavigationBasePage,
@@ -117,17 +119,23 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts enabled sidebar menuitems and locked rows under Cttos combustible.
+   * Asserts nested Contratos combustible sidebar items match enabled + locked labels exactly.
    */
   async expectCttosCombustibleSidebarLinksVisible(): Promise<void> {
+    await this.expandCttosCombustibleSidebar();
+    await assertSidebarLabelsMatchConfig(
+      this.registroSubmoduleNestedItems(),
+      [...REGISTRO_CTTS_COMBUSTIBLE_ENABLED_TAB_NAMES, ...REGISTRO_CTTS_COMBUSTIBLE_LOCKED_TAB_NAMES],
+      { context: 'Contratos combustible nested sidebar' },
+    );
     for (const tabName of REGISTRO_CTTS_COMBUSTIBLE_ENABLED_TAB_NAMES) {
       await expect(
-        this.registroSubmenu().getByRole('menuitem', { name: tabName }).first(),
+        this.registroSubmenu().getByRole('menuitem', { name: tabName, exact: true }).first(),
       ).toBeVisible();
     }
     for (const tabName of REGISTRO_CTTS_COMBUSTIBLE_LOCKED_TAB_NAMES) {
       await expect(
-        this.registroSubmenu().getByRole('menuitem', { name: tabName, disabled: true }),
+        this.registroSubmenu().getByRole('menuitem', { name: tabName, exact: true, disabled: true }),
       ).toBeVisible();
     }
   }
@@ -194,7 +202,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
    */
   async expectLockedTabsDisabled(): Promise<void> {
     for (const tabName of REGISTRO_CTTS_COMBUSTIBLE_LOCKED_TAB_NAMES) {
-      const tab = this.page.getByRole('tab', { name: tabName });
+      const tab = this.page.getByRole('tab', { name: tabName, exact: true });
       await expect(tab).toBeVisible();
       await expect(tab).toBeDisabled();
     }
@@ -209,10 +217,10 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
     const url = this.page.url();
     const selected = this.page.getByRole('tab', { selected: true });
     const selectedName = (await selected.textContent())?.trim() ?? '';
-    await this.page.getByRole('tab', { name: tabName }).click({ force: true });
+    await this.page.getByRole('tab', { name: tabName, exact: true }).click({ force: true });
     await expect(this.page).toHaveURL(url);
     if (selectedName) {
-      await expect(this.page.getByRole('tab', { name: selectedName })).toHaveAttribute(
+      await expect(this.page.getByRole('tab', { name: selectedName, exact: true })).toHaveAttribute(
         'aria-selected',
         'true',
       );
@@ -228,18 +236,18 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
     const breadcrumb = this.page.getByRole('navigation');
     await expect(breadcrumb).toContainText('Gestor de datos');
     await expect(breadcrumb).toContainText('Contratos combustible');
-    for (const tabName of REGISTRO_CTTS_COMBUSTIBLE_ENABLED_TAB_NAMES) {
-      await expect(this.page.getByRole('tab', { name: tabName })).toBeVisible();
-      await expect(this.page.getByRole('tab', { name: tabName })).toBeEnabled();
-    }
-    await this.expectLockedTabsDisabled();
+    await assertTabStripMatchesConfig(this.page, {
+      enabledTabs: REGISTRO_CTTS_COMBUSTIBLE_ENABLED_TAB_NAMES,
+      lockedTabs: REGISTRO_CTTS_COMBUSTIBLE_LOCKED_TAB_NAMES,
+      context: 'Contratos combustible',
+    });
   }
 
   /**
    * Opens a Contratos combustible tab and asserts selection, breadcrumb, and URL slug.
    */
   async openContratosCombustibleTab(tabName: RegistroCttosCombustibleTabName): Promise<void> {
-    await this.page.getByRole('tab', { name: tabName }).click();
+    await this.page.getByRole('tab', { name: tabName, exact: true }).click();
     await this.expectContratosCombustibleTabActive(tabName);
   }
 
@@ -251,7 +259,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
       RegistroCttosCombustibleNavigationPage.REGISTRO_CTTS_COMBUSTIBLE_TAB_SLUGS[tabName],
       { timeout: 15_000 },
     );
-    const tab = this.page.getByRole('tab', { name: tabName });
+    const tab = this.page.getByRole('tab', { name: tabName, exact: true });
     await expect(tab).toBeVisible();
     await expect(tab).toHaveAttribute('aria-selected', 'true');
     await expect(this.page.getByRole('navigation')).toContainText(
@@ -300,7 +308,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
    * Leaves the Inventarios 404 route by selecting Transporte when that tab is available.
    */
   async restoreDefaultCombustibleView(): Promise<void> {
-    const defaultTab = this.page.getByRole('tab', { name: REGISTRO_CTTS_COMBUSTIBLE_DEFAULT_TAB });
+    const defaultTab = this.page.getByRole('tab', { name: REGISTRO_CTTS_COMBUSTIBLE_DEFAULT_TAB, exact: true });
     if (!(await defaultTab.isVisible())) {
       return;
     }
@@ -402,7 +410,6 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
       fieldAssertOptions: {
         ...REGISTRO_WIZARD_FIELD_ASSERT_COMBUSTIBLE,
         retryOpen: true,
-        allowExtraDropdownOptions: true,
       },
       ...options,
     });

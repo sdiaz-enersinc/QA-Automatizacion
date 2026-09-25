@@ -4,6 +4,8 @@ import { MODULE_IDS } from '../../config/module-registry';
 import type { RegistroHistorialTabName } from '../../config/types/registro-historial';
 import { RegistroNavigationBasePage } from './registro-navigation-base';
 import { assertTableColumnHeadersMatchConfig } from '../../registro/table-column-headers';
+import { assertTabStripMatchesConfig } from '../../registro/tab-strip';
+import { assertSidebarLabelsMatchConfig } from '../../registro/sidebar-labels';
 
 export type { RegistroHistorialTabName };
 
@@ -19,6 +21,20 @@ export const REGISTRO_HISTORIAL_TAB_NAMES = cfg.registroHistorialTabNames;
 export const REGISTRO_HISTORIAL_ENABLED_TAB_NAMES = getModuleEnabledTabNames(MODULE_IDS.registroHistorial);
 
 export const REGISTRO_HISTORIAL_LOCKED_TAB_NAMES = cfg.registroHistorialLockedTabNames;
+
+/** Landing tab used as sidebar anchor and seed. */
+export const REGISTRO_HISTORIAL_DEFAULT_TAB = cfg.registroHistorialDefaultTab;
+
+/** Operaciones multiples tab label (tenant config). */
+export const REGISTRO_HISTORIAL_OPERACIONES_MULTIPLES_TAB =
+  cfg.registroHistorialOperacionesMultiplesTab;
+
+/** Operaciones individuales tab label (tenant config). */
+export const REGISTRO_HISTORIAL_OPERACIONES_INDIVIDUALES_TAB =
+  cfg.registroHistorialOperacionesIndividualesTab;
+
+/** Archivos cargados tab label (tenant config). */
+export const REGISTRO_HISTORIAL_ARCHIVOS_CARGADOS_TAB = cfg.registroHistorialArchivosCargadosTab;
 
 /** Encabezados de columna de la grilla Operaciones multiples (config del tenant). */
 export const REGISTRO_HISTORIAL_OPERACIONES_MULTIPLES_COLUMNS =
@@ -56,7 +72,7 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
    * Asegura que Historial está expandido y que los enlaces anidados del menú lateral son visibles.
    */
   async ensureHistorialSidebarExpanded(
-    anchorLinkName: RegistroHistorialTabName = 'Operaciones multiples',
+    anchorLinkName: RegistroHistorialTabName = REGISTRO_HISTORIAL_DEFAULT_TAB,
   ): Promise<void> {
     await this.ensureRegistroSubmoduleNestedLinksVisible('Historial', anchorLinkName);
   }
@@ -72,14 +88,19 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
   }
 
   /**
-   * Comprueba que Historial está expandido y que los enlaces anidados son visibles con los href esperados.
+   * Comprueba que Historial está expandido y que los enlaces anidados coinciden exactamente con la config.
    */
   async expectHistorialNestedSidebarLinksVisible(): Promise<void> {
     await this.ensureHistorialSidebarExpanded();
     const row = this.registroSubmenu().getByRole('menuitem', { name: 'Historial' }).first();
     await expect(row).toHaveAttribute('aria-expanded', 'true');
+    await assertSidebarLabelsMatchConfig(
+      this.registroSubmoduleNestedItems(),
+      REGISTRO_HISTORIAL_TAB_NAMES,
+      { context: 'Historial nested sidebar' },
+    );
     for (const tabName of REGISTRO_HISTORIAL_TAB_NAMES) {
-      const link = this.registroSubmenu().getByRole('link', { name: tabName }).first();
+      const link = this.registroSubmenu().getByRole('link', { name: tabName, exact: true }).first();
       await link.scrollIntoViewIfNeeded();
       await expect(link).toBeVisible();
       await expect(link).toHaveAttribute(
@@ -95,7 +116,7 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
   async openHistorialFromSidebar(tabName: RegistroHistorialTabName): Promise<void> {
     await expect(async () => {
       await this.ensureRegistroSubmoduleNestedLinksVisible('Historial', tabName);
-      const link = this.registroSubmenu().getByRole('link', { name: tabName }).first();
+      const link = this.registroSubmenu().getByRole('link', { name: tabName, exact: true }).first();
       await link.scrollIntoViewIfNeeded();
       await expect(link).toBeVisible();
       await link.click();
@@ -144,9 +165,11 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
     const breadcrumb = this.page.getByRole('navigation');
     await expect(breadcrumb).toContainText('Gestor de datos');
     await expect(breadcrumb).toContainText('Historial');
-    for (const tabName of REGISTRO_HISTORIAL_TAB_NAMES) {
-      await expect(this.page.getByRole('tab', { name: tabName })).toBeVisible();
-    }
+    await assertTabStripMatchesConfig(this.page, {
+      enabledTabs: REGISTRO_HISTORIAL_ENABLED_TAB_NAMES,
+      lockedTabs: REGISTRO_HISTORIAL_LOCKED_TAB_NAMES,
+      context: 'Historial',
+    });
     await expect(this.gestorMain().getByRole('searchbox', { name: /Buscar/i })).toBeVisible();
     await expect(this.gestorMain().getByRole('table').first()).toBeVisible();
   }
@@ -161,7 +184,7 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
         timeout: 15_000,
       },
     );
-    const tab = this.page.getByRole('tab', { name: tabName });
+    const tab = this.page.getByRole('tab', { name: tabName, exact: true });
     await expect(tab).toBeVisible();
     await expect(tab).toHaveAttribute('aria-selected', 'true');
     await expect(this.page.getByRole('navigation')).toContainText(
@@ -175,7 +198,7 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
    */
   async expectHistorialTabBreadcrumbDiscrepancy(tabName: RegistroHistorialTabName): Promise<void> {
     const breadcrumbSegment = RegistroHistorialNavigationPage.REGISTRO_HISTORIAL_TAB_BREADCRUMBS[tabName];
-    await expect(this.page.getByRole('tab', { name: tabName })).toBeVisible();
+    await expect(this.page.getByRole('tab', { name: tabName, exact: true })).toBeVisible();
     await expect(this.page.getByRole('navigation')).toContainText(breadcrumbSegment);
     await expect(this.page.getByRole('navigation')).not.toContainText(tabName);
     await expect(this.page).toHaveURL(
@@ -189,7 +212,7 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
    */
   async openHistorialTab(tabName: RegistroHistorialTabName): Promise<void> {
     await expect(async () => {
-      const tab = this.page.getByRole('tab', { name: tabName });
+      const tab = this.page.getByRole('tab', { name: tabName, exact: true });
       await tab.click();
       const main = this.gestorMain();
       if ((await main.getByText('404', { exact: true }).count()) > 0) {
@@ -200,7 +223,7 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
       await expect(this.page).toHaveURL(
         RegistroHistorialNavigationPage.REGISTRO_HISTORIAL_TAB_SLUGS[tabName],
       );
-      await expect(this.page.getByRole('tab', { name: tabName })).toHaveAttribute(
+      await expect(this.page.getByRole('tab', { name: tabName, exact: true })).toHaveAttribute(
         'aria-selected',
         'true',
       );
@@ -216,9 +239,11 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
    * Comprueba que todas las pestañas del módulo son visibles en la tira.
    */
   async expectHistorialTabStripVisible(): Promise<void> {
-    for (const tabName of REGISTRO_HISTORIAL_TAB_NAMES) {
-      await expect(this.page.getByRole('tab', { name: tabName })).toBeVisible();
-    }
+    await assertTabStripMatchesConfig(this.page, {
+      enabledTabs: REGISTRO_HISTORIAL_ENABLED_TAB_NAMES,
+      lockedTabs: REGISTRO_HISTORIAL_LOCKED_TAB_NAMES,
+      context: 'Historial',
+    });
   }
 
   /**
