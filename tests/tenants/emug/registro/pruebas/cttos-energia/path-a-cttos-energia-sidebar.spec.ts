@@ -27,6 +27,7 @@ test.describe('Contratos de energía — Path A (menú lateral)', () => {
       await test.step(`Abrir «${tabName}» desde el menú lateral y validar pestaña, breadcrumb y slug`, async () => {
         await registro.openCttosEnergiaFromSidebar(tabName);
         await registro.expectContratosEnergiaTabActive(tabName);
+        await registro.expectGestorDeDatosCttosEnergiaShell();
       });
     }
   });

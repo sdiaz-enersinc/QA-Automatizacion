@@ -4,7 +4,11 @@
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
 import { test, expect } from '../../../../../support/fixtures';
-import { RegistroHistorialNavigationPage } from '../../../../../support/pages/registro/historial';
+import { REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS } from '../../../../../support/pages/registro/navigation';
+import {
+  REGISTRO_HISTORIAL_DEFAULT_TAB,
+  RegistroHistorialNavigationPage,
+} from '../../../../../support/pages/registro/historial';
 
 test.describe('Historial — Path B (hover del tablero)', () => {
   test.beforeEach(() => {
@@ -20,9 +24,9 @@ test.describe('Historial — Path B (hover del tablero)', () => {
     await test.step('1. Validar el shell del tablero y la tarjeta de Registro', async () => {
       await dashboardPage.expectLoaded();
       await expect(registro.registroDashboardCard()).toBeVisible();
-      await expect(registro.registroDashboardCard().getByText('Empresas')).toBeVisible();
-      await expect(registro.registroDashboardCard().getByText('Cttos energía')).toBeVisible();
-      await expect(registro.registroDashboardCard().getByText('Cttos combustible')).toBeVisible();
+      for (const label of REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS) {
+        await expect(registro.registroDashboardCard().getByText(label)).toBeVisible();
+      }
     });
 
     await test.step('2. Abrir Historial desde el hover de la tarjeta Registro', async () => {
@@ -31,7 +35,7 @@ test.describe('Historial — Path B (hover del tablero)', () => {
     });
 
     await test.step('3. Validar la vista activa de Operaciones multiples', async () => {
-      await registro.expectHistorialViewActive('Operaciones multiples');
+      await registro.expectHistorialViewActive(REGISTRO_HISTORIAL_DEFAULT_TAB);
       await expect(page.getByRole('main').getByRole('searchbox', { name: /Buscar/i })).toBeVisible();
       await expect(page.getByRole('main').getByRole('table').first()).toBeVisible();
     });

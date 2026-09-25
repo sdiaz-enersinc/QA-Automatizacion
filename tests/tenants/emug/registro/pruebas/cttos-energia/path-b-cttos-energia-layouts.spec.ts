@@ -10,15 +10,16 @@ import {
 import { expect, test } from '../../../../../support/fixtures';
 import {
   REGISTRO_CTTS_ENERGIA_DEC_CONTRACT_COLUMNS,
+  REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB,
+  REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB,
+  REGISTRO_CTTS_ENERGIA_LAYOUT_SPOT_CHECK_TABS,
   RegistroCttosEnergiaNavigationPage,
 } from '../../../../../support/pages/registro/cttos-energia';
-
-const LAYOUT_SPOT_CHECK_TABS = ['Largo plazo', 'DEC'] as const;
 
 test.describe('Contratos de energía — Path B (tablero) — comprobación puntual de layouts', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosEnergia);
-    skipUnlessAnyTabEnabled(MODULE_IDS.registroCttosEnergia, LAYOUT_SPOT_CHECK_TABS);
+    skipUnlessAnyTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_SPOT_CHECK_TABS);
   });
 
   test('Path B — Un tablero por familia de layout (Layout A LP y Layout C DEC)', async ({
@@ -35,9 +36,9 @@ test.describe('Contratos de energía — Path B (tablero) — comprobación punt
 
     await whenTabEnabled(
       MODULE_IDS.registroCttosEnergia,
-      'Largo plazo',
+      REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB,
       async () => {
-        await registro.openContratosEnergiaTab('Largo plazo');
+        await registro.openContratosEnergiaTab(REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB);
         await registro.expectSelectAllColumnVisible();
       },
       '2. Layout A LP — abrir Largo plazo y validar la columna Select all',
@@ -45,17 +46,15 @@ test.describe('Contratos de energía — Path B (tablero) — comprobación punt
 
     await whenTabEnabled(
       MODULE_IDS.registroCttosEnergia,
-      'DEC',
+      REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB,
       async () => {
-        await registro.openContratosEnergiaTab('DEC');
+        await registro.openContratosEnergiaTab(REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB);
         await registro.expectLayoutCDecToolbar();
+        await registro.expectContractGridColumnHeaders(REGISTRO_CTTS_ENERGIA_DEC_CONTRACT_COLUMNS);
         const decTable = page.getByRole('main').getByRole('table').first();
         await expect(decTable.getByRole('columnheader', { name: 'Estado', exact: true })).toHaveCount(
           0,
         );
-        for (const col of REGISTRO_CTTS_ENERGIA_DEC_CONTRACT_COLUMNS) {
-          await expect(decTable.getByRole('columnheader', { name: col, exact: true })).toBeVisible();
-        }
       },
       '3. Layout C DEC — abrir DEC y validar la barra de herramientas y columnas sin Estado',
     );

@@ -28,6 +28,11 @@
     "Horario Promigas",
     "Costos Regas"
   ],
+  "registroInsumosOfertaDefaultTab": "Oferta Diaria",
+  "registroInsumosOfertaLayoutATab": "Oferta Diaria",
+  "registroInsumosOfertaOefProyectadaTab": "OEF Proyectada",
+  "registroInsumosOfertaConceptosOcTab": "Conceptos OC",
+  "registroInsumosOfertaGestionConceptosTab": "Gestion Conceptos",
   "registroInsumosOfertaCalendarWeekdayHeaders": [
     "Lun",
     "Mar",
@@ -52,6 +57,8 @@
     "Dic"
   ],
   "registroInsumosOfertaCalendarYearOptions": [
+    "2016",
+    "2017",
     "2018",
     "2019",
     "2020",
@@ -62,7 +69,14 @@
     "2025",
     "2026",
     "2027",
-    "2028"
+    "2028",
+    "2029",
+    "2030",
+    "2031",
+    "2032",
+    "2033",
+    "2034",
+    "2035"
   ],
   "registroInsumosOfertaCalendarMonthOptions": [
     "ene",

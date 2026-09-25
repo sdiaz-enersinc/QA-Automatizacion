@@ -6,13 +6,14 @@ import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../su
 import { test } from '../../../../../support/fixtures';
 import {
   REGISTRO_HISTORIAL_ARCHIVOS_CARGADOS_COLUMNS,
+  REGISTRO_HISTORIAL_ARCHIVOS_CARGADOS_TAB,
   RegistroHistorialNavigationPage,
 } from '../../../../../support/pages/registro/historial';
 
 test.describe('Historial — Pestaña Archivos cargados', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroHistorial);
-    skipUnlessTabEnabled(MODULE_IDS.registroHistorial, 'Archivos cargados');
+    skipUnlessTabEnabled(MODULE_IDS.registroHistorial, REGISTRO_HISTORIAL_ARCHIVOS_CARGADOS_TAB);
   });
 
   test('Archivos cargados — Pestañas, breadcrumb alineado, filtros de barra de herramientas (modal Filtros sin Añadir filtro) y columnas de grilla', async ({
@@ -23,9 +24,9 @@ test.describe('Historial — Pestaña Archivos cargados', () => {
 
     await test.step('1. Abrir Archivos cargados desde el menú lateral y validar el shell', async () => {
       await dashboardPage.expectLoaded();
-      await registro.openHistorialFromSidebar('Archivos cargados');
+      await registro.openHistorialFromSidebar(REGISTRO_HISTORIAL_ARCHIVOS_CARGADOS_TAB);
       await registro.expectGestorDeDatosHistorialShell();
-      await registro.expectHistorialViewActive('Archivos cargados');
+      await registro.expectHistorialViewActive(REGISTRO_HISTORIAL_ARCHIVOS_CARGADOS_TAB);
     });
 
     await test.step('2. Validar la barra de herramientas (búsqueda y Filtros; sin chips)', async () => {

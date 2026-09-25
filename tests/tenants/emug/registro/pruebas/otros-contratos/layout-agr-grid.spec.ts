@@ -6,13 +6,14 @@ import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../su
 import { expect, test } from '../../../../../support/fixtures';
 import {
   REGISTRO_OTROS_CONTRATOS_AGR_CONTRACT_COLUMNS,
+  REGISTRO_OTROS_CONTRATOS_AGR_TAB,
   RegistroOtrosContratosNavigationPage,
 } from '../../../../../support/pages/registro/otros-contratos';
 
 test.describe('Otros contratos — layouts (toolbar chips integrados; AGR incluida)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosContratos);
-    skipUnlessTabEnabled(MODULE_IDS.registroOtrosContratos, 'AGR');
+    skipUnlessTabEnabled(MODULE_IDS.registroOtrosContratos, REGISTRO_OTROS_CONTRATOS_AGR_TAB);
   });
 
   test('Layout AGR — barra sin chips, grilla sin Producto Facturable y diálogo Nuevo Registro', async ({
@@ -24,8 +25,8 @@ test.describe('Otros contratos — layouts (toolbar chips integrados; AGR inclui
 
     // 1. Desde el dashboard, abrir Otros contratos en Miscelaneos por menú lateral y pulsar la pestaña AGR.
     await dashboardPage.expectLoaded();
-    await registro.openOtrosContratosFromSidebar('AGR');
-    await registro.expectOtrosContratosTabActive('AGR');
+    await registro.openOtrosContratosFromSidebar(REGISTRO_OTROS_CONTRATOS_AGR_TAB);
+    await registro.expectOtrosContratosTabActive(REGISTRO_OTROS_CONTRATOS_AGR_TAB);
     await registro.expectGestorDeDatosOtrosContratosShell();
     await expect(page.getByRole('navigation')).toContainText('Contratos energia');
     await expect(page.getByRole('navigation')).toContainText('Agr');

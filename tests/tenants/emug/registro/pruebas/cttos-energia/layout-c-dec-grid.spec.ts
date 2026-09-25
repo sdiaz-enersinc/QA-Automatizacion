@@ -6,13 +6,14 @@ import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../su
 import { expect, test } from '../../../../../support/fixtures';
 import {
   REGISTRO_CTTS_ENERGIA_DEC_CONTRACT_COLUMNS,
+  REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB,
   RegistroCttosEnergiaNavigationPage,
 } from '../../../../../support/pages/registro/cttos-energia';
 
 test.describe('Contratos de energía — Botones de diálogo (Path A)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosEnergia);
-    skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, 'DEC');
+    skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB);
   });
 
   test('Layout C — DEC Nuevon contrato y Cargar archivos', async ({ page, dashboardPage }) => {
@@ -22,9 +23,9 @@ test.describe('Contratos de energía — Botones de diálogo (Path A)', () => {
 
     await test.step('1. Abrir DEC desde el menú lateral y validar el shell', async () => {
       await dashboardPage.expectLoaded();
-      await registro.openCttosEnergiaFromSidebar('DEC');
+      await registro.openCttosEnergiaFromSidebar(REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB);
       await registro.expectGestorDeDatosCttosEnergiaShell();
-      await registro.expectContratosEnergiaTabActive('DEC');
+      await registro.expectContratosEnergiaTabActive(REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB);
     });
 
     await test.step('2. Validar barra de herramientas de DEC, CTAs duales y columnas de la grilla sin Estado', async () => {

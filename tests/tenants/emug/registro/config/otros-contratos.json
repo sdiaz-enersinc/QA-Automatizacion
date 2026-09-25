@@ -13,6 +13,9 @@
     "Excedentes",
     "Respaldos ORI"
   ],
+  "registroOtrosContratosDefaultTab": "Miscelaneos",
+  "registroOtrosContratosMiscTab": "Miscelaneos",
+  "registroOtrosContratosAgrTab": "AGR",
   "registroOtrosContratosMiscContractColumns": [
     "ID",
     "Producto Facturable",
@@ -86,10 +89,9 @@
       "COMPRA",
       "VENTA"
     ],
-    "Negocio": [
-      "COMERCIALIZADOR",
-      "GENERADOR"
-    ],
+    "Negocio": {
+      "minimum": ["COMERCIALIZADOR", "GENERADOR"]
+    },
     "Contraparte del Contrato": [
       "EMPRESA TEST FACTURACIÓN",
       "TRANSMISORA COLOMBIANA DE ENERGIA S.A.S. E.S.P.",

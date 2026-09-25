@@ -4,11 +4,14 @@ import {
   skipUnlessTabEnabled,
 } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
-import { RegistroCttosEnergiaNavigationPage } from '../../../../../support/pages/registro/cttos-energia';
+import {
+  REGISTRO_CTTS_ENERGIA_DEFAULT_TAB,
+  RegistroCttosEnergiaNavigationPage,
+} from '../../../../../support/pages/registro/cttos-energia';
 
 test.beforeEach(() => {
   skipUnlessModuleEnabled(MODULE_IDS.registroCttosEnergia);
-  skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, 'Largo plazo');
+  skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_DEFAULT_TAB);
 });
 
 test('Seed — shell de Contratos de energía por menú lateral', async ({ page, dashboardPage }) => {

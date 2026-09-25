@@ -4,11 +4,14 @@
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
-import { RegistroOtrosDocumentosNavigationPage } from '../../../../../support/pages/registro/otros-documentos';
+import {
+  REGISTRO_OTROS_DOCUMENTOS_DEFAULT_VIEW,
+  RegistroOtrosDocumentosNavigationPage,
+} from '../../../../../support/pages/registro/otros-documentos';
 
 test.beforeEach(() => {
   skipUnlessModuleEnabled(MODULE_IDS.registroOtrosDocumentos);
-  skipUnlessTabEnabled(MODULE_IDS.registroOtrosDocumentos, 'Hidrologia Horaria');
+  skipUnlessTabEnabled(MODULE_IDS.registroOtrosDocumentos, REGISTRO_OTROS_DOCUMENTOS_DEFAULT_VIEW);
 });
 
 /**
@@ -17,7 +20,7 @@ test.beforeEach(() => {
 test('Seed — shell de Otros documentos en Hidrologia Horaria', async ({ page, dashboardPage }) => {
   const registro = new RegistroOtrosDocumentosNavigationPage(page);
   await dashboardPage.expectLoaded();
-  await registro.openOtrosDocumentosFromSidebar('Hidrologia Horaria');
-  await registro.expectOtrosDocumentosViewActive('Hidrologia Horaria');
+  await registro.openOtrosDocumentosFromSidebar(REGISTRO_OTROS_DOCUMENTOS_DEFAULT_VIEW);
+  await registro.expectOtrosDocumentosViewActive(REGISTRO_OTROS_DOCUMENTOS_DEFAULT_VIEW);
   await registro.expectGestorDeDatosOtrosDocumentosShell();
 });

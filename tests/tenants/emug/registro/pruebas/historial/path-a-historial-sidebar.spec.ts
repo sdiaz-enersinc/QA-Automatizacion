@@ -4,7 +4,10 @@
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
-import { RegistroHistorialNavigationPage } from '../../../../../support/pages/registro/historial';
+import {
+  REGISTRO_HISTORIAL_ENABLED_TAB_NAMES,
+  RegistroHistorialNavigationPage,
+} from '../../../../../support/pages/registro/historial';
 
 test.describe('Historial — Path A (menú lateral)', () => {
   test.beforeEach(() => {
@@ -32,19 +35,12 @@ test.describe('Historial — Path A (menú lateral)', () => {
       await registro.expectHistorialNestedSidebarLinksVisible();
     });
 
-    await test.step('4. Abrir Operaciones multiples desde el menú lateral', async () => {
-      await registro.openHistorialFromSidebar('Operaciones multiples');
-      await registro.expectHistorialViewActive('Operaciones multiples');
-    });
-
-    await test.step('5. Abrir Operaciones individuales desde el menú lateral', async () => {
-      await registro.openHistorialFromSidebar('Operaciones individuales');
-      await registro.expectHistorialViewActive('Operaciones individuales');
-    });
-
-    await test.step('6. Abrir Archivos cargados desde el menú lateral', async () => {
-      await registro.openHistorialFromSidebar('Archivos cargados');
-      await registro.expectHistorialViewActive('Archivos cargados');
-    });
+    for (const tabName of REGISTRO_HISTORIAL_ENABLED_TAB_NAMES) {
+      await test.step(`Abrir «${tabName}» desde el menú lateral y validar la vista activa`, async () => {
+        await registro.openHistorialFromSidebar(tabName);
+        await registro.expectHistorialViewActive(tabName);
+        await registro.expectGestorDeDatosHistorialShell();
+      });
+    }
   });
 });

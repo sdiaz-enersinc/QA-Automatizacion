@@ -15,6 +15,15 @@
   "registroCttosEnergiaLockedTabNames": [
     "Usuarios NR"
   ],
+  "registroCttosEnergiaDefaultTab": "Largo plazo",
+  "registroCttosEnergiaLayoutATab": "Largo plazo",
+  "registroCttosEnergiaLayoutCTab": "DEC",
+  "registroCttosEnergiaLayoutDTab": "",
+  "registroCttosEnergiaLayoutMiscTab": "",
+  "registroCttosEnergiaLayoutSpotCheckTabs": [
+    "Largo plazo",
+    "DEC"
+  ],
   "registroCttosEnergiaStandardContractColumns": [
     "ID",
     "Compra/Venta",

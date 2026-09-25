@@ -6,13 +6,14 @@ import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../su
 import { test } from '../../../../../support/fixtures';
 import {
   REGISTRO_HISTORIAL_OPERACIONES_MULTIPLES_COLUMNS,
+  REGISTRO_HISTORIAL_OPERACIONES_MULTIPLES_TAB,
   RegistroHistorialNavigationPage,
 } from '../../../../../support/pages/registro/historial';
 
 test.describe('Historial — Pestaña Operaciones multiples', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroHistorial);
-    skipUnlessTabEnabled(MODULE_IDS.registroHistorial, 'Operaciones multiples');
+    skipUnlessTabEnabled(MODULE_IDS.registroHistorial, REGISTRO_HISTORIAL_OPERACIONES_MULTIPLES_TAB);
   });
 
   test('Operaciones multiples — Pestañas, discrepancia del breadcrumb, filtros de barra de herramientas y columnas de grilla', async ({
@@ -23,14 +24,14 @@ test.describe('Historial — Pestaña Operaciones multiples', () => {
 
     await test.step('1. Abrir Operaciones multiples desde el menú lateral y validar el shell', async () => {
       await dashboardPage.expectLoaded();
-      await registro.openHistorialFromSidebar('Operaciones multiples');
+      await registro.openHistorialFromSidebar(REGISTRO_HISTORIAL_OPERACIONES_MULTIPLES_TAB);
       await registro.expectGestorDeDatosHistorialShell();
-      await registro.expectHistorialViewActive('Operaciones multiples');
+      await registro.expectHistorialViewActive(REGISTRO_HISTORIAL_OPERACIONES_MULTIPLES_TAB);
     });
 
     await test.step('2. Validar la discrepancia entre pestaña y breadcrumb/URL', async () => {
       // PROBLEMA CONOCIDO — cuando se corrija, actualizar las aserciones para que coincidan con la etiqueta de la pestaña.
-      await registro.expectHistorialTabBreadcrumbDiscrepancy('Operaciones multiples');
+      await registro.expectHistorialTabBreadcrumbDiscrepancy(REGISTRO_HISTORIAL_OPERACIONES_MULTIPLES_TAB);
     });
 
     await test.step('3. Validar la barra de herramientas (búsqueda y Filtros; sin chips)', async () => {

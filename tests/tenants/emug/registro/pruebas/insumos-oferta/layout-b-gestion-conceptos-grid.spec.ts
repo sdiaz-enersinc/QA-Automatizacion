@@ -6,13 +6,14 @@ import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../su
 import { test } from '../../../../../support/fixtures';
 import {
   REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_COLUMNS,
+  REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_TAB,
   RegistroInsumosOfertaNavigationPage,
 } from '../../../../../support/pages/registro/insumos-oferta';
 
 test.describe('Insumos oferta', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroInsumosOferta);
-    skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, 'Gestion Conceptos');
+    skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_TAB);
   });
 
   test('Layout B — Gestion Conceptos grilla y Nuevo Registro', async ({ page, dashboardPage }) => {
@@ -21,8 +22,8 @@ test.describe('Insumos oferta', () => {
 
     // 1. Abrir Gestion Conceptos por sidebar.
     await dashboardPage.expectLoaded();
-    await registro.openInsumosOfertaFromSidebar('Gestion Conceptos');
-    await registro.expectInsumosOfertaTabActive('Gestion Conceptos');
+    await registro.openInsumosOfertaFromSidebar(REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_TAB);
+    await registro.expectInsumosOfertaTabActive(REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_TAB);
     await registro.expectLayoutBTableToolbar(['Nuevo Registro']);
     await registro.expectGridColumnHeaders(REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_COLUMNS);
 

@@ -5,14 +5,14 @@ import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
 import {
-  REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB,
+  REGISTRO_INSUMOS_OFERTA_LAYOUT_A_TAB,
   RegistroInsumosOfertaNavigationPage,
 } from '../../../../../support/pages/registro/insumos-oferta';
 
 test.describe('Insumos oferta', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroInsumosOferta);
-    skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB);
+    skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_LAYOUT_A_TAB);
   });
 
   test('Layout A — Oferta Diaria calendario, controles Mes/Año y diálogo Carga archivo', async ({
@@ -24,9 +24,9 @@ test.describe('Insumos oferta', () => {
 
     // 1. Abrir Oferta Diaria por sidebar.
     await dashboardPage.expectLoaded();
-    await registro.openInsumosOfertaFromSidebar(REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB);
+    await registro.openInsumosOfertaFromSidebar(REGISTRO_INSUMOS_OFERTA_LAYOUT_A_TAB);
     await registro.expectGestorDeDatosInsumosOfertaShell();
-    await registro.expectInsumosOfertaTabActive(REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB);
+    await registro.expectInsumosOfertaTabActive(REGISTRO_INSUMOS_OFERTA_LAYOUT_A_TAB);
 
     // 2. Inspeccionar la barra del calendario (año, mes, Mes/Año, Carga archivo, sin Filtros).
     await registro.expectLayoutACalendarToolbar('Carga archivo');

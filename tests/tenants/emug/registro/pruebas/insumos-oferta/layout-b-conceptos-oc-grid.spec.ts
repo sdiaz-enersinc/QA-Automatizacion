@@ -6,13 +6,14 @@ import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../su
 import { test } from '../../../../../support/fixtures';
 import {
   REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_COLUMNS,
+  REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_TAB,
   RegistroInsumosOfertaNavigationPage,
 } from '../../../../../support/pages/registro/insumos-oferta';
 
 test.describe('Insumos oferta', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroInsumosOferta);
-    skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, 'Conceptos OC');
+    skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_TAB);
   });
 
   test('Layout B — Conceptos OC grilla y diálogos Nuevo Concepto y Nuevo Registro', async ({
@@ -24,8 +25,8 @@ test.describe('Insumos oferta', () => {
 
     // 1. Abrir Conceptos OC por sidebar.
     await dashboardPage.expectLoaded();
-    await registro.openInsumosOfertaFromSidebar('Conceptos OC');
-    await registro.expectInsumosOfertaTabActive('Conceptos OC');
+    await registro.openInsumosOfertaFromSidebar(REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_TAB);
+    await registro.expectInsumosOfertaTabActive(REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_TAB);
     await registro.expectLayoutBTableToolbar(['Nuevo Concepto', 'Nuevo Registro']);
     await registro.expectGridColumnHeaders(REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_COLUMNS);
 

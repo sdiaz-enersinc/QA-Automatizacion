@@ -5,6 +5,7 @@ import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
 import {
+  REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB,
   REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS,
   RegistroCttosEnergiaNavigationPage,
 } from '../../../../../support/pages/registro/cttos-energia';
@@ -12,7 +13,7 @@ import {
 test.describe('Contratos de energía — Botones de diálogo (Path A)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosEnergia);
-    skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, 'Largo plazo');
+    skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB);
   });
 
   test('Layout A LP — Pie de página y desplegables del asistente Nuevo Contrato', async ({
@@ -29,7 +30,7 @@ test.describe('Contratos de energía — Botones de diálogo (Path A)', () => {
     });
 
     await test.step('2. Abrir la pestaña Largo plazo y validar la barra de herramientas y columnas de la grilla', async () => {
-      await registro.openContratosEnergiaTab('Largo plazo');
+      await registro.openContratosEnergiaTab(REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB);
       await registro.expectLayoutBStandardToolbar();
       await registro.expectSelectAllColumnVisible();
       await registro.expectContractGridColumnHeaders(REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS);

@@ -6,13 +6,14 @@ import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../su
 import { test } from '../../../../../support/fixtures';
 import {
   REGISTRO_OTROS_CONTRATOS_MISC_CONTRACT_COLUMNS,
+  REGISTRO_OTROS_CONTRATOS_MISC_TAB,
   RegistroOtrosContratosNavigationPage,
 } from '../../../../../support/pages/registro/otros-contratos';
 
 test.describe('Otros contratos — layouts (toolbar chips integrados; AGR incluida)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosContratos);
-    skipUnlessTabEnabled(MODULE_IDS.registroOtrosContratos, 'Miscelaneos');
+    skipUnlessTabEnabled(MODULE_IDS.registroOtrosContratos, REGISTRO_OTROS_CONTRATOS_MISC_TAB);
   });
 
   test('Layout Miscelaneos — barra sin chips, grilla MISC y diálogo Nuevo Registro', async ({
@@ -24,9 +25,9 @@ test.describe('Otros contratos — layouts (toolbar chips integrados; AGR inclui
 
     // 1. Desde el dashboard, abrir Miscelaneos por Registro → Otros contratos en el menú lateral.
     await dashboardPage.expectLoaded();
-    await registro.openOtrosContratosFromSidebar('Miscelaneos');
+    await registro.openOtrosContratosFromSidebar(REGISTRO_OTROS_CONTRATOS_MISC_TAB);
     await registro.expectGestorDeDatosOtrosContratosShell();
-    await registro.expectOtrosContratosTabActive('Miscelaneos');
+    await registro.expectOtrosContratosTabActive(REGISTRO_OTROS_CONTRATOS_MISC_TAB);
 
     // 2. Inspeccionar la barra de herramientas de Miscelaneos (absorbe toolbar-chips-removed-misc).
     await registro.expectOtrosContratosToolbar();

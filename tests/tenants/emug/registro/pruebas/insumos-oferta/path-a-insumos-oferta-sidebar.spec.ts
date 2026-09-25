@@ -5,6 +5,7 @@ import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessAnyTabEnabled, skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
 import {
+  REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB,
   REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES,
   RegistroInsumosOfertaNavigationPage,
 } from '../../../../../support/pages/registro/insumos-oferta';
@@ -29,7 +30,7 @@ test.describe('Insumos oferta', () => {
       await registro.openInsumosOfertaFromSidebar(tabName);
       await registro.expectInsumosOfertaTabActive(tabName);
 
-      if (tabName === REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES[0]) {
+      if (tabName === REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB) {
         await registro.expectGestorDeDatosInsumosOfertaShell();
         await registro.expectAgrTabLocked();
       }

@@ -6,13 +6,14 @@ import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../su
 import { test } from '../../../../../support/fixtures';
 import {
   REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_COLUMNS,
+  REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_TAB,
   RegistroInsumosOfertaNavigationPage,
 } from '../../../../../support/pages/registro/insumos-oferta';
 
 test.describe('Insumos oferta', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroInsumosOferta);
-    skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, 'OEF Proyectada');
+    skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_TAB);
   });
 
   test('Layout B — OEF Proyectada grilla y wizard Nueva Vigencia Oef', async ({ page, dashboardPage }) => {
@@ -21,8 +22,8 @@ test.describe('Insumos oferta', () => {
 
     // 1. Abrir OEF Proyectada por sidebar.
     await dashboardPage.expectLoaded();
-    await registro.openInsumosOfertaFromSidebar('OEF Proyectada');
-    await registro.expectInsumosOfertaTabActive('OEF Proyectada');
+    await registro.openInsumosOfertaFromSidebar(REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_TAB);
+    await registro.expectInsumosOfertaTabActive(REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_TAB);
 
     // 2. Inspeccionar barra de herramientas y columnas Recurso, Fecha inicial, Fecha final, Usuario, Acciones.
     await registro.expectLayoutBTableToolbar(['Nuevo Registro']);

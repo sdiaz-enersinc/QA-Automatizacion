@@ -4,6 +4,7 @@
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessAnyTabEnabled, skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
 import { expect, test } from '../../../../../support/fixtures';
+import { REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS } from '../../../../../support/pages/registro/navigation';
 import {
   REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB,
   REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES,
@@ -26,12 +27,10 @@ test.describe('Insumos oferta', () => {
     // 1. En dashboard, localizar la tarjeta Registro y comprobar filas visibles de Empresas, Cttos energía y Cttos combustible.
     await dashboardPage.expectLoaded();
     await expect(card).toBeVisible();
-    await expect(card.getByText('Empresas')).toBeVisible();
-    await expect(card.getByRole('listitem').filter({ hasText: 'Empresas' }).getByLabel('eye')).toBeVisible();
-    await expect(card.getByText('Cttos energía')).toBeVisible();
-    await expect(card.getByRole('listitem').filter({ hasText: 'Cttos energía' }).getByLabel('eye')).toBeVisible();
-    await expect(card.getByText('Cttos combustible')).toBeVisible();
-    await expect(card.getByRole('listitem').filter({ hasText: 'Cttos combustible' }).getByLabel('eye')).toBeVisible();
+    for (const label of REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS) {
+      await expect(card.getByText(label)).toBeVisible();
+      await expect(card.getByRole('listitem').filter({ hasText: label }).getByLabel('eye')).toBeVisible();
+    }
 
     // 2. Hacer hover sobre la tarjeta Registro.
     await registro.expectInsumosOfertaVisibleOnDashboardHover();

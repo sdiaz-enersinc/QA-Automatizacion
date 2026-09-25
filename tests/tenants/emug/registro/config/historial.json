@@ -10,6 +10,10 @@
     "Archivos cargados"
   ],
   "registroHistorialLockedTabNames": [],
+  "registroHistorialDefaultTab": "Operaciones multiples",
+  "registroHistorialOperacionesMultiplesTab": "Operaciones multiples",
+  "registroHistorialOperacionesIndividualesTab": "Operaciones individuales",
+  "registroHistorialArchivosCargadosTab": "Archivos cargados",
   "registroHistorialOperacionesMultiplesColumns": [
     "ID",
     "Fecha de Registro",

@@ -6,6 +6,7 @@ import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-gu
 import { test, expect } from '../../../../../support/fixtures';
 import {
   REGISTRO_CTTS_ENERGIA_ENABLED_TAB_NAMES,
+  REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL,
   RegistroCttosEnergiaNavigationPage,
 } from '../../../../../support/pages/registro/cttos-energia';
 
@@ -27,7 +28,7 @@ test.describe('Contratos de energía — Path B (hover del tablero)', () => {
 
     await test.step('2. Abrir Cttos energía desde el hover de la tarjeta Registro', async () => {
       await registro.hoverRegistroDashboardCard();
-      await expect(registro.registroDashboardCard().getByText('Cttos energía')).toBeVisible();
+      await expect(registro.registroDashboardCard().getByText(REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL)).toBeVisible();
       await registro.openCttosEnergiaFromDashboardGrid();
     });
 
