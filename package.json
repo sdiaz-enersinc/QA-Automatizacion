@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:chromium": "playwright test --project=chromium"
+    "test:chromium": "playwright test --project=chromium",
+    "refresh:dropdowns": "playwright test --config=playwright.refresh.config.ts"
   },
   "keywords": [],
   "author": "",
