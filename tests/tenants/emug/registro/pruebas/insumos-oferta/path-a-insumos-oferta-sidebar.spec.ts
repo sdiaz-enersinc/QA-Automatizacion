@@ -1,5 +1,5 @@
-// spec: specs/Registro/insumos-oferta-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/pruebas/insumos-oferta/seed-insumos-oferta.spec.ts
+// plan: specs/Registro/insumos-oferta-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/insumos-oferta/seed-insumos-oferta.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessAnyTabEnabled, skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
@@ -16,14 +16,14 @@ test.describe('Insumos oferta', () => {
     skipUnlessAnyTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES);
   });
 
-  test('Path A — cada pestaña habilitada por Registro → Insumos oferta en el menú lateral', async ({
+  test('Ruta A — cada pestaña habilitada por Registro → Insumos oferta en el menú lateral', async ({
     page,
     dashboardPage,
   }) => {
     test.setTimeout(120_000);
     const registro = new RegistroInsumosOfertaNavigationPage(page);
 
-    // 1. Desde dashboard, para cada pestaña habilitada expandir Registro → Insumos oferta y pulsar el enlace anidado.
+    // 1. Desde el tablero, para cada pestaña habilitada expandir Registro → Insumos oferta y pulsar el enlace anidado.
     await dashboardPage.expectLoaded();
 
     for (const tabName of REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES) {

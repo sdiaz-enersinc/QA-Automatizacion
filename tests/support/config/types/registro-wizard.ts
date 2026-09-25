@@ -1,33 +1,33 @@
-/** Control kind for Registro Nuevo Registro / Nuevo Contrato wizard fields (QA, Jun 2026). */
+/** Tipo de control de campos del asistente Nuevo Registro / Nuevo Contrato de Registro (QA, jun 2026). */
 export type RegistroWizardFieldKind = 'combobox' | 'textbox' | 'datepicker';
 
-/** Metadata for a single field on a Registro wizard step. */
+/** Metadatos de un campo en un paso del asistente de Registro. */
 export interface RegistroWizardFieldDefinition {
-  /** Visible label text without the required asterisk. */
+  /** Texto de etiqueta visible sin el asterisco de obligatorio. */
   label: string;
   kind: RegistroWizardFieldKind;
   required?: boolean;
   disabled?: boolean;
-  /** Field sits below the initial dialog viewport; scroll before assert. */
+  /** El campo queda bajo el viewport inicial del diálogo; hay que hacer scroll antes de asertar. */
   requiresScroll?: boolean;
 }
 
-/** Combobox that must include these labels and may list additional UI options. */
+/** Combobox que debe incluir estas etiquetas y puede listar opciones extra en la UI. */
 export interface RegistroWizardDropdownMinimumExpectation {
-  /** Option labels that must appear; extra UI options are allowed. */
+  /** Etiquetas de opción que deben aparecer; se permiten extras en la UI. */
   minimum: readonly string[];
 }
 
-/** Expected combobox content: exact labels, empty array (no options), conditional, or a minimum subset. */
+/** Contenido esperado del combobox: etiquetas exactas, arreglo vacío (sin opciones), condicional o subconjunto mínimo. */
 export type RegistroWizardDropdownExpectation =
   | readonly string[]
   | 'conditional'
   | RegistroWizardDropdownMinimumExpectation;
 
 /**
- * Returns whether a dropdown expectation is a minimum-subset map.
+ * Indica si una expectativa de desplegable es un mapa de subconjunto mínimo.
  *
- * @param value - Raw dropdown expectation from tenant JSON.
+ * @param value - Expectativa cruda de desplegable del JSON del tenant.
  */
 export function isRegistroWizardDropdownMinimum(
   value: RegistroWizardDropdownExpectation | undefined,
@@ -40,5 +40,5 @@ export function isRegistroWizardDropdownMinimum(
   );
 }
 
-/** Dropdown expectations keyed by wizard field label (QA, Jun 2026). */
+/** Expectativas de desplegable indexadas por etiqueta de campo del asistente (QA, jun 2026). */
 export type RegistroWizardDropdownOptionsMap = Record<string, RegistroWizardDropdownExpectation>;

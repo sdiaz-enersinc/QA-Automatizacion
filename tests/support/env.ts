@@ -2,20 +2,20 @@ import dotenv from 'dotenv';
 
 dotenv.config({ quiet: true });
 
-/** Application base URL from `BASE_URL`. */
+/** URL base de la aplicación desde `BASE_URL`. */
 export const BASE_URL = process.env.BASE_URL ?? '';
 
-/** Valid login email from `VALID_EMAIL`. */
+/** Correo de login válido desde `VALID_EMAIL`. */
 export const VALID_EMAIL = process.env.VALID_EMAIL ?? '';
 
-/** Invalid login email from `INVALID_EMAIL`. */
+/** Correo de login inválido desde `INVALID_EMAIL`. */
 export const INVALID_EMAIL = process.env.INVALID_EMAIL ?? 'a';
 
-/** Valid login password from `VALID_PASSWORD`. */
+/** Contraseña de login válida desde `VALID_PASSWORD`. */
 export const VALID_PASSWORD = process.env.VALID_PASSWORD ?? '';
 
-/** Invalid login password from `INVALID_PASSWORD`. */
+/** Contraseña de login inválida desde `INVALID_PASSWORD`. */
 export const INVALID_PASSWORD = process.env.INVALID_PASSWORD ?? 'wrong-password';
 
-/** Active tenant id from `TEST_TENANT`. Defaults to `emug` when unset. */
+/** Identificador del tenant activo desde `TEST_TENANT`. Vale `emug` si no se define. */
 export const TEST_TENANT = process.env.TEST_TENANT ?? 'emug';

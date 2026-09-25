@@ -6,18 +6,18 @@ type WorkerFixtures = {
 };
 
 /**
- * Returns whether the Playwright project should reuse one authenticated browser context.
+ * Indica si el proyecto de Playwright debe reutilizar un contexto de navegador autenticado.
  *
- * @param projectName - Playwright project name from worker or test info.
+ * @param projectName - Nombre del proyecto de Playwright (worker o test info).
  */
 export function usesSharedSession(projectName: string): boolean {
   return !projectName.startsWith('setup-') && !projectName.endsWith('-unauth');
 }
 
 /**
- * Creates a browser context with the same defaults as playwright.config `use`.
+ * Crea un contexto de navegador con los mismos valores por defecto que `use` en playwright.config.
  *
- * @param browser - Playwright browser used to open the shared context.
+ * @param browser - Navegador de Playwright usado para abrir el contexto compartido.
  */
 async function createAuthenticatedContext(browser: Browser): Promise<BrowserContext> {
   return browser.newContext({
@@ -30,9 +30,9 @@ async function createAuthenticatedContext(browser: Browser): Promise<BrowserCont
 }
 
 /**
- * Returns the first open page in a context or creates one when none exist.
+ * Devuelve la primera página abierta del contexto o crea una si no hay ninguna.
  *
- * @param context - Shared authenticated browser context.
+ * @param context - Contexto autenticado compartido.
  */
 async function getOrCreateSharedPage(context: BrowserContext): Promise<Page> {
   const openPage = context.pages().find((candidate) => !candidate.isClosed());
@@ -40,11 +40,11 @@ async function getOrCreateSharedPage(context: BrowserContext): Promise<Page> {
 }
 
 /**
- * Extends tenant fixtures with a worker-scoped authenticated browser context.
- * Authenticated projects log in once per worker; unauth and setup projects keep
- * Playwright's default per-test isolation.
+ * Extiende los fixtures del tenant con un contexto autenticado de alcance worker.
+ * Los proyectos autenticados inician sesión una vez por worker; los proyectos unauth y setup
+ * conservan el aislamiento por test de Playwright.
  *
- * @param tenantFixtures - Tenant-specific test fixtures (e.g. dashboardPage).
+ * @param tenantFixtures - Fixtures específicos del tenant (p. ej. dashboardPage).
  */
 export function extendWithSharedSession<Extra extends object>(
   tenantFixtures: Fixtures<Extra, {}, Extra, {}>,

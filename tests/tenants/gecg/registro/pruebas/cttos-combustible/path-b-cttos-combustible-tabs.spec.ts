@@ -1,5 +1,5 @@
-// spec: specs/Registro/cttos-combustible-navigation-playwright-test.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/cttos-combustible/seed-cttos-combustible.spec.ts
+// plan: specs/Registro/cttos-combustible-navigation-playwright-test.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/cttos-combustible/seed-cttos-combustible.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
@@ -9,12 +9,12 @@ import {
   RegistroCttosCombustibleNavigationPage,
 } from '../../../../../support/pages/registro/cttos-combustible';
 
-test.describe('Contratos combustible — Path B (hover del tablero)', () => {
+test.describe('Contratos combustible — Ruta B (hover del tablero)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosCombustible);
   });
 
-  test('Path B — El hover del tablero abre Cttos combustible y renderiza las pestañas habilitadas', async ({
+  test('Ruta B — El hover del tablero abre Cttos combustible y renderiza las pestañas habilitadas', async ({
     page,
     dashboardPage,
   }) => {

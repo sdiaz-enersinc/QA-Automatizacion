@@ -8,7 +8,7 @@ test.beforeEach(() => {
   skipUnlessTabEnabled(MODULE_IDS.registroSireci, 'Resumen');
 });
 
-test('Seed — shell de Sireci por menú lateral', async ({ page, dashboardPage }) => {
+test('Semilla — shell de Sireci por menú lateral', async ({ page, dashboardPage }) => {
   const registro = new RegistroSireciNavigationPage(page);
 
   await test.step('Abrir Sireci Resumen y validar el shell del gestor', async () => {

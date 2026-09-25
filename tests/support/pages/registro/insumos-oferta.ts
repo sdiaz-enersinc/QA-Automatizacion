@@ -23,151 +23,151 @@ export type { RegistroInsumosOfertaTabName };
 
 const cfg = getRegistroInsumosOfertaConfig();
 
-/** Whether the Registro Insumos oferta module is enabled for the active tenant. */
+/** Indica si el módulo Registro Insumos oferta está habilitado para el tenant activo. */
 export const REGISTRO_INSUMOS_OFERTA_ENABLED = isModuleEnabled(MODULE_IDS.registroInsumosOferta);
 
-/** Visible submenu label for Insumos oferta (tenant config). */
+/** Etiqueta visible del submenú para Insumos oferta (config del tenant). */
 export const REGISTRO_INSUMOS_OFERTA_SUBMODULE_LABEL = cfg.registroInsumosOfertaSubmoduleLabel;
 
-/** Legacy submenu label that must not appear after the rename. */
+/** Etiqueta legacy del submenú que no debe aparecer tras el cambio de nombre. */
 export const REGISTRO_INSUMOS_OFERTA_LEGACY_SUBMODULE_LABEL =
   cfg.registroInsumosOfertaLegacySubmoduleLabel;
 
-/** Legacy breadcrumb second segment still shown in the gestor shell. */
+/** Segundo segmento legacy del breadcrumb que aún se muestra en el shell del gestor. */
 export const REGISTRO_INSUMOS_OFERTA_LEGACY_BREADCRUMB = cfg.registroInsumosOfertaLegacyBreadcrumb;
 
-/** Exact UI label for the locked Recursos Generción (AGR) tab and sidebar row. */
+/** Etiqueta exacta de la UI para la pestaña y fila bloqueada Recursos Generción (AGR). */
 export const REGISTRO_INSUMOS_OFERTA_AGR_LABEL = cfg.registroInsumosOfertaAgrLabel;
 
-/** Labels that must be absent from sidebar and tab strip (e.g. Heat Rate). */
+/** Etiquetas que deben estar ausentes del menú lateral y de la tira de pestañas (p. ej. Heat Rate). */
 export const REGISTRO_INSUMOS_OFERTA_ABSENT_LABELS = cfg.registroInsumosOfertaAbsentLabels;
 
-/** Tab and nested-sidebar labels in UI order (includes AGR). */
+/** Etiquetas de pestaña y de menú anidado en orden de UI (incluye AGR). */
 export const REGISTRO_INSUMOS_OFERTA_TAB_NAMES = cfg.registroInsumosOfertaTabNames;
 
-/** Nested sidebar labels (alias of tab names; AGR first). */
+/** Etiquetas del menú anidado (alias de los nombres de pestaña; AGR primero). */
 export const REGISTRO_INSUMOS_OFERTA_NESTED_SIDEBAR_LABELS = REGISTRO_INSUMOS_OFERTA_TAB_NAMES;
 
-/** Tabs reachable with current tenant credentials. */
+/** Pestañas alcanzables con las credenciales actuales del tenant. */
 export const REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES = getModuleEnabledTabNames(
   MODULE_IDS.registroInsumosOferta,
 );
 
-/** Enabled nested sidebar links (alias of enabled tab names). */
+/** Enlaces anidados habilitados del menú lateral (alias de los nombres de pestaña habilitados). */
 export const REGISTRO_INSUMOS_OFERTA_ENABLED_NESTED_LABELS = REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES;
 
-/** Locked tab and nested-sidebar labels (includes AGR). */
+/** Etiquetas de pestaña y de menú anidado bloqueadas (incluye AGR). */
 export const REGISTRO_INSUMOS_OFERTA_LOCKED_TAB_NAMES = cfg.registroInsumosOfertaLockedTabNames;
 
-/** Locked nested sidebar menuitems (alias of locked tab names). */
+/** Ítems de menú anidado bloqueados (alias de los nombres de pestaña bloqueados). */
 export const REGISTRO_INSUMOS_OFERTA_LOCKED_NESTED_LABELS = REGISTRO_INSUMOS_OFERTA_LOCKED_TAB_NAMES;
 
-/** Default enabled tab used as sidebar anchor and landing view. */
+/** Pestaña habilitada por defecto usada como ancla del menú lateral y vista de aterrizaje. */
 export const REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB = cfg.registroInsumosOfertaDefaultTab;
 
-/** Layout A tab (Oferta Diaria calendar). */
+/** Pestaña Layout A (calendario Oferta Diaria). */
 export const REGISTRO_INSUMOS_OFERTA_LAYOUT_A_TAB = cfg.registroInsumosOfertaLayoutATab;
 
-/** Layout B OEF Proyectada tab. */
+/** Pestaña Layout B OEF Proyectada. */
 export const REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_TAB = cfg.registroInsumosOfertaOefProyectadaTab;
 
-/** Layout B Conceptos OC tab. */
+/** Pestaña Layout B Conceptos OC. */
 export const REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_TAB = cfg.registroInsumosOfertaConceptosOcTab;
 
-/** Layout B Gestion Conceptos tab. */
+/** Pestaña Layout B Gestion Conceptos. */
 export const REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_TAB =
   cfg.registroInsumosOfertaGestionConceptosTab;
 
-/** Calendar weekday column headers (Mes view). */
+/** Encabezados de columna de días de la semana del calendario (vista Mes). */
 export const REGISTRO_INSUMOS_OFERTA_CALENDAR_WEEKDAY_HEADERS =
   cfg.registroInsumosOfertaCalendarWeekdayHeaders;
 
-/** Calendar month tile labels (Año view). */
+/** Etiquetas de mosaico de mes del calendario (vista Año). */
 export const REGISTRO_INSUMOS_OFERTA_CALENDAR_ANO_MONTH_CELLS =
   cfg.registroInsumosOfertaCalendarAnoMonthCells;
 
-/** Expected year options in calendar year dropdown. */
+/** Opciones esperadas de año en el desplegable de año del calendario. */
 export const REGISTRO_INSUMOS_OFERTA_CALENDAR_YEAR_OPTIONS =
   cfg.registroInsumosOfertaCalendarYearOptions;
 
-/** Expected month options visible without scroll in calendar month dropdown. */
+/** Opciones esperadas de mes visibles sin desplazamiento en el desplegable de mes del calendario. */
 export const REGISTRO_INSUMOS_OFERTA_CALENDAR_MONTH_OPTIONS =
   cfg.registroInsumosOfertaCalendarMonthOptions;
 
-/** Additional month options reachable by scrolling the month dropdown. */
+/** Opciones adicionales de mes alcanzables al desplazar el desplegable de mes. */
 export const REGISTRO_INSUMOS_OFERTA_CALENDAR_MONTH_OPTIONS_SCROLL =
   cfg.registroInsumosOfertaCalendarMonthOptionsScroll;
 
-/** OEF Proyectada grid column headers (Layout B). */
+/** Encabezados de columna de la grilla OEF Proyectada (Layout B). */
 export const REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_COLUMNS =
   cfg.registroInsumosOfertaOefProyectadaColumns;
 
-/** Conceptos OC grid column headers (Layout B). */
+/** Encabezados de columna de la grilla Conceptos OC (Layout B). */
 export const REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_COLUMNS =
   cfg.registroInsumosOfertaConceptosOcColumns;
 
-/** Gestion Conceptos grid column headers (Layout B). */
+/** Encabezados de columna de la grilla Gestion Conceptos (Layout B). */
 export const REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_COLUMNS =
   cfg.registroInsumosOfertaGestionConceptosColumns;
 
-/** Wizard step titles for OEF Proyectada Nuevo Registro. */
+/** Títulos de paso del asistente Nuevo Registro de OEF Proyectada. */
 export const REGISTRO_INSUMOS_OFERTA_OEF_NUEVO_REGISTRO_WIZARD_STEPS =
   cfg.registroInsumosOfertaOefNuevoRegistroWizardSteps;
 
-/** Expected dropdown options per OEF Proyectada wizard combobox. */
+/** Opciones esperadas por combobox del asistente de OEF Proyectada. */
 export const REGISTRO_INSUMOS_OFERTA_OEF_WIZARD_DROPDOWN_OPTIONS: RegistroWizardDropdownOptionsMap =
   cfg.registroInsumosOfertaOefWizardDropdownOptions;
 
-/** Shared Unidad options for concept forms. */
+/** Opciones compartidas de Unidad para los formularios de concepto. */
 export const REGISTRO_INSUMOS_OFERTA_CONCEPTO_UNIDAD_OPTIONS =
   cfg.registroInsumosOfertaConceptoUnidadOptions;
 
-/** Expected dropdown options for Conceptos OC Nuevo Registro. */
+/** Opciones esperadas del desplegable de Nuevo Registro de Conceptos OC. */
 export const REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_REGISTRO_DROPDOWN_OPTIONS: RegistroWizardDropdownOptionsMap =
   cfg.registroInsumosOfertaConceptosOcRegistroDropdownOptions;
 
-/** Step-1 form fields for OEF Proyectada Nuevo Registro. */
+/** Campos del paso 1 de Nuevo Registro de OEF Proyectada. */
 export const REGISTRO_INSUMOS_OFERTA_OEF_NUEVO_REGISTRO_FIELDS: readonly RegistroWizardFieldDefinition[] =
   cfg.registroInsumosOfertaOefNuevoRegistroFields;
 
-/** Form fields for Nuevo Concepto / Gestion Conceptos Nuevo Registro. */
+/** Campos del formulario Nuevo Concepto / Nuevo Registro de Gestion Conceptos. */
 export const REGISTRO_INSUMOS_OFERTA_CONCEPTO_FORM_FIELDS: readonly RegistroWizardFieldDefinition[] =
   cfg.registroInsumosOfertaConceptoFormFields;
 
-/** Form fields for Conceptos OC Nuevo Registro. */
+/** Campos del formulario Nuevo Registro de Conceptos OC. */
 export const REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_REGISTRO_FIELDS: readonly RegistroWizardFieldDefinition[] =
   cfg.registroInsumosOfertaConceptosOcRegistroFields;
 
-/** Spinbutton labels for Conceptos OC Nuevo Registro (not modeled as wizard field kinds). */
+/** Etiquetas de spinbutton de Nuevo Registro de Conceptos OC (no modeladas como tipos de campo de asistente). */
 export const REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_REGISTRO_SPINBUTTON_LABELS =
   cfg.registroInsumosOfertaConceptosOcRegistroSpinbuttonLabels;
 
 /**
- * Navigation and assertions for the Insumos oferta submodule under Registro.
+ * Navegación y aserciones del submódulo Insumos oferta bajo Registro.
  */
 export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBasePage {
-  /** URL slug segment per navigable Insumos oferta tab (tenant config). */
+  /** Segmento de slug de URL por pestaña navegable de Insumos oferta (config del tenant). */
   static readonly REGISTRO_INSUMOS_OFERTA_TAB_SLUGS: Record<string, RegExp> = toTabSlugRecord(
     cfg.registroInsumosOfertaTabSlugs,
   );
 
-  /** Breadcrumb third-segment text per active tab. */
+  /** Texto del tercer segmento del breadcrumb por pestaña activa. */
   static readonly REGISTRO_INSUMOS_OFERTA_TAB_BREADCRUMBS: Record<string, string> =
     cfg.registroInsumosOfertaTabBreadcrumbs;
 
-  /** Href of each enabled nested sidebar link (tenant config). */
+  /** Href de cada enlace anidado habilitado del menú lateral (config del tenant). */
   static readonly REGISTRO_INSUMOS_OFERTA_SIDEBAR_HREFS: Record<string, string> =
     cfg.registroInsumosOfertaSidebarHrefs;
 
   /**
-   * Expands Registro and the Insumos oferta submodule dropdown in the sidebar.
+   * Expande Registro y el desplegable del submódulo Insumos oferta en el menú lateral.
    */
   async expandInsumosOfertaSidebar(): Promise<void> {
     await this.expandRegistroSubmodule(REGISTRO_INSUMOS_OFERTA_SUBMODULE_LABEL);
   }
 
   /**
-   * Re-expands Registro and Insumos oferta when navigation collapsed the sidebar flyouts.
+   * Vuelve a expandir Registro e Insumos oferta cuando la navegación plegó los menús laterales.
    */
   async ensureInsumosOfertaSidebarExpanded(): Promise<void> {
     await this.ensureRegistroSubmoduleNestedLinksVisible(
@@ -177,9 +177,9 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Clicks an Insumos oferta tab link inside the expanded sidebar submenu.
+   * Hace clic en el enlace de una pestaña de Insumos oferta dentro del submenú expandido.
    *
-   * @param tabName - Enabled nested sidebar link label.
+   * @param tabName - Etiqueta del enlace anidado habilitado del menú lateral.
    */
   async clickInsumosOfertaSidebarLink(tabName: RegistroInsumosOfertaTabName): Promise<void> {
     await this.ensureInsumosOfertaSidebarExpanded();
@@ -191,9 +191,9 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Opens an Insumos oferta tab via sidebar nested links under Insumos oferta.
+   * Abre una pestaña de Insumos oferta por los enlaces anidados del menú lateral bajo Insumos oferta.
    *
-   * @param tabName - Enabled nested sidebar link label.
+   * @param tabName - Etiqueta del enlace anidado habilitado del menú lateral.
    */
   async openInsumosOfertaFromSidebar(tabName: RegistroInsumosOfertaTabName): Promise<void> {
     await this.expandInsumosOfertaSidebar();
@@ -201,7 +201,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Insumos oferta is listed on the Registro dashboard hover card and the legacy name is absent.
+   * Comprueba que Insumos oferta aparece en la tarjeta hover de Registro y que el nombre legacy está ausente.
    */
   async expectInsumosOfertaVisibleOnDashboardHover(): Promise<void> {
     await this.hoverRegistroDashboardCard();
@@ -215,7 +215,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Insumos oferta is present in the Registro submenu and the legacy label is absent.
+   * Comprueba que Insumos oferta está presente en el submenú de Registro y que la etiqueta legacy está ausente.
    */
   async expectInsumosOfertaSubmenuPresentAndLegacyAbsent(): Promise<void> {
     await this.expandRegistroSidebar();
@@ -229,7 +229,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts nested Insumos oferta sidebar items match tenant config exactly, with AGR first and locked.
+   * Comprueba que los ítems anidados de Insumos oferta coinciden exactamente con la config del tenant, con AGR primero y bloqueado.
    */
   async expectInsumosOfertaNestedSidebarItems(): Promise<void> {
     await this.expandInsumosOfertaSidebar();
@@ -254,7 +254,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts enabled nested sidebar links expose the expected hrefs from tenant config.
+   * Comprueba que los enlaces anidados habilitados del menú lateral exponen los hrefs esperados de la config del tenant.
    */
   async expectInsumosOfertaEnabledSidebarHrefs(): Promise<void> {
     await this.expandInsumosOfertaSidebar();
@@ -267,7 +267,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Heat Rate is absent from the Registro submenu.
+   * Comprueba que Heat Rate está ausente del submenú de Registro.
    */
   async expectHeatRateAbsentFromSidebar(): Promise<void> {
     const submenu = this.registroSubmenu();
@@ -277,7 +277,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Heat Rate is absent from the gestor tab strip.
+   * Comprueba que Heat Rate está ausente de la tira de pestañas del gestor.
    */
   async expectHeatRateAbsentFromTabs(): Promise<void> {
     for (const label of REGISTRO_INSUMOS_OFERTA_ABSENT_LABELS) {
@@ -286,7 +286,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Heat Rate is absent from both the sidebar and the tab strip.
+   * Comprueba que Heat Rate está ausente tanto del menú lateral como de la tira de pestañas.
    */
   async expectHeatRateAbsent(): Promise<void> {
     await this.expectHeatRateAbsentFromSidebar();
@@ -294,7 +294,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts the banner breadcrumb still shows the legacy Plantas y consumos segment, not Insumos oferta.
+   * Comprueba que el breadcrumb del banner sigue mostrando el segmento legacy Plantas y consumos, no Insumos oferta.
    */
   async expectLegacyPlantasYConsumosBreadcrumb(): Promise<void> {
     const breadcrumb = this.page.getByRole('banner').getByRole('navigation');
@@ -303,7 +303,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Recursos Generción (AGR) is the first tab and is disabled.
+   * Comprueba que Recursos Generción (AGR) es la primera pestaña y está deshabilitada.
    */
   async expectAgrTabLocked(): Promise<void> {
     const agrTab = this.page.getByRole('tab', { name: REGISTRO_INSUMOS_OFERTA_AGR_LABEL, exact: true });
@@ -313,7 +313,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts a forced click on Recursos Generción (AGR) does not navigate or open a dialog.
+   * Comprueba que un clic forzado en Recursos Generción (AGR) no navega ni abre un diálogo.
    */
   async expectAgrTabDoesNotNavigate(): Promise<void> {
     const agrTab = this.page.getByRole('tab', { name: REGISTRO_INSUMOS_OFERTA_AGR_LABEL, exact: true });
@@ -330,7 +330,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts locked tabs on the Insumos oferta gestor shell are visible and disabled.
+   * Comprueba que las pestañas bloqueadas del shell del gestor de Insumos oferta son visibles y están deshabilitadas.
    */
   async expectLockedTabsDisabled(): Promise<void> {
     for (const tabName of REGISTRO_INSUMOS_OFERTA_LOCKED_TAB_NAMES) {
@@ -341,7 +341,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Insumos oferta gestor shell: URL, legacy breadcrumb, and tab strip state.
+   * Comprueba el shell del gestor de Insumos oferta: URL, breadcrumb legacy y estado de la tira de pestañas.
    */
   async expectGestorDeDatosInsumosOfertaShell(): Promise<void> {
     await expect(this.page).toHaveURL(/gestor-de-datos\/plantas-y-consumos\//);
@@ -356,9 +356,9 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Opens an Insumos oferta tab and asserts selection, breadcrumb, and URL slug.
+   * Abre una pestaña de Insumos oferta y comprueba selección, breadcrumb y slug de URL.
    *
-   * @param tabName - Enabled tab label.
+   * @param tabName - Etiqueta de pestaña habilitada.
    */
   async openInsumosOfertaTab(tabName: RegistroInsumosOfertaTabName): Promise<void> {
     await this.page.getByRole('tab', { name: tabName, exact: true }).click();
@@ -366,9 +366,9 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts the tab is selected, breadcrumb shows the tab label, and URL matches the slug.
+   * Comprueba que la pestaña está seleccionada, el breadcrumb muestra su etiqueta y la URL coincide con el slug.
    *
-   * @param tabName - Enabled tab label.
+   * @param tabName - Etiqueta de pestaña habilitada.
    */
   async expectInsumosOfertaTabActive(tabName: RegistroInsumosOfertaTabName): Promise<void> {
     await expect(this.page).toHaveURL(
@@ -384,37 +384,37 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Returns the calendar year combobox in the main content region.
+   * Devuelve el combobox de año del calendario en la región de contenido principal.
    */
   protected calendarYearCombobox(): Locator {
     return this.gestorMain().getByRole('combobox').first();
   }
 
   /**
-   * Returns the calendar month combobox in the main content region.
+   * Devuelve el combobox de mes del calendario en la región de contenido principal.
    */
   protected calendarMonthCombobox(): Locator {
     return this.gestorMain().getByRole('combobox').nth(1);
   }
 
   /**
-   * Returns the Ant Design select wrapper for the calendar year control.
+   * Devuelve el contenedor select de Ant Design del control de año del calendario.
    */
   protected calendarYearSelect(): Locator {
     return this.calendarYearCombobox().locator('xpath=ancestor::*[contains(@class,"ant-select")]').first();
   }
 
   /**
-   * Returns the Ant Design select wrapper for the calendar month control.
+   * Devuelve el contenedor select de Ant Design del control de mes del calendario.
    */
   protected calendarMonthSelect(): Locator {
     return this.calendarMonthCombobox().locator('xpath=ancestor::*[contains(@class,"ant-select")]').first();
   }
 
   /**
-   * Asserts Layout A calendar toolbar: year/month selectors, Mes/Año radios, and primary CTA.
+   * Comprueba la barra Layout A del calendario: selectores de año/mes, radios Mes/Año y CTA principal.
    *
-   * @param primaryCta - Visible primary action on the calendar toolbar.
+   * @param primaryCta - Acción principal visible en la barra del calendario.
    */
   async expectLayoutACalendarToolbar(
     primaryCta: 'Carga archivo' | 'Nuevo Registro' = 'Carga archivo',
@@ -430,7 +430,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Mes view calendar grid with weekday headers and day cells.
+   * Comprueba la grilla del calendario en vista Mes con encabezados de días de la semana y celdas de día.
    */
   async expectCalendarMesView(): Promise<void> {
     const table = this.gestorMain().locator('table').filter({ hasText: 'Lun' }).first();
@@ -441,7 +441,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Año view calendar grid with twelve month tiles and no weekday headers.
+   * Comprueba la grilla del calendario en vista Año con doce mosaicos de mes y sin encabezados de días de la semana.
    */
   async expectCalendarAnoView(): Promise<void> {
     const main = this.gestorMain();
@@ -455,9 +455,9 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Opens the calendar year dropdown, asserts options match tenant config exactly, then selects the given year.
+   * Abre el desplegable de año del calendario, comprueba que las opciones coinciden exactamente con la config del tenant y selecciona el año dado.
    *
-   * @param selectYear - Year option to select after listing all years.
+   * @param selectYear - Opción de año a seleccionar después de listar todos los años.
    */
   async expectCalendarYearDropdownWorks(selectYear = '2025'): Promise<void> {
     const yearCombo = this.calendarYearCombobox();
@@ -465,7 +465,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
     const dropdown = this.page.locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)').last();
     await expect(dropdown).toBeVisible();
     await this.expectWizardSelectOptionsMatch(dropdown, REGISTRO_INSUMOS_OFERTA_CALENDAR_YEAR_OPTIONS, {
-      fieldLabel: 'calendar year',
+      fieldLabel: 'año del calendario',
     });
     await dropdown.locator('.ant-select-item-option-content').getByText(selectYear, { exact: true }).click();
     await expect(this.calendarYearSelect()).toContainText(selectYear);
@@ -473,9 +473,9 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Opens the calendar month dropdown, asserts the full option set matches tenant config, then selects the given month.
+   * Abre el desplegable de mes del calendario, comprueba que el conjunto completo de opciones coincide con la config del tenant y selecciona el mes dado.
    *
-   * @param selectMonth - Month option to select after listing visible months.
+   * @param selectMonth - Opción de mes a seleccionar después de listar los meses visibles.
    */
   async expectCalendarMonthDropdownWorks(selectMonth = 'mar'): Promise<void> {
     const monthCombo = this.calendarMonthCombobox();
@@ -488,7 +488,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
         ...REGISTRO_INSUMOS_OFERTA_CALENDAR_MONTH_OPTIONS,
         ...REGISTRO_INSUMOS_OFERTA_CALENDAR_MONTH_OPTIONS_SCROLL,
       ],
-      { fieldLabel: 'calendar month' },
+      { fieldLabel: 'mes del calendario' },
     );
     await dropdown.locator('.ant-select-item-option-content').getByText(selectMonth, { exact: true }).click();
     await expect(this.calendarMonthSelect()).toContainText(selectMonth);
@@ -496,7 +496,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Toggles Mes/Año calendar views and validates each layout.
+   * Alterna las vistas Mes/Año del calendario y valida cada layout.
    */
   async expectCalendarMesAnoToggleWorks(): Promise<void> {
     const main = this.gestorMain();
@@ -507,7 +507,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Exercises year/month dropdowns and Mes/Año toggle on a Layout A calendar tab.
+   * Ejercita los desplegables de año/mes y el interruptor Mes/Año en una pestaña de calendario Layout A.
    */
   async expectCalendarControlsWork(): Promise<void> {
     await this.expectCalendarYearDropdownWorks();
@@ -518,9 +518,9 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts Layout B table toolbar: search, no Filtros, no filter chips, and optional extra CTAs.
+   * Comprueba la barra Layout B de tabla: búsqueda, sin Filtros, sin chips de filtro y CTAs extra opcionales.
    *
-   * @param extraButtons - Extra toolbar button names expected besides search.
+   * @param extraButtons - Nombres extra de botones de la barra esperados además de la búsqueda.
    */
   async expectLayoutBTableToolbar(extraButtons: readonly string[] = ['Nuevo Registro']): Promise<void> {
     const main = this.gestorMain();
@@ -533,9 +533,9 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Asserts data-table column headers in the first main grid.
+   * Comprueba los encabezados de columna de la primera grilla principal.
    *
-   * @param columnNames - Expected column header labels in order.
+   * @param columnNames - Etiquetas esperadas de encabezado de columna en orden.
    */
   async expectGridColumnHeaders(columnNames: readonly string[]): Promise<void> {
     const table = this.gestorMain().getByRole('table').first();
@@ -543,7 +543,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Opens OEF Proyectada Nuevo Registro, validates wizard fields, then closes.
+   * Abre Nuevo Registro de OEF Proyectada, valida los campos del asistente y cierra.
    */
   async expectOefProyectadaWizardDialog(): Promise<void> {
     await this.expectRegistroWizardDialogOpensAndCloses({
@@ -557,7 +557,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Opens Nuevo Concepto form, validates fields and Unidad dropdown, then closes.
+   * Abre el formulario Nuevo Concepto, valida campos y el desplegable Unidad, y cierra.
    */
   async expectNuevoConceptoDialog(): Promise<void> {
     await this.expectFlatFormDialogWithComboboxOpensAndCloses(
@@ -569,7 +569,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Opens Conceptos OC Nuevo Registro, validates fields and Concepto dropdown, then closes.
+   * Abre Nuevo Registro de Conceptos OC, valida campos y el desplegable Concepto, y cierra.
    */
   async expectConceptosOcRegistroDialog(): Promise<void> {
     await this.expectFlatFormDialogWithComboboxOpensAndCloses(
@@ -584,7 +584,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Opens Gestion Conceptos Nuevo Registro, validates concept form fields, then closes.
+   * Abre Nuevo Registro de Gestion Conceptos, valida los campos del formulario de concepto y cierra.
    */
   async expectGestionConceptosRegistroDialog(): Promise<void> {
     await this.expectFlatFormDialogWithComboboxOpensAndCloses(
@@ -595,12 +595,12 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
   }
 
   /**
-   * Opens a flat-form CTA, validates labels and combobox dropdowns, then closes the dialog.
+   * Abre un CTA de formulario plano, valida etiquetas y desplegables de combobox, y cierra el diálogo.
    *
-   * @param buttonName - Toolbar button that opens Registrar Información.
-   * @param fields - Wizard field definitions from tenant config.
-   * @param dropdownOptions - Expected combobox options keyed by field label.
-   * @param options - Optional extra labels and spinbuttons.
+   * @param buttonName - Botón de la barra que abre Registrar Información.
+   * @param fields - Definiciones de campo del asistente desde la config del tenant.
+   * @param dropdownOptions - Opciones esperadas de combobox indexadas por etiqueta de campo.
+   * @param options - Etiquetas extra y spinbuttons opcionales.
    */
   async expectFlatFormDialogWithComboboxOpensAndCloses(
     buttonName: string | RegExp,

@@ -2,9 +2,9 @@ import { Locator, Page, expect } from '@playwright/test';
 import { DASHBOARD_LOAD_TIMEOUT_MS } from '../timeouts';
 
 /**
- * Page object for the authenticated application shell after a successful
- * login (welcome region, primary side navigation, layout controls). Extend
- * this class with feature-specific sections as new dashboard tests are added.
+ * Page object del shell autenticado tras un login exitoso
+ * (región de bienvenida, navegación lateral primaria, controles de layout).
+ * Extender esta clase con secciones de producto a medida que se añadan pruebas del tablero.
  */
 export class DashboardPage {
   constructor(private readonly page: Page) {}
@@ -18,10 +18,10 @@ export class DashboardPage {
   menuFold = (): Locator => this.page.getByRole('button', { name: 'menu-fold' });
 
   /**
-   * Asserts the post-login dashboard shell is visible and stable enough
-   * for further navigation or feature tests.
+   * Comprueba que el shell del tablero post-login es visible y está lo bastante
+   * estable para seguir navegando o ejecutar pruebas de módulo.
    *
-   * @param timeoutMs - Max wait per assertion; defaults to {@link DASHBOARD_LOAD_TIMEOUT_MS}.
+   * @param timeoutMs - Espera máxima por aserción; por defecto {@link DASHBOARD_LOAD_TIMEOUT_MS}.
    */
   async expectLoaded(timeoutMs: number = DASHBOARD_LOAD_TIMEOUT_MS): Promise<void> {
     await expect(this.welcomeHeading()).toBeVisible({ timeout: timeoutMs });

@@ -1,238 +1,188 @@
-# New — import progresivo de TestingWithByPass
+# Suite Playwright por tenant (QA + bypass)
 
-Esta carpeta es una copia **parcial** de `TestingWithByPass`. El objetivo es traer solo los archivos y funciones que realmente se usan, rebanada a rebanada, y dejar el proyecto original como fuente de verdad hasta que cada rebanada pase en `New`.
+Suite de pruebas de UI contra el entorno QA de Enersinc. El login usa la cabecera `QA-Bypass-Token`. El código compartido vive en `tests/support/`; los datos JSON y los specs viven en `tests/tenants/<tenant>/`.
 
-## Cómo se copia
+Tenants activos: **emug** y **gecg**. El tenant se elige con `TEST_TENANT` (por defecto `emug`).
 
-1. Elegir **un spec** (o, al inicio, solo el esqueleto del proyecto).
-2. Copiar ese archivo y todo lo que importa, de forma transitiva.
-3. Ejecutar **solo ese spec**.
-4. Repetir. No copiar carpetas enteras “porque van juntas”.
+## Instalar y correr
 
-## Paso 0 — esqueleto Playwright (hecho)
-
-Este paso deja `New` como proyecto Playwright instalable, **sin tests todavía**.
-
-### Qué se copió o adaptó
-
-| Archivo | Qué cambió respecto a `TestingWithByPass` |
-| --- | --- |
-| `package.json` | Mismo runtime (`@playwright/test`, `dotenv`). Sin script de harvest. |
-| `package-lock.json` | Se regenera con `npm install` a partir del `package.json` de este paso. |
-| `.gitignore` | Igual: ignora `.env`, `node_modules`, reportes de Playwright. |
-| `playwright.config.ts` | Misma `baseURL`, token `QA-Bypass-Token`, filtro por `TEST_TENANT` y proyectos `chromium` / `firefox` / `webkit` (más variantes `-unauth`). El match de auth no autenticado apunta a `tenants/<tenant>/auth/pruebas/`. |
-
-### Qué se dejó fuera a propósito
-
-- Reporter CSV, teardown CSV y `tests/reporters/`.
-- `playwright.harvest.config.ts` y `scripts/` de harvest.
-- `tests/support/auth.ts` (storageState; el login de esta suite es UI + contexto compartido).
-- Registro, `load-tenant-config`, JSON de tenant y el resto de specs de auth.
-- `.env` no forma parte del import: ya debe existir en local y **no** se versiona.
-
-### Variables de entorno
-
-Define estas claves en `.env` (valores reales solo en local):
-
-| Variable | Uso |
-| --- | --- |
-| `BASE_URL` | URL base de QA (`use.baseURL`). |
-| `TOKEN_BYPASS` | Cabecera `QA-Bypass-Token`. |
-| `TEST_TENANT` | Tenant activo; por defecto `emug` si falta. Filtra `tests/tenants/<tenant>/**/*.spec.ts`. |
-| `VALID_EMAIL` / `VALID_PASSWORD` | Login válido (paso 1 en adelante). |
-| `INVALID_EMAIL` / `INVALID_PASSWORD` | Specs de auth negativa (paso 1 en adelante). |
-
-### Cómo instalar
-
-Desde esta carpeta (`New`):
+Desde la raíz de este repo:
 
 ```bash
 npm install
 npx playwright install
 ```
 
-Un spec de login: `npx playwright test --project=chromium-unauth`.
+Correr el tenant por defecto (`emug`):
 
-## Paso 0.5 — arquitectura de carpetas (hecho)
+```bash
+npx playwright test --project=chromium
+```
 
-Carpetas por tenant y módulo. El código de login vive en `support/`; los specs, bajo `tenants/<id>/…/pruebas/`.
+Correr gecg (PowerShell):
 
-Convención: **`support/` es código compartido**; **`tenants/` es datos JSON y specs**.
+```powershell
+$env:TEST_TENANT="gecg"
+npx playwright test --project=chromium
+```
+
+Proyectos:
+
+- `chromium` / `firefox` / `webkit`: specs autenticados (Registro). Un login por worker; la sesión se reutiliza.
+- `chromium-unauth` (y equivalentes): specs de auth en `tenants/<tenant>/auth/pruebas/`. Cada test arranca sin sesión.
+
+Scripts de `package.json`:
+
+- `npm test` — suite según `playwright.config.ts`.
+- `npm run test:chromium` — solo Chromium autenticado.
+- `npm run refresh:dropdowns` — recaptura opciones de combobox desde QA (no forma parte de la suite de tenant).
+
+## Variables de entorno
+
+Definir estas claves en `.env` (no se versiona):
+
+- `BASE_URL` — URL de QA (`use.baseURL`).
+- `TOKEN_BYPASS` — valor de la cabecera `QA-Bypass-Token`.
+- `TEST_TENANT` — `emug` o `gecg`. Filtra `tests/tenants/<tenant>/**/*.spec.ts`.
+- `VALID_EMAIL` / `VALID_PASSWORD` — login válido.
+- `INVALID_EMAIL` / `INVALID_PASSWORD` — casos negativos de auth.
+
+Si `VALID_PASSWORD` contiene apóstrofos, usar comillas dobles (`VALID_PASSWORD="..."`). Las comillas simples de dotenv cortan el valor.
+
+## Arquitectura
 
 ```text
 tests/
-├── support/                          # código compartido (login kernel)
+├── global-setup.ts                   # valida TEST_TENANT, carpeta y tenant.json
+├── support/                          # código compartido
+│   ├── env.ts, urls.ts, timeouts.ts
+│   ├── ui-login.ts, shared-session.ts, fixtures.ts
+│   ├── ant-select-collect-options.ts
 │   ├── config/                       # loader, registry, guards, types/
-│   ├── pages/                        # POM de login aquí; registro/ y despacho/ por módulo
-│   │   ├── registro/
-│   │   └── despacho/
-│   └── registro/                     # helpers de DOM (labels, headers de tabla)
+│   ├── pages/                        # POM de login
+│   │   └── registro/                 # POM por módulo de Registro
+│   └── registro/                     # helpers de DOM (labels, tabs, columnas)
 └── tenants/
     ├── emug/
-    │   ├── tenant.json               # manifest del tenant (paso 2)
+    │   ├── tenant.json               # módulos enabled/disabled
     │   ├── auth/pruebas/
-    │   │   ├── email-auth/
-    │   │   └── password-auth/
     │   └── registro/
     │       ├── config/               # JSON de columnas, tabs, wizard
     │       └── pruebas/              # specs Playwright
-    ├── gecg/                         # misma forma que emug
-    └── tbsg/                         # misma forma que emug
+    └── gecg/                         # misma forma
+```
+
+```mermaid
+flowchart LR
+  tenantJson["tenant.json"] --> loader["load-tenant-config"]
+  moduleJson["registro/config/*.json"] --> loader
+  loader --> guards["tenant-guards"]
+  guards --> specs["specs en pruebas/"]
+  fixtures["fixtures + sesion compartida"] --> specs
+  pom["pages/registro POM"] --> specs
+  helpers["registro/* helpers"] --> pom
 ```
 
 Un módulo de producto nuevo (por ejemplo MDM) suma `support/pages/mdm/` y `tenants/<tenant>/mdm/{config,pruebas}/`.
 
-## Paso 1 — kernel de login (hecho)
+## Helpers y POM
 
-Un spec no autenticado prueba el stack: env, POM de login, fixtures y `globalSetup` (solo valida que exista `tests/tenants/<tenant>`).
+### Login y sesión
 
-| Destino en `New` | Origen |
-| --- | --- |
-| `tests/support/env.ts` | `tests/support/env.ts` |
-| `tests/support/urls.ts` | `tests/tenants/emug/support/urls.ts` (compartido) |
-| `tests/support/timeouts.ts` | `tests/tenants/emug/support/timeouts.ts` (compartido) |
-| `tests/support/pages/EmailStepPage.ts` | `tests/tenants/emug/support/pages/EmailStepPage.ts` |
-| `tests/support/pages/PasswordStepPage.ts` | idem |
-| `tests/support/pages/DashboardPage.ts` | idem |
-| `tests/support/ui-login.ts` | `tests/support/ui-login.ts` (imports estáticos; ya no carga POM por tenant) |
-| `tests/support/shared-session.ts` | `tests/support/shared-session.ts` |
-| `tests/support/fixtures.ts` | `tests/tenants/emug/support/fixtures.ts` |
-| `tests/global-setup.ts` | igual, **sin** `ensureCanonicalCatalog` |
-| `tests/tenants/emug/auth/pruebas/password-auth/successful-password-login.spec.ts` | spec de login válido |
+- `ui-login.ts` — recorre correo + contraseña hasta el tablero autenticado.
+- `shared-session.ts` — un contexto autenticado por worker en proyectos que no terminan en `-unauth`.
+- `fixtures.ts` — exporta `test` / `expect`. Los specs autenticados deben importar desde aquí (no desde `@playwright/test`) para recibir `dashboardPage`.
+- `EmailStepPage` / `PasswordStepPage` / `DashboardPage` — POM del flujo de entrada.
 
-## Paso 2 — kernel de config (hecho)
+### Config y guards
 
-Loader slim: solo el manifest (`tenant.json`). Sin JSON de módulos ni getters de tabs (paso 3).
+- `module-registry.ts` — `MODULE_IDS` y rutas a `registro/config/*.json`.
+- `load-tenant-config.ts` — `getTenantManifest`, `isModuleEnabled`, `isTabEnabled`, getters `getRegistro*Config`. Carga perezosa: un JSON de módulo deshabilitado no se lee.
+- `tenant-guards.ts` — `skipUnlessModuleEnabled`, `skipUnlessTabEnabled`, `skipUnlessAnyTabEnabled`, `skipUnlessAllTabsEnabled`, `whenTabEnabled`.
 
-| Destino en `New` | Origen / acción |
-| --- | --- |
-| `tests/support/config/types/tenant-manifest.ts` | `tests/config/types/tenant-manifest.ts` |
-| `tests/support/config/module-registry.ts` | `tests/config/module-registry.ts`; `MODULE_CONFIG_PATHS` apunta a `registro/config/*.json` |
-| `tests/support/config/load-tenant-config.ts` | Solo manifest: `getTenantManifest`, `isModuleEnabled`, `isModuleFull`, etc. |
-| `tests/support/config/tenant-guards.ts` | Solo `skipUnlessModuleEnabled` |
-| `tests/tenants/emug/tenant.json` | `tests/config/tenants/emug/tenant.json` |
+Los submódulos de Registro también exigen `modules.registro.enabled` en `tenant.json`. Si un módulo tiene `full: true`, se usan todas las pestañas del JSON (no solo `*EnabledTabNames`).
 
-`global-setup.ts` exige `tenant.json` y llama `getTenantManifest()`. `TEST_TENANT` en `env.ts` default `emug`.
+### Helpers de DOM (`tests/support/registro/`)
 
-## Paso 3 — navegación Registro + seed (hecho)
+- `sidebar-labels.ts` — compara etiquetas del menú lateral con el JSON.
+- `tab-strip.ts` — compara la tira de pestañas (habilitadas vs bloqueadas por ACL).
+- `form-field-labels.ts` — compara labels de formularios/asistentes.
+- `table-column-headers.ts` — compara encabezados de grilla.
+- `ant-select-collect-options.ts` — recolecta opciones de un `Select` de Ant Design (incluye listas virtuales).
 
-Seed autenticado: dashboard → sidebar Cttos energía → shell del gestor. POM slim (solo sidebar); JSON de energía copiado completo.
+### POM de Registro
 
-| Destino en `New` | Origen / acción |
-| --- | --- |
-| `tests/tenants/emug/registro/config/navigation.json` | `tests/config/tenants/emug/registro/navigation.json` |
-| `tests/tenants/emug/registro/config/cttos-energia.json` | `tests/config/tenants/emug/registro/cttos-energia.json` (completo) |
-| `tests/support/config/types/registro-navigation.ts` | igual |
-| `tests/support/config/types/registro-cttos-energia.ts` | slim: tabs + slugs |
-| `tests/support/config/load-tenant-config.ts` | getters de navegación/energía, `isTabEnabled` (solo `registroCttosEnergia`) |
-| `tests/support/config/tenant-guards.ts` | + `skipUnlessTabEnabled` |
-| `tests/support/pages/registro/registro-navigation-base.ts` | sidebar only |
-| `tests/support/pages/registro/cttos-energia.ts` | cadena del seed |
-| `tests/tenants/emug/registro/pruebas/cttos-energia/seed-cttos-energia.spec.ts` | seed autenticado |
+`RegistroNavigationBasePage` cubre menú lateral, hover del tablero, toolbar, asistentes y aserciones compartidas. Cada módulo tiene su página (`cttos-energia.ts`, `empresas.ts`, `historial.ts`, `rpm.ts`, `sireci.ts`, …) que lee el JSON del tenant activo al importar.
 
-## Paso 4 — resto de specs de Contratos energía (hecho)
+## Configs JSON
 
-Las 14 specs restantes de energía. POM y helpers completos; el JSON no se recopia.
+Cada módulo tiene un JSON en `tests/tenants/<tenant>/registro/config/`. Convención de claves:
 
-| Destino en `New` | Origen / acción |
-| --- | --- |
-| `tests/support/config/types/registro-wizard.ts` | igual |
-| `tests/support/config/types/tenant-breadcrumb.ts` | igual |
-| `tests/support/config/types/registro-cttos-energia.ts` | tipo completo (ya no slim) |
-| `tests/support/config/load-tenant-config.ts` | + `toBreadcrumbMatcherRecord` |
-| `tests/support/config/tenant-guards.ts` | + `skipUnlessAnyTabEnabled`, `skipUnlessAllTabsEnabled`, `whenTabEnabled` |
-| `tests/support/registro/table-column-headers.ts` | igual |
-| `tests/support/registro/form-field-labels.ts` | import hacia `support/config/types` |
-| `tests/support/ant-select-collect-options.ts` | igual |
-| `tests/support/pages/registro/registro-navigation-base.ts` | POM completo (wizard, toolbar, hover) |
-| `tests/support/pages/registro/cttos-energia.ts` | POM completo |
-| `tests/tenants/emug/registro/pruebas/cttos-energia/*.spec.ts` | 14 specs + seed |
+- `*TabNames` — pestañas o vistas declaradas.
+- `*EnabledTabNames` — alcanzables con las credenciales actuales.
+- `*LockedTabNames` — visibles pero deshabilitadas (ACL).
+- columnas de grilla, pasos y campos de asistente, mapas `*DropdownOptions`.
+- `*TabSlugs` y `*TabBreadcrumbs` — aserciones de URL y miga de pan.
 
-## Paso 5 — resto de emug enabled + auth (hecho)
+`navigation.json` lista el submenú de Registro: habilitados, bloqueados, legacy y previsualización del tablero.
 
-Auth restante, navigation y módulos Registro enabled. Sin combustible, RPM ni SIRECI.
+`tenant.json` es el interruptor de módulos. Un módulo `enabled: false` hace que los specs llamen `test.skip` vía guards. El loader no exige que el JSON exista si el módulo está apagado.
 
-| Destino en `New` | Origen / acción |
-| --- | --- |
-| `tests/tenants/emug/auth/pruebas/email-auth/` | 2 specs (imports a `support/urls` y `support/env`) |
-| `tests/tenants/emug/auth/pruebas/password-auth/` | 3 specs extra + login ya existente |
-| `tests/tenants/emug/registro/pruebas/navigation/` | 4 specs |
-| `tests/tenants/emug/registro/pruebas/empresas/` | 5 specs |
-| `tests/tenants/emug/registro/pruebas/otros-contratos/` | 5 specs |
-| `tests/tenants/emug/registro/pruebas/planta-consumos/` | 12 specs |
-| `tests/tenants/emug/registro/pruebas/insumos-oferta/` | 2 specs (POM de planta) |
-| `tests/tenants/emug/registro/pruebas/otros-documentos/` | 8 specs |
-| `tests/tenants/emug/registro/pruebas/historial/` | 10 specs |
-| `tests/tenants/emug/registro/config/{empresas,otros-contratos,planta-consumos,otros-documentos,historial}.json` | JSON de módulo |
-| `tests/support/config/types/registro-{empresas,otros-contratos,planta-consumos,otros-documentos,historial}.ts` | tipos |
-| `tests/support/pages/registro/{empresas,otros-contratos,planta-consumos,otros-documentos,historial}.ts` | POM |
-| `tests/support/config/load-tenant-config.ts` | getters + switch de tabs (sin combustible/RPM/SIRECI) |
+## Patrones de prueba
 
-### Qué se dejó fuera a propósito
+Los nombres de archivo se mantienen en inglés corto. Los títulos del reporte van en español:
 
-- `cttos-combustible`, `RPM`, `sireci` (disabled en `tenant.json`).
-- Despacho, tenants `tbsg` / `gecg`, harvest, reporters CSV.
+- `seed-*.spec.ts` — **Semilla**: abre el módulo por el menú lateral y valida el shell del gestor.
+- `path-a-*.spec.ts` — **Ruta A**: navegación por el menú lateral.
+- `path-b-*.spec.ts` — **Ruta B**: hover de la tarjeta Registro en el tablero.
+- `layout-*.spec.ts` — grilla, toolbar, columnas y diálogos de una vista.
+- `tab-navigation.spec.ts` — cruce entre pestañas habilitadas.
+- `ratify-*.spec.ts` — confirma etiquetas o renombres frente al JSON.
 
-### Verificación (chromium)
+Auth (proyecto `*-unauth`):
 
-| Grupo | Resultado |
-| --- | --- |
-| `chromium-unauth` (6 auth) | 5 passed; 1 failed (QA) |
-| navigation + empresas | 8 passed; 1 failed (QA vs JSON) |
-| otros-contratos + planta-consumos + insumos-oferta | 14 passed; 5 skipped (tabs locked en JSON) |
-| otros-documentos + historial | 14 passed; 4 skipped (Contadores / hover placeholder) |
+- `email-auth/` — autorización por correo (válido / no registrado).
+- `password-auth/` — contraseña válida, vacía, inválida o solo espacios.
 
-Desajustes QA vs harvest (no se recorta JSON para “arreglarlos”):
+Los specs autenticados usan `skipUnlessModuleEnabled` / `skipUnlessTabEnabled` en `beforeEach`.
 
-- `layout-a-empresas-grid`: el diálogo Nuevo Cliente/Proveedor muestra **Sectores Operativos** en UI y no está en `empresas.json`.
-- `whitespace-only-password`: QA navega a `/privacy-policy` en lugar del alert «Ocurrió un error inesperado…».
-- Energía (paso 4): `layout-c-dec-grid` dropdown `Estado` vs harvest.
+## Tenants
 
-## Paso 6 — agentes Playwright (hecho)
+### emug (~50 specs)
 
-Definiciones de agente y MCP `playwright-test` para planner / generator / healer. Abrir la carpeta `New` como raíz del workspace para que Cursor cargue `.cursor/`.
+Habilitados: navigation, empresas, cttos-energía, otros-contratos, insumos-oferta, otros-documentos, historial.
 
-| Destino en `New` | Origen |
-| --- | --- |
-| `.cursor/mcp.json` | servidor MCP `npx playwright run-test-mcp-server` |
-| `.cursor/commands/playwright-test-planner.agent.md` | igual |
-| `.cursor/commands/playwright-test-generator.agent.md` | igual |
-| `.cursor/commands/playwright-test-healer.agent.md` | igual |
+Deshabilitados: cttos-combustible, RPM, SIRECI.
 
-Los planes generados van a `specs/` (ya en `.gitignore`). Los seeds de módulo ya existen bajo `tests/tenants/<tenant>/…/seed-*.spec.ts`.
+No hay módulo `planta-consumos`. La etiqueta legacy «Planta y consumos» queda en `navigation.json` para aserciones de menú.
 
-## Paso 7 — tenant gecg (hecho)
+Specs extra de navigation (`ratify-*`, chips de toolbar) viven solo en emug.
 
-Auth + Registro de gecg. Support compartido; JSON y specs bajo `tests/tenants/gecg/`. Combustible, RPM y SIRECI entran a `support/` porque emug no los trajo.
+### gecg (~46 specs)
 
-Para correr gecg: `TEST_TENANT=gecg` y credenciales gecg en `.env`. Si `VALID_PASSWORD` contiene apóstrofos, usa comillas dobles (`VALID_PASSWORD="..."`); las comillas simples de dotenv cortan el valor.
+Habilitados: navigation, empresas, cttos-energía, cttos-combustible, RPM, SIRECI, historial.
 
-| Destino en `New` | Origen / acción |
-| --- | --- |
-| `tests/tenants/gecg/tenant.json` | `tests/config/tenants/gecg/tenant.json` |
-| `tests/tenants/gecg/registro/config/navigation.json` | submenu gecg + schema New (enabled/locked/legacy/preview) |
-| `tests/tenants/gecg/auth/pruebas/` | 6 specs (imports a `support/`) |
-| `tests/tenants/gecg/registro/config/{empresas,cttos-energia,historial,cttos-combustible,rpm,sireci}.json` | JSON del original |
-| `tests/tenants/gecg/registro/pruebas/{empresas,historial,cttos-energia,cttos-combustible,rpm,sireci}/` | 37 specs Registro (seed de energía restaurado con tab `Contratos LP`) |
-| `tests/support/config/types/registro-{cttos-combustible,rpm,sireci}.ts` | tipos |
-| `tests/support/config/load-tenant-config.ts` | getters + switch de tabs combustible/RPM/SIRECI |
-| `tests/support/pages/registro/{cttos-combustible,rpm,sireci}.ts` | POM (imports a `support/config`) |
-| `tests/support/pages/registro/cttos-energia.ts` | `waitForDecTabToolbarReady` usa el label DEC del JSON del tenant |
+Deshabilitados: planta/consumos y otros-documentos (sin carpeta de pruebas).
 
-### Qué se dejó fuera a propósito
+No copia los specs de `registro/pruebas/navigation/` de emug.
 
-- `tests/tenants/gecg/support/` (fixtures, login POM, Despacho).
-- Planta y consumos / Otros documentos (disabled y sin specs).
-- Harvest, `_archive/gecg-harvest-data.json`, reporters CSV.
-- Specs de `navigation/` (gecg no los tenía).
-- JSON de combustible/RPM/SIRECI en **emug** (loader lazy).
+## Recaptura de desplegables
 
-`layout-d-respaldos-grid` usa el tab locked `Contratos Respaldos` → skip.
-`layout-resumen-tab` permanece `test.fixme` como en el original.
+Mantenimiento aparte de la suite de tenant. Recorre los asistentes habilitados y compara (o escribe) los mapas `*DropdownOptions` del JSON.
 
-Verificación Chromium (`TEST_TENANT=gecg`): el loader lista 8 módulos enabled; `--list` carga 6 specs unauth + 39 casos Registro. El correo autorizado y los casos negativos de contraseña vacía/inválida pasan. El login válido y el caso de solo espacios fallan hoy en QA (el formulario no entra al dashboard; espacios navega a `/privacy-policy`), así que los seeds autenticados no se pudieron ejercer hasta actualizar la contraseña gecg.
+```bash
+npm run refresh:dropdowns
+```
 
-## Siguientes pasos (aún no copiados)
+- Sin `REFRESH_DROPDOWNS_WRITE`: solo imprime diffs.
+- `REFRESH_DROPDOWNS_WRITE=1`: persiste cambios en el JSON del tenant activo.
+- `REFRESH_DROPDOWNS_MODULE=<moduleId>`: filtra un módulo (`registroCttosEnergia`, `registroEmpresas`, …).
 
-1. Tenant `tbsg` y/o reporters CSV.
-2. Módulos Registro disabled, si se habilitan en `tenant.json`.
+Config: `playwright.refresh.config.ts`. Runner: `scripts/refresh-dropdown-options.spec.ts`.
+
+## Fuera de alcance
+
+- Tenant `tbsg`.
+- Módulo Despacho.
+- Reporters CSV y harvest histórico.
+- Agentes de Cursor (`.cursor/commands/*.agent.md`): definiciones de Playwright MCP, en inglés a propósito.

@@ -1,5 +1,5 @@
-// spec: specs/Registro/insumos-oferta-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/pruebas/insumos-oferta/seed-insumos-oferta.spec.ts
+// plan: specs/Registro/insumos-oferta-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/insumos-oferta/seed-insumos-oferta.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
@@ -16,7 +16,7 @@ test.describe('Insumos oferta', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_TAB);
   });
 
-  test('Layout B — OEF Proyectada grilla y wizard Nueva Vigencia Oef', async ({ page, dashboardPage }) => {
+  test('Layout B — OEF Proyectada grilla y asistente Nueva Vigencia Oef', async ({ page, dashboardPage }) => {
     test.setTimeout(60_000);
     const registro = new RegistroInsumosOfertaNavigationPage(page);
 

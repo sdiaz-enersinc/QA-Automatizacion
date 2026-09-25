@@ -1,5 +1,5 @@
-// spec: specs/Registro/otros-documentos-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/pruebas/otros-documentos/seed-otros-documentos.spec.ts
+// plan: specs/Registro/otros-documentos-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/otros-documentos/seed-otros-documentos.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import {
@@ -19,7 +19,7 @@ test.describe('Escenario 2 — Navegación por menú lateral y cruce de pestaña
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosDocumentos);
   });
 
-  test('Path A — cada vista de Hidrologia accesible por enlaces anidados del menú lateral', async ({
+  test('Ruta A — cada vista de Hidrologia accesible por enlaces anidados del menú lateral', async ({
     page,
     dashboardPage,
   }) => {
@@ -51,7 +51,7 @@ test.describe('Escenario 2 — Navegación por menú lateral y cruce de pestaña
   });
 
   test.fixme(
-    'Acceso roto a Contadores lo daña / Path A — cada vista de Contadores accesible por enlaces anidados del menú lateral',
+    'Acceso roto a Contadores lo daña / Ruta A — cada vista de Contadores accesible por enlaces anidados del menú lateral',
     async ({ page, dashboardPage }) => {
       skipUnlessAnyTabEnabled(
         MODULE_IDS.registroOtrosDocumentos,

@@ -1,5 +1,5 @@
-// spec: specs/Registro/empresas-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/empresas/seed-empresas.spec.ts
+// plan: specs/Registro/empresas-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/empresas/seed-empresas.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
@@ -7,12 +7,12 @@ import { test, expect } from '../../../../../support/fixtures';
 import { REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS } from '../../../../../support/pages/registro/navigation';
 import { RegistroEmpresasNavigationPage } from '../../../../../support/pages/registro/empresas';
 
-test.describe('Empresas — Path B (hover del tablero)', () => {
+test.describe('Empresas — Ruta B (hover del tablero)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroEmpresas);
   });
 
-  test('Path B — El hover del tablero abre la grilla de Empresas', async ({
+  test('Ruta B — El hover del tablero abre la grilla de Empresas', async ({
     page,
     dashboardPage,
   }) => {

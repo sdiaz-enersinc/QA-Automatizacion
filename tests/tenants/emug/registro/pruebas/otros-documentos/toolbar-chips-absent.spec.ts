@@ -1,5 +1,5 @@
-// spec: specs/Registro/emug-registro-toolbar-chips-removed.plan.md
-// seed: tests/tenants/emug/registro/pruebas/otros-documentos/seed-otros-documentos.spec.ts
+// plan: specs/Registro/emug-registro-toolbar-chips-removed.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/otros-documentos/seed-otros-documentos.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import {

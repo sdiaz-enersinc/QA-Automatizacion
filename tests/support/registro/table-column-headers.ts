@@ -1,9 +1,9 @@
 import { expect, type Locator } from '@playwright/test';
 
 /**
- * Reads visible column header texts from a data table.
+ * Lee los textos visibles de encabezados de columna de una tabla de datos.
  *
- * @param table - Table locator (typically `getByRole('table').first()`).
+ * @param table - Localizador de tabla (típicamente `getByRole('table').first()`).
  */
 export async function collectTableColumnHeaderLabels(table: Locator): Promise<string[]> {
   const headers = table.getByRole('columnheader');
@@ -12,19 +12,19 @@ export async function collectTableColumnHeaderLabels(table: Locator): Promise<st
 }
 
 export interface AssertTableColumnHeadersMatchConfigOptions {
-  /** Extra headers allowed in the UI but omitted from config (e.g. Acciones). */
+  /** Encabezados extra permitidos en la UI pero omitidos en la config (p. ej. Acciones). */
   additionalAllowedColumns?: readonly string[];
-  /** When true, only fail on config columns missing from UI (subset mode). */
+  /** Si es true, solo falla cuando faltan columnas de la config en la UI (modo subconjunto). */
   allowExtraColumns?: boolean;
   context?: string;
 }
 
 /**
- * Asserts table column headers match the configured set (strict by default).
+ * Comprueba que los encabezados de columna coinciden con el conjunto configurado (estricto por defecto).
  *
- * @param table - Table locator.
- * @param expectedColumns - Data columns from tenant config.
- * @param options - Chrome columns and subset mode.
+ * @param table - Localizador de tabla.
+ * @param expectedColumns - Columnas de datos de la config del tenant.
+ * @param options - Columnas de chrome y modo subconjunto.
  */
 export async function assertTableColumnHeadersMatchConfig(
   table: Locator,
@@ -53,14 +53,14 @@ export async function assertTableColumnHeadersMatchConfig(
     const parts: string[] = [];
     if (missing.length > 0) {
       const preview = missing.slice(0, 5).join(', ');
-      const suffix = missing.length > 5 ? ` (+${missing.length - 5} more)` : '';
-      parts.push(`missing from UI: ${preview}${suffix}`);
+      const suffix = missing.length > 5 ? ` (+${missing.length - 5} más)` : '';
+      parts.push(`faltan en la UI: ${preview}${suffix}`);
     }
     if (unexpected.length > 0) {
       const preview = unexpected.slice(0, 5).join(', ');
-      const suffix = unexpected.length > 5 ? ` (+${unexpected.length - 5} more)` : '';
-      parts.push(`in UI but not in config: ${preview}${suffix}`);
+      const suffix = unexpected.length > 5 ? ` (+${unexpected.length - 5} más)` : '';
+      parts.push(`en la UI pero no en la config: ${preview}${suffix}`);
     }
-    throw new Error(`${prefix}Column header mismatch — ${parts.join('; ')}`);
+    throw new Error(`${prefix}Desajuste de encabezados de columna — ${parts.join('; ')}`);
   }).toPass({ timeout: 30_000 });
 }

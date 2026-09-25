@@ -1,5 +1,5 @@
-// spec: specs/initial-email-authorization.plan.md
-// seed: tests/auth.setup.ts
+// plan: specs/initial-email-authorization.plan.md
+// semilla: tests/auth.setup.ts
 
 import { test, expect } from '@playwright/test';
 import { entryUrl } from '../../../../../support/urls';

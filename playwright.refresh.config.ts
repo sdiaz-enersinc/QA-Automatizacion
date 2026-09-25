@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 dotenv.config({ quiet: true });
 
 /**
- * Playwright config for the dropdown harvest maintenance runner.
- * Kept separate so `refresh-dropdown-options.spec.ts` is not part of the tenant suite.
+ * Config de Playwright del runner de mantenimiento de desplegables.
+ * Va aparte para que `refresh-dropdown-options.spec.ts` no entre en la suite de tenant.
  */
 export default defineConfig({
   testDir: './scripts',

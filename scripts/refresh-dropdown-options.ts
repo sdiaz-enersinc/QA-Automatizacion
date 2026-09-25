@@ -1,8 +1,8 @@
 /**
- * Maintenance script: recaptures QA combobox options into tenant `*DropdownOptions` JSON maps.
+ * Script de mantenimiento: recaptura las opciones de combobox de QA en los mapas `*DropdownOptions` del JSON del tenant.
  *
- * Run: `npm run refresh:dropdowns`
- * Env: `REFRESH_DROPDOWNS_WRITE=1` to persist, `REFRESH_DROPDOWNS_MODULE=<moduleId>` to filter.
+ * Ejecutar: `npm run refresh:dropdowns`
+ * Env: `REFRESH_DROPDOWNS_WRITE=1` para persistir, `REFRESH_DROPDOWNS_MODULE=<moduleId>` para filtrar.
  */
 import fs from 'fs';
 import path from 'path';
@@ -67,18 +67,18 @@ interface FieldDiff {
 }
 
 /**
- * Returns whether a JSON value is a string array (harvestable dropdown list).
+ * Indica si un valor JSON es un arreglo de strings (lista de desplegable recaptable).
  *
- * @param value - Raw JSON value from a dropdown-options map.
+ * @param value - Valor JSON crudo de un mapa de opciones de desplegable.
  */
 function isStringArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every((item) => typeof item === 'string');
 }
 
 /**
- * Parses CLI flags for the dropdown refresh script.
+ * Parsea flags de CLI del script de recaptura de desplegables.
  *
- * @param argv - Process arguments (Playwright argv plus optional --write / --module).
+ * @param argv - Argumentos del proceso (argv de Playwright más --write / --module opcionales).
  */
 function parseCliArgs(argv: readonly string[] = process.argv): { write: boolean; moduleId?: string } {
   const write = argv.includes('--write') || process.env.REFRESH_DROPDOWNS_WRITE === '1';
@@ -89,38 +89,38 @@ function parseCliArgs(argv: readonly string[] = process.argv): { write: boolean;
 }
 
 /**
- * Returns the absolute tenant JSON path for a module.
+ * Devuelve la ruta absoluta del JSON del tenant para un módulo.
  *
- * @param moduleId - Canonical module id.
+ * @param moduleId - Id canónico de módulo.
  */
 function tenantConfigPath(moduleId: ModuleId): string {
   return path.resolve('tests/tenants', TEST_TENANT, MODULE_CONFIG_PATHS[moduleId]);
 }
 
 /**
- * Reads a tenant module JSON file as a mutable object.
+ * Lee el JSON de un módulo del tenant como objeto mutable.
  *
- * @param configPath - Absolute path to the module JSON.
+ * @param configPath - Ruta absoluta al JSON del módulo.
  */
 function readJsonFile(configPath: string): Record<string, unknown> {
   return JSON.parse(fs.readFileSync(configPath, 'utf-8')) as Record<string, unknown>;
 }
 
 /**
- * Writes a tenant JSON file with 2-space indent and a trailing newline.
+ * Escribe un JSON de tenant con indentación de 2 espacios y un salto de línea final.
  *
- * @param configPath - Absolute path to the module JSON.
- * @param data - Updated JSON object.
+ * @param configPath - Ruta absoluta al JSON del módulo.
+ * @param data - Objeto JSON actualizado.
  */
 function writeJsonFile(configPath: string, data: Record<string, unknown>): void {
   fs.writeFileSync(configPath, `${JSON.stringify(data, null, 2)}\n`, 'utf-8');
 }
 
 /**
- * Diffs two option lists for console output.
+ * Calcula el diff de dos listas de opciones para la salida de consola.
  *
- * @param before - Options currently stored in JSON.
- * @param after - Options collected from QA.
+ * @param before - Opciones actualmente guardadas en el JSON.
+ * @param after - Opciones recolectadas desde QA.
  */
 function diffOptionLists(
   before: readonly string[],
@@ -136,7 +136,7 @@ function diffOptionLists(
 }
 
 /**
- * Harvest job catalog: one entry per `*DropdownOptions` map in tenant JSON.
+ * Catálogo de trabajos de recaptura: una entrada por mapa `*DropdownOptions` del JSON del tenant.
  */
 function harvestJobs(): HarvestJob[] {
   return [
@@ -255,10 +255,10 @@ function harvestJobs(): HarvestJob[] {
 }
 
 /**
- * Resolves the tab label for a job from a literal or a JSON config key.
+ * Resuelve la etiqueta de pestaña de un trabajo a partir de un literal o de una clave JSON.
  *
- * @param job - Harvest job definition.
- * @param config - Parsed module JSON.
+ * @param job - Definición del trabajo de recaptura.
+ * @param config - JSON del módulo ya parseado.
  */
 function resolveJobTabName(job: HarvestJob, config: Record<string, unknown>): string | undefined {
   if (job.tabConfigKey) {
@@ -269,9 +269,9 @@ function resolveJobTabName(job: HarvestJob, config: Record<string, unknown>): st
 }
 
 /**
- * Returns the field-assert profile used when collecting combobox options.
+ * Devuelve el perfil de aserción de campos usado al recolectar opciones de combobox.
  *
- * @param profile - energia or combustible harvest profile.
+ * @param profile - Perfil de recaptura energia o combustible.
  */
 function fieldAssertOptionsFor(
   profile: HarvestJob['fieldProfile'],
@@ -282,11 +282,11 @@ function fieldAssertOptionsFor(
 }
 
 /**
- * Builds the Gestor de datos path for a harvest job from JSON slugs or a direct path.
+ * Construye la ruta de Gestor de datos de un trabajo a partir de slugs JSON o una ruta directa.
  *
- * @param job - Harvest job definition.
- * @param config - Parsed module JSON.
- * @param tabName - Resolved tab label, if the module uses tabs.
+ * @param job - Definición del trabajo de recaptura.
+ * @param config - JSON del módulo ya parseado.
+ * @param tabName - Etiqueta de pestaña resuelta, si el módulo usa pestañas.
  */
 function resolveJobPath(
   job: HarvestJob,
@@ -295,21 +295,21 @@ function resolveJobPath(
 ): string {
   const paths = MODULE_HARVEST_PATHS[job.moduleId];
   if (!paths) {
-    throw new Error(`No harvest path mapping for module ${job.moduleId}`);
+    throw new Error(`No hay mapeo de ruta de recaptura para el módulo ${job.moduleId}`);
   }
   if (paths.directPath) {
     return paths.directPath;
   }
   if (!paths.tabSlugsKey || !tabName) {
-    throw new Error(`Missing tab slug for ${job.dropdownOptionsKey}`);
+    throw new Error(`Falta el slug de pestaña para ${job.dropdownOptionsKey}`);
   }
   const slugs = config[paths.tabSlugsKey];
   if (!slugs || typeof slugs !== 'object') {
-    throw new Error(`Missing ${paths.tabSlugsKey} in ${job.moduleId} config`);
+    throw new Error(`Falta ${paths.tabSlugsKey} en la config de ${job.moduleId}`);
   }
   const slug = (slugs as Record<string, string>)[tabName];
   if (!slug) {
-    throw new Error(`No slug for tab "${tabName}" in ${paths.tabSlugsKey}`);
+    throw new Error(`No hay slug para la pestaña "${tabName}" en ${paths.tabSlugsKey}`);
   }
   const normalized = slug.replace(/^\//, '');
   if (normalized.startsWith('gestor-de-datos/')) {
@@ -320,12 +320,12 @@ function resolveJobPath(
 }
 
 /**
- * Deep-links the harvest job view and returns a Registro navigation page.
+ * Abre por deep-link la vista del trabajo de recaptura y devuelve una página de navegación de Registro.
  *
- * @param page - Authenticated Playwright page.
- * @param job - Harvest job definition.
- * @param config - Parsed module JSON.
- * @param tabName - Resolved tab label, if the module uses tabs.
+ * @param page - Página autenticada de Playwright.
+ * @param job - Definición del trabajo de recaptura.
+ * @param config - JSON del módulo ya parseado.
+ * @param tabName - Etiqueta de pestaña resuelta, si el módulo usa pestañas.
  */
 async function openJobView(
   page: Page,
@@ -350,11 +350,11 @@ async function openJobView(
 }
 
 /**
- * Applies harvested option lists onto an existing dropdown-options map.
- * Leaves `"conditional"` values, `{ minimum }` maps, and unknown keys unchanged.
+ * Aplica las listas de opciones recapturadas sobre un mapa de desplegables existente.
+ * Deja intactos los valores `"conditional"`, los mapas `{ minimum }` y las claves desconocidas.
  *
- * @param existing - Dropdown map from tenant JSON.
- * @param harvested - Options collected from QA, keyed by field label.
+ * @param existing - Mapa de desplegables del JSON del tenant.
+ * @param harvested - Opciones recolectadas desde QA, indexadas por etiqueta de campo.
  */
 function applyHarvestedOptions(
   existing: Record<string, unknown>,
@@ -380,36 +380,36 @@ function applyHarvestedOptions(
 }
 
 /**
- * Prints a per-field added/removed/unchanged summary.
+ * Imprime un resumen por campo de añadidos/eliminados/sin cambio.
  *
- * @param job - Harvest job that produced the diffs.
- * @param diffs - Per-field option diffs.
+ * @param job - Trabajo de recaptura que produjo los diffs.
+ * @param diffs - Diffs de opciones por campo.
  */
 function printDiffs(job: HarvestJob, diffs: FieldDiff[]): void {
   console.log(`\n[${job.moduleId}] ${job.dropdownOptionsKey}`);
   if (diffs.length === 0) {
-    console.log('  (no array fields harvested)');
+    console.log('  (no se recapturaron campos de arreglo)');
     return;
   }
   for (const diff of diffs) {
     const preview = (items: string[]) => {
       if (items.length === 0) {
-        return 'none';
+        return 'ninguna';
       }
       const head = items.slice(0, 3).join(', ');
-      return items.length > 3 ? `${head} (+${items.length - 3} more)` : head;
+      return items.length > 3 ? `${head} (+${items.length - 3} más)` : head;
     };
     console.log(
       `  ${diff.label}: +${diff.added.length} / -${diff.removed.length} / =${diff.unchanged}` +
-        ` | added: ${preview(diff.added)} | removed: ${preview(diff.removed)}`,
+        ` | añadidas: ${preview(diff.added)} | eliminadas: ${preview(diff.removed)}`,
     );
   }
 }
 
 /**
- * Harvests dropdown options for enabled modules of the active tenant and optionally writes JSON.
+ * Recaptura opciones de desplegable de los módulos habilitados del tenant activo y, opcionalmente, escribe el JSON.
  *
- * @param page - Authenticated Playwright page on the dashboard.
+ * @param page - Página autenticada de Playwright en el tablero.
  */
 export async function runRefreshDropdownOptions(page: Page): Promise<void> {
   const { write, moduleId: moduleFilter } = parseCliArgs();
@@ -426,31 +426,31 @@ export async function runRefreshDropdownOptions(page: Page): Promise<void> {
       continue;
     }
     if (!isModuleEnabled(job.moduleId)) {
-      console.log(`skip ${job.dropdownOptionsKey}: module ${job.moduleId} disabled`);
+      console.log(`omitir ${job.dropdownOptionsKey}: módulo ${job.moduleId} desactivado`);
       continue;
     }
 
     const configPath = tenantConfigPath(job.moduleId);
     if (!fs.existsSync(configPath)) {
-      console.log(`skip ${job.dropdownOptionsKey}: missing ${configPath}`);
+      console.log(`omitir ${job.dropdownOptionsKey}: falta ${configPath}`);
       continue;
     }
 
     const config = pendingWrites.get(configPath) ?? readJsonFile(configPath);
     const tabName = resolveJobTabName(job, config);
     if (job.tabConfigKey && !tabName) {
-      console.log(`skip ${job.dropdownOptionsKey}: empty ${job.tabConfigKey}`);
+      console.log(`omitir ${job.dropdownOptionsKey}: ${job.tabConfigKey} vacío`);
       continue;
     }
     if (tabName && !isTabEnabled(job.moduleId, tabName)) {
-      console.log(`skip ${job.dropdownOptionsKey}: tab "${tabName}" disabled`);
+      console.log(`omitir ${job.dropdownOptionsKey}: pestaña "${tabName}" desactivada`);
       continue;
     }
 
     const fields = config[job.fieldsKey];
     const dropdownOptions = config[job.dropdownOptionsKey];
     if (!Array.isArray(fields) || !dropdownOptions || typeof dropdownOptions !== 'object') {
-      console.log(`skip ${job.dropdownOptionsKey}: missing fields or dropdown map`);
+      console.log(`omitir ${job.dropdownOptionsKey}: faltan campos o mapa de desplegables`);
       continue;
     }
 
@@ -474,11 +474,11 @@ export async function runRefreshDropdownOptions(page: Page): Promise<void> {
   if (write) {
     for (const [configPath, data] of pendingWrites) {
       writeJsonFile(configPath, data);
-      console.log(`wrote ${configPath}`);
+      console.log(`escrito ${configPath}`);
     }
   } else {
     console.log(
-      '\nDry run: set REFRESH_DROPDOWNS_WRITE=1 to persist JSON updates.',
+      '\nSimulación: defina REFRESH_DROPDOWNS_WRITE=1 para persistir actualizaciones de JSON.',
     );
   }
 }

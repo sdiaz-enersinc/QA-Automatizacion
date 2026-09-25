@@ -1,5 +1,5 @@
-// spec: specs/Registro/sireci-playwright-test.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/sireci/seed-sireci.spec.ts
+// plan: specs/Registro/sireci-playwright-test.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/sireci/seed-sireci.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';

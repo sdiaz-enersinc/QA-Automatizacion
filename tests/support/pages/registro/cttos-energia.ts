@@ -24,7 +24,7 @@ export type EnergiaWizardFieldDefinition = RegistroWizardFieldDefinition;
 export type EnergiaWizardDropdownOptionsMap = RegistroWizardDropdownOptionsMap;
 export type { RegistroCttosEnergiaTabName };
 
-/** Visible submenu and dashboard-card label for Cttos energía. */
+/** Etiqueta visible del submenú y de la tarjeta del tablero para Cttos energía. */
 export const REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL = 'Cttos energía';
 
 const cfg = getRegistroCttosEnergiaConfig();
@@ -42,22 +42,22 @@ export const REGISTRO_CTTS_ENERGIA_ENABLED_TAB_NAMES = getModuleEnabledTabNames(
 
 export const REGISTRO_CTTS_ENERGIA_LOCKED_TAB_NAMES = cfg.registroCttosEnergiaLockedTabNames;
 
-/** Landing tab used as sidebar anchor and seed. */
+/** Pestaña de aterrizaje usada como ancla del menú lateral y semilla. */
 export const REGISTRO_CTTS_ENERGIA_DEFAULT_TAB = cfg.registroCttosEnergiaDefaultTab;
 
-/** Layout A tab (LP grid with Select all). */
+/** Pestaña Layout A (grilla LP con Select all). */
 export const REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB = cfg.registroCttosEnergiaLayoutATab;
 
-/** Layout C tab (DEC dual-CTA toolbar). */
+/** Pestaña Layout C (barra DEC de CTAs duales). */
 export const REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB = cfg.registroCttosEnergiaLayoutCTab;
 
-/** Layout D tab (Respaldos file register); empty when the tenant has no Respaldos view. */
+/** Pestaña Layout D (registro de archivos de Respaldos); vacía cuando el tenant no tiene vista Respaldos. */
 export const REGISTRO_CTTS_ENERGIA_LAYOUT_D_TAB = cfg.registroCttosEnergiaLayoutDTab;
 
-/** Layout B MISC tab; empty when the tenant has no Contratos MISC view. */
+/** Pestaña Layout B MISC; vacía cuando el tenant no tiene vista Contratos MISC. */
 export const REGISTRO_CTTS_ENERGIA_LAYOUT_MISC_TAB = cfg.registroCttosEnergiaLayoutMiscTab;
 
-/** One tab per layout family for Path B spot-checks. */
+/** Una pestaña por familia de layout para las comprobaciones puntuales de Ruta B. */
 export const REGISTRO_CTTS_ENERGIA_LAYOUT_SPOT_CHECK_TABS =
   cfg.registroCttosEnergiaLayoutSpotCheckTabs.filter((tabName) => tabName.length > 0);
 
@@ -65,7 +65,7 @@ export const REGISTRO_CTTS_ENERGIA_LAYOUT_SPOT_CHECK_TABS =
 export const REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS =
   cfg.registroCttosEnergiaStandardContractColumns;
 
-/** Standard-grid columns whose headers look like the old toolbar chips (Estado / Usuario). */
+/** Columnas de la grilla estándar cuyos encabezados se parecen a los chips antiguos de la barra (Estado / Usuario). */
 export const REGISTRO_CTTS_ENERGIA_TOOLBAR_CHIP_LOOKALIKE_COLUMNS =
   REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS.filter(
     (name) => name === 'Estado' || name === 'Usuario',
@@ -255,7 +255,7 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   /**
    * Abre una pestaña de Contratos energía por los enlaces anidados del menú lateral bajo Cttos energía.
    *
-   * @param entryLink - Sidebar nested link to open; defaults to the tenant landing tab.
+   * @param entryLink - Enlace anidado del menú lateral a abrir; por defecto, la pestaña de aterrizaje del tenant.
    */
   async openCttosEnergiaFromSidebar(
     entryLink: RegistroCttosEnergiaTabName = REGISTRO_CTTS_ENERGIA_DEFAULT_TAB,
@@ -389,14 +389,14 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   }
 
   /**
-   * Returns the DEC tab label from tenant config.
+   * Devuelve la etiqueta de pestaña DEC desde la config del tenant.
    */
   private decTabName(): RegistroCttosEnergiaTabName {
     return REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB;
   }
 
   /**
-   * Espera a que la pestaña DEC renderice su barra de CTAs duales (evita un flash de la toolbar de LP).
+   * Espera a que la pestaña DEC renderice su barra de CTAs duales (evita un destello de la barra de LP).
    */
   async waitForDecTabToolbarReady(): Promise<void> {
     const main = this.gestorMain();
@@ -428,7 +428,7 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   }
 
   /**
-   * Espera a que la pestaña Respaldos renderice su barra de registro de archivos (evita un flash de la toolbar de LP).
+   * Espera a que la pestaña Respaldos renderice su barra de registro de archivos (evita un destello de la barra de LP).
    */
   async waitForRespaldosTabToolbarReady(): Promise<void> {
     const main = this.gestorMain();
@@ -622,7 +622,7 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   /**
    * Abre un diálogo solo de carga, comprueba dropzone, Guardar, plantilla y que no hay comboboxes.
    *
-   * @param options - Toolbar button name and whether Descargar plantilla must be present.
+   * @param options - Nombre del botón de la barra y si Descargar plantilla debe estar presente.
    */
   private async expectEnergiaUploadDialogOpensAndCloses(options: {
     buttonName: string;

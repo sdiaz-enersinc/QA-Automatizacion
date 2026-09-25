@@ -1,5 +1,5 @@
-// spec: specs/Registro/otros-contratos-agr-navigation-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/pruebas/otros-contratos/seed-otros-contratos.spec.ts
+// plan: specs/Registro/otros-contratos-agr-navigation-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/otros-contratos/seed-otros-contratos.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
@@ -10,7 +10,7 @@ import {
   RegistroOtrosContratosNavigationPage,
 } from '../../../../../support/pages/registro/otros-contratos';
 
-test.describe('Otros contratos — layouts (toolbar chips integrados; AGR incluida)', () => {
+test.describe('Otros contratos — layouts (chips de barra integrados; AGR incluida)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosContratos);
     skipUnlessTabEnabled(MODULE_IDS.registroOtrosContratos, REGISTRO_OTROS_CONTRATOS_MISC_TAB);
@@ -23,7 +23,7 @@ test.describe('Otros contratos — layouts (toolbar chips integrados; AGR inclui
     test.setTimeout(180_000);
     const registro = new RegistroOtrosContratosNavigationPage(page);
 
-    // 1. Desde el dashboard, abrir Miscelaneos por Registro → Otros contratos en el menú lateral.
+    // 1. Desde el tablero, abrir Miscelaneos por Registro → Otros contratos en el menú lateral.
     await dashboardPage.expectLoaded();
     await registro.openOtrosContratosFromSidebar(REGISTRO_OTROS_CONTRATOS_MISC_TAB);
     await registro.expectGestorDeDatosOtrosContratosShell();

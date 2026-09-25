@@ -1,4 +1,4 @@
-// spec: specs/post-email-login.plan.md
+// plan: specs/post-email-login.plan.md
 
 import { test, expect } from '../../../../../support/fixtures';
 import { VALID_EMAIL, VALID_PASSWORD } from '../../../../../support/env';

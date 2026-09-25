@@ -1,5 +1,5 @@
-// spec: specs/Registro/cttos-energia-tabs-playwright-test.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/cttos-energia/seed-cttos-energia.spec.ts
+// plan: specs/Registro/cttos-energia-tabs-playwright-test.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/cttos-energia/seed-cttos-energia.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import {
@@ -16,13 +16,13 @@ import {
   RegistroCttosEnergiaNavigationPage,
 } from '../../../../../support/pages/registro/cttos-energia';
 
-test.describe('Contratos de energía — Path B (tablero) — comprobación puntual de layouts', () => {
+test.describe('Contratos de energía — Ruta B (tablero) — comprobación puntual de layouts', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosEnergia);
     skipUnlessAnyTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_SPOT_CHECK_TABS);
   });
 
-  test('Path B — Un tablero por familia de layout (Layout A LP y Layout C DEC)', async ({
+  test('Ruta B — Un tablero por familia de layout (Layout A LP y Layout C DEC)', async ({
     page,
     dashboardPage,
   }) => {

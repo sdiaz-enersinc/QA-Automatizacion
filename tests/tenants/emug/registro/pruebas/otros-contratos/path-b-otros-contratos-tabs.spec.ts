@@ -1,5 +1,5 @@
-// spec: specs/Registro/otros-contratos-agr-navigation-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/pruebas/otros-contratos/seed-otros-contratos.spec.ts
+// plan: specs/Registro/otros-contratos-agr-navigation-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/otros-contratos/seed-otros-contratos.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessAnyTabEnabled, skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
@@ -9,7 +9,7 @@ import {
   RegistroOtrosContratosNavigationPage,
 } from '../../../../../support/pages/registro/otros-contratos';
 
-test.describe('Otros contratos — Path A y Path B (pestañas habilitadas, AGR incluida)', () => {
+test.describe('Otros contratos — Ruta A y Ruta B (pestañas habilitadas, AGR incluida)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosContratos);
     skipUnlessAnyTabEnabled(
@@ -18,14 +18,14 @@ test.describe('Otros contratos — Path A y Path B (pestañas habilitadas, AGR i
     );
   });
 
-  test('Path B — hover del tablero abre Otros contratos y la tira recorre las pestañas habilitadas', async ({
+  test('Ruta B — hover del tablero abre Otros contratos y la tira recorre las pestañas habilitadas', async ({
     page,
     dashboardPage,
   }) => {
     const registro = new RegistroOtrosContratosNavigationPage(page);
     test.setTimeout(120_000);
 
-    // 1. En el dashboard, localizar la tarjeta Registro, hacer hover y abrir Otros contratos por el icono eye.
+    // 1. En el tablero, localizar la tarjeta Registro, hacer hover y abrir Otros contratos por el icono ojo.
     await dashboardPage.expectLoaded();
     await registro.openOtrosContratosFromDashboardHover();
 

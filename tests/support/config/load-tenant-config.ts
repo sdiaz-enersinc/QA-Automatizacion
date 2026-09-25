@@ -39,16 +39,16 @@ let cachedRegistroRpmConfig: RegistroRpmTenantConfig | undefined;
 let cachedRegistroEmpresasConfig: RegistroEmpresasTenantConfig | undefined;
 
 /**
- * Loads and parses a tenant JSON config file from tests/tenants/<tenant>/.
+ * Carga y parsea un JSON de config del tenant desde tests/tenants/<tenant>/.
  *
- * @param relativePath - Path relative to the tenant directory (e.g. `tenant.json`).
+ * @param relativePath - Ruta relativa al directorio del tenant (p. ej. `tenant.json`).
  */
 function loadTenantJsonConfig<T>(relativePath: string): T {
   const configPath = path.join(__dirname, '../../tenants', TEST_TENANT, relativePath);
 
   if (!fs.existsSync(configPath)) {
     throw new Error(
-      `Tenant config not found: ${configPath} (TEST_TENANT=${TEST_TENANT})`,
+      `No se encontró la config del tenant: ${configPath} (TEST_TENANT=${TEST_TENANT})`,
     );
   }
 
@@ -56,10 +56,10 @@ function loadTenantJsonConfig<T>(relativePath: string): T {
 }
 
 /**
- * Normalizes a tenant.json module entry into a TenantModuleEntry.
- * Boolean shorthand: true → enabled with all tabs; false → disabled.
+ * Normaliza una entrada de módulo de tenant.json a TenantModuleEntry.
+ * Atajo booleano: true → habilitado con todas las pestañas; false → deshabilitado.
  *
- * @param value - Raw module value from tenant.json.
+ * @param value - Valor crudo del módulo en tenant.json.
  */
 export function normalizeTenantModuleEntry(value: TenantModuleManifestValue): TenantModuleEntry {
   if (typeof value === 'boolean') {
@@ -73,7 +73,7 @@ export function normalizeTenantModuleEntry(value: TenantModuleManifestValue): Te
 }
 
 /**
- * Loads and normalizes the tenant manifest from tenant.json.
+ * Carga y normaliza el manifiesto del tenant desde tenant.json.
  */
 function loadTenantManifest(): TenantManifest {
   const raw = loadTenantJsonConfig<TenantManifestRaw>('tenant.json');
@@ -88,7 +88,7 @@ function loadTenantManifest(): TenantManifest {
 }
 
 /**
- * Returns the cached tenant manifest for the active tenant.
+ * Devuelve el manifiesto del tenant activo (con caché).
  */
 export function getTenantManifest(): TenantManifest {
   cachedTenantManifest ??= loadTenantManifest();
@@ -96,10 +96,10 @@ export function getTenantManifest(): TenantManifest {
 }
 
 /**
- * Returns whether a module group is enabled in tenant.json.
- * When the group entry is absent, the group is treated as enabled.
+ * Indica si un grupo de módulos está habilitado en tenant.json.
+ * Si la entrada del grupo no existe, el grupo se trata como habilitado.
  *
- * @param groupId - Parent group key (e.g. `registro`).
+ * @param groupId - Clave del grupo padre (p. ej. `registro`).
  */
 export function isModuleGroupEnabled(groupId: string): boolean {
   const entry = getTenantManifest().modules[groupId];
@@ -107,10 +107,10 @@ export function isModuleGroupEnabled(groupId: string): boolean {
 }
 
 /**
- * Returns whether a module is enabled for the active tenant.
- * Registro submodules also require modules.registro to be enabled in tenant.json.
+ * Indica si un módulo está habilitado para el tenant activo.
+ * Los submódulos de Registro también exigen modules.registro habilitado en tenant.json.
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
  */
 export function isModuleEnabled(moduleId: ModuleId | string): boolean {
   const groupId = getModuleGroupId(moduleId);
@@ -123,16 +123,16 @@ export function isModuleEnabled(moduleId: ModuleId | string): boolean {
 }
 
 /**
- * Returns whether the Registro module group is enabled for the active tenant.
+ * Indica si el grupo de módulos Registro está habilitado para el tenant activo.
  */
 export function isRegistroEnabled(): boolean {
   return isModuleGroupEnabled(MODULE_GROUP_IDS.registro);
 }
 
 /**
- * Returns whether a module runs in full mode (all tabs/views from module JSON).
+ * Indica si un módulo corre en modo full (todas las pestañas/vistas del JSON del módulo).
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
  */
 export function isModuleFull(moduleId: ModuleId | string): boolean {
   if (!isModuleEnabled(moduleId)) {
@@ -144,9 +144,9 @@ export function isModuleFull(moduleId: ModuleId | string): boolean {
 }
 
 /**
- * Converts tenant tab slug strings into RegExp patterns for URL assertions.
+ * Convierte slugs de pestaña del tenant en patrones RegExp para aserciones de URL.
  *
- * @param slugs - Tab name to URL-slug pattern map from module JSON.
+ * @param slugs - Mapa nombre de pestaña → patrón de slug de URL, del JSON del módulo.
  */
 export function toTabSlugRecord(slugs: Record<string, string>): Record<string, RegExp> {
   return Object.fromEntries(
@@ -155,9 +155,9 @@ export function toTabSlugRecord(slugs: Record<string, string>): Record<string, R
 }
 
 /**
- * Converts JSON breadcrumb matchers into string or RegExp values for assertions.
+ * Convierte coincidencias de miga de pan del JSON en string o RegExp para aserciones.
  *
- * @param breadcrumbs - Tab name to string or regex matcher map from module JSON.
+ * @param breadcrumbs - Mapa nombre de pestaña → matcher string o regex, del JSON del módulo.
  */
 export function toBreadcrumbMatcherRecord(
   breadcrumbs: Record<string, TenantBreadcrumbMatcher>,
@@ -173,7 +173,7 @@ export function toBreadcrumbMatcherRecord(
 }
 
 /**
- * Returns the cached Registro navigation config for the active tenant.
+ * Devuelve la config de navegación de Registro del tenant activo (con caché).
  */
 export function getRegistroNavigationConfig(): RegistroNavigationTenantConfig {
   cachedRegistroNavigationConfig ??= loadTenantJsonConfig<RegistroNavigationTenantConfig>(
@@ -183,7 +183,7 @@ export function getRegistroNavigationConfig(): RegistroNavigationTenantConfig {
 }
 
 /**
- * Returns the cached Registro Contratos combustible config for the active tenant.
+ * Devuelve la config de Registro Contratos combustible del tenant activo (con caché).
  */
 export function getRegistroCttosCombustibleConfig(): RegistroCttosCombustibleTenantConfig {
   cachedRegistroCttosCombustibleConfig ??=
@@ -194,7 +194,7 @@ export function getRegistroCttosCombustibleConfig(): RegistroCttosCombustibleTen
 }
 
 /**
- * Returns the cached Registro Contratos energía config for the active tenant.
+ * Devuelve la config de Registro Contratos energía del tenant activo (con caché).
  */
 export function getRegistroCttosEnergiaConfig(): RegistroCttosEnergiaTenantConfig {
   cachedRegistroCttosEnergiaConfig ??= loadTenantJsonConfig<RegistroCttosEnergiaTenantConfig>(
@@ -204,7 +204,7 @@ export function getRegistroCttosEnergiaConfig(): RegistroCttosEnergiaTenantConfi
 }
 
 /**
- * Returns the cached Registro Otros contratos config for the active tenant.
+ * Devuelve la config de Registro Otros contratos del tenant activo (con caché).
  */
 export function getRegistroOtrosContratosConfig(): RegistroOtrosContratosTenantConfig {
   cachedRegistroOtrosContratosConfig ??= loadTenantJsonConfig<RegistroOtrosContratosTenantConfig>(
@@ -214,7 +214,7 @@ export function getRegistroOtrosContratosConfig(): RegistroOtrosContratosTenantC
 }
 
 /**
- * Returns the cached Registro Insumos oferta config for the active tenant.
+ * Devuelve la config de Registro Insumos oferta del tenant activo (con caché).
  */
 export function getRegistroInsumosOfertaConfig(): RegistroInsumosOfertaTenantConfig {
   cachedRegistroInsumosOfertaConfig ??= loadTenantJsonConfig<RegistroInsumosOfertaTenantConfig>(
@@ -224,7 +224,7 @@ export function getRegistroInsumosOfertaConfig(): RegistroInsumosOfertaTenantCon
 }
 
 /**
- * Returns the cached Registro Otros documentos config for the active tenant.
+ * Devuelve la config de Registro Otros documentos del tenant activo (con caché).
  */
 export function getRegistroOtrosDocumentosConfig(): RegistroOtrosDocumentosTenantConfig {
   cachedRegistroOtrosDocumentosConfig ??= loadTenantJsonConfig<RegistroOtrosDocumentosTenantConfig>(
@@ -234,7 +234,7 @@ export function getRegistroOtrosDocumentosConfig(): RegistroOtrosDocumentosTenan
 }
 
 /**
- * Returns the cached Registro Historial config for the active tenant.
+ * Devuelve la config de Registro Historial del tenant activo (con caché).
  */
 export function getRegistroHistorialConfig(): RegistroHistorialTenantConfig {
   cachedRegistroHistorialConfig ??= loadTenantJsonConfig<RegistroHistorialTenantConfig>(
@@ -244,7 +244,7 @@ export function getRegistroHistorialConfig(): RegistroHistorialTenantConfig {
 }
 
 /**
- * Returns the cached Registro Sireci config for the active tenant.
+ * Devuelve la config de Registro Sireci del tenant activo (con caché).
  */
 export function getRegistroSireciConfig(): RegistroSireciTenantConfig {
   cachedRegistroSireciConfig ??= loadTenantJsonConfig<RegistroSireciTenantConfig>(
@@ -254,7 +254,7 @@ export function getRegistroSireciConfig(): RegistroSireciTenantConfig {
 }
 
 /**
- * Returns the cached Registro RPM config for the active tenant.
+ * Devuelve la config de Registro RPM del tenant activo (con caché).
  */
 export function getRegistroRpmConfig(): RegistroRpmTenantConfig {
   cachedRegistroRpmConfig ??= loadTenantJsonConfig<RegistroRpmTenantConfig>(
@@ -264,7 +264,7 @@ export function getRegistroRpmConfig(): RegistroRpmTenantConfig {
 }
 
 /**
- * Returns the cached Registro Empresas config for the active tenant.
+ * Devuelve la config de Registro Empresas del tenant activo (con caché).
  */
 export function getRegistroEmpresasConfig(): RegistroEmpresasTenantConfig {
   cachedRegistroEmpresasConfig ??= loadTenantJsonConfig<RegistroEmpresasTenantConfig>(
@@ -274,9 +274,9 @@ export function getRegistroEmpresasConfig(): RegistroEmpresasTenantConfig {
 }
 
 /**
- * Returns all tab or view names declared for a registered module.
+ * Devuelve todos los nombres de pestaña o vista declarados para un módulo registrado.
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
  */
 export function getModuleAllTabNames(moduleId: ModuleId | string): readonly string[] {
   switch (moduleId) {
@@ -297,14 +297,14 @@ export function getModuleAllTabNames(moduleId: ModuleId | string): readonly stri
     case MODULE_IDS.registroRpm:
       return getRegistroRpmConfig().registroRpmTabNames;
     default:
-      throw new Error(`Unknown module ID: ${moduleId}`);
+      throw new Error(`ID de módulo desconocido: ${moduleId}`);
   }
 }
 
 /**
- * Returns the partial enabled tab list from the module JSON (ignores tenant full mode).
+ * Devuelve la lista parcial de pestañas habilitadas del JSON del módulo (ignora el modo full del tenant).
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
  */
 function getModulePartialEnabledTabNames(moduleId: ModuleId | string): readonly string[] {
   switch (moduleId) {
@@ -325,15 +325,15 @@ function getModulePartialEnabledTabNames(moduleId: ModuleId | string): readonly 
     case MODULE_IDS.registroRpm:
       return getRegistroRpmConfig().registroRpmEnabledTabNames;
     default:
-      throw new Error(`Unknown module ID: ${moduleId}`);
+      throw new Error(`ID de módulo desconocido: ${moduleId}`);
   }
 }
 
 /**
- * Returns enabled tab or view names for a registered module.
- * Honors tenant.json full mode: all module tabs when full is true.
+ * Devuelve los nombres de pestaña o vista habilitados para un módulo registrado.
+ * Respeta el modo full de tenant.json: todas las pestañas del módulo cuando full es true.
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
  */
 export function getModuleEnabledTabNames(moduleId: ModuleId | string): readonly string[] {
   if (isModuleFull(moduleId)) {
@@ -344,10 +344,10 @@ export function getModuleEnabledTabNames(moduleId: ModuleId | string): readonly 
 }
 
 /**
- * Returns whether a tab is enabled for a registered module.
+ * Indica si una pestaña está habilitada para un módulo registrado.
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
- * @param tabName - Visible tab label from module JSON.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
+ * @param tabName - Etiqueta visible de pestaña según el JSON del módulo.
  */
 export function isTabEnabled(moduleId: ModuleId | string, tabName: string): boolean {
   return getModuleEnabledTabNames(moduleId).includes(tabName);

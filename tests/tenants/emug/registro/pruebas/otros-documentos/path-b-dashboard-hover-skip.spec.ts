@@ -1,5 +1,5 @@
-// spec: specs/Registro/otros-documentos-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/pruebas/otros-documentos/seed-otros-documentos.spec.ts
+// plan: specs/Registro/otros-documentos-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/otros-documentos/seed-otros-documentos.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
@@ -11,7 +11,7 @@ test.describe('Escenario 1 — Acceso por hover del tablero (problema conocido)'
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosDocumentos);
   });
 
-  test('Path B — Navegación por hover del tablero de Otros documentos (marcador / test.skip)', async ({
+  test('Ruta B — Navegación por hover del tablero de Otros documentos (marcador / test.skip)', async ({
     page,
     dashboardPage,
   }) => {

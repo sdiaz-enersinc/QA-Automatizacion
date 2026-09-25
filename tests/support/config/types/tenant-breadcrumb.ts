@@ -1,4 +1,4 @@
-/** Plain string or regex breadcrumb matcher stored in tenant JSON. */
+/** Coincidencia de miga de pan: texto plano o regex guardada en el JSON del tenant. */
 export type TenantBreadcrumbMatcher =
   | string
   | {

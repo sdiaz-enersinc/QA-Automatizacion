@@ -1,4 +1,4 @@
-/** Tenant-specific test data for the Registro Otros documentos module. */
+/** Datos de prueba específicos del tenant para el módulo Registro Otros documentos. */
 export interface RegistroOtrosDocumentosTenantConfig {
   registroOtrosDocumentosViewNames: readonly string[];
   registroOtrosDocumentosEnabledViewNames: readonly string[];
@@ -14,5 +14,5 @@ export interface RegistroOtrosDocumentosTenantConfig {
   registroOtrosDocumentosTabPairMate: Record<string, string>;
 }
 
-/** Otros documentos view label (tenant-specific at runtime). */
+/** Etiqueta de vista de Otros documentos (específica del tenant en runtime). */
 export type RegistroOtrosDocumentosViewName = string;

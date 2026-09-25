@@ -1,9 +1,8 @@
 import { BASE_URL } from './env';
 
 /**
- * Builds the application entry URL from the configured BASE_URL,
- * normalizing any trailing slash so callers always get a single
- * trailing "/".
+ * Construye la URL de entrada a partir de `BASE_URL`,
+ * normalizando la barra final para que siempre termine en `/`.
  */
 export function entryUrl(): string {
   return `${BASE_URL.replace(/\/$/, '')}/`;

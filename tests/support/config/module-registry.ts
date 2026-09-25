@@ -1,4 +1,4 @@
-/** Canonical module route keys for tenant manifest and guards. */
+/** Claves canónicas de ruta de módulo para el manifiesto del tenant y los guards. */
 export const MODULE_IDS = {
   registroNavigation: 'registroNavigation',
   registroCttosCombustible: 'registroCttosCombustible',
@@ -14,22 +14,22 @@ export const MODULE_IDS = {
 
 export type ModuleId = (typeof MODULE_IDS)[keyof typeof MODULE_IDS];
 
-/** Parent group keys in tenant.json that gate multiple modules at once. */
+/** Claves de grupo padre en tenant.json que habilitan varios módulos a la vez. */
 export const MODULE_GROUP_IDS = {
   registro: 'registro',
 } as const;
 
 export type ModuleGroupId = (typeof MODULE_GROUP_IDS)[keyof typeof MODULE_GROUP_IDS];
 
-/** Module IDs that belong to the Registro group (gated by modules.registro in tenant.json). */
+/** IDs de módulo que pertenecen al grupo Registro (gobernados por modules.registro en tenant.json). */
 export const REGISTRO_MODULE_IDS: readonly ModuleId[] = (
   Object.values(MODULE_IDS) as ModuleId[]
 ).filter((id) => id !== MODULE_IDS.registroNavigation);
 
 /**
- * Returns the parent group id for a module, if any.
+ * Devuelve el id de grupo padre de un módulo, si existe.
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
  */
 export function getModuleGroupId(moduleId: ModuleId | string): ModuleGroupId | undefined {
   if ((REGISTRO_MODULE_IDS as readonly string[]).includes(moduleId)) {
@@ -39,7 +39,7 @@ export function getModuleGroupId(moduleId: ModuleId | string): ModuleGroupId | u
   return undefined;
 }
 
-/** Relative paths under tests/tenants/<tenant>/ for each module config file. */
+/** Rutas relativas bajo tests/tenants/<tenant>/ para cada archivo de config de módulo. */
 export const MODULE_CONFIG_PATHS: Record<ModuleId, string> = {
   registroNavigation: 'registro/config/navigation.json',
   registroCttosCombustible: 'registro/config/cttos-combustible.json',

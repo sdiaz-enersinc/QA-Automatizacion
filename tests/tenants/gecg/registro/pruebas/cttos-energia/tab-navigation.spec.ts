@@ -1,5 +1,5 @@
-// spec: specs/Registro/cttos-energia-tabs-playwright-test.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/cttos-energia/seed-cttos-energia.spec.ts
+// plan: specs/Registro/cttos-energia-tabs-playwright-test.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/cttos-energia/seed-cttos-energia.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';

@@ -9,37 +9,37 @@ const cfg = getRegistroNavigationConfig();
 
 export { REGISTRO_NAVIGATION_SUBMENU_LABELS };
 
-/** Enabled Registro submenu rows (clickable with current tenant credentials). */
+/** Filas habilitadas del submenú de Registro (clicables con las credenciales actuales del tenant). */
 export const REGISTRO_NAVIGATION_ENABLED_SUBMENU_LABELS = cfg.registroNavigationEnabledSubmenuLabels;
 
-/** Locked Registro submenu rows (visible and disabled). */
+/** Filas bloqueadas del submenú de Registro (visibles y deshabilitadas). */
 export const REGISTRO_NAVIGATION_LOCKED_SUBMENU_LABELS = cfg.registroNavigationLockedSubmenuLabels;
 
-/** Legacy submodule labels that must not appear after the rename. */
+/** Etiquetas legacy de submódulo que no deben aparecer tras el cambio de nombre. */
 export const REGISTRO_NAVIGATION_LEGACY_SUBMODULE_LABELS = cfg.registroNavigationLegacySubmoduleLabels;
 
-/** Submodule rows visible on the Registro dashboard card without hovering. */
+/** Filas de submódulo visibles en la tarjeta Registro del tablero sin pasar el cursor. */
 export const REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS =
   cfg.registroNavigationDashboardPreviewLabels;
 
-/** Hover-card submodule labels (same order as the sidebar submenu). */
+/** Etiquetas de submódulo de la tarjeta hover (mismo orden que el submenú lateral). */
 export const REGISTRO_NAVIGATION_DASHBOARD_HOVER_LABELS = REGISTRO_NAVIGATION_SUBMENU_LABELS;
 
 /**
- * Strips the lock emoji prefix from a Registro submenu accessible name.
+ * Quita el prefijo de emoji de candado del nombre accesible de un ítem del submenú de Registro.
  *
- * @param label - Raw menuitem inner text, possibly prefixed with a lock emoji.
+ * @param label - Texto interno crudo del menuitem, posiblemente prefijado con un emoji de candado.
  */
 export function stripRegistroLockPrefix(label: string): string {
   return label.replace(/^🔒\s*/, '').trim();
 }
 
 /**
- * Shared Registro dashboard and sidebar harvest assertions.
+ * Aserciones compartidas de recolección del tablero y del menú lateral de Registro.
  */
 export class RegistroNavigationPage extends RegistroNavigationBasePage {
   /**
-   * Asserts the Registro card is visible with the preview submodule rows and eye icons, without hovering.
+   * Comprueba que la tarjeta Registro es visible con las filas de submódulo de vista previa y los iconos ojo, sin pasar el cursor.
    */
   async expectRegistroDashboardPreviewRows(): Promise<void> {
     const card = this.registroDashboardCard();
@@ -51,7 +51,7 @@ export class RegistroNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Hovers the Registro dashboard card and asserts every submodule row is visible with an eye icon.
+   * Pasa el cursor sobre la tarjeta Registro del tablero y comprueba que cada fila de submódulo es visible con un icono ojo.
    */
   async expectRegistroDashboardHoverSubmodules(): Promise<void> {
     await this.hoverRegistroDashboardCard();
@@ -64,7 +64,7 @@ export class RegistroNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts legacy submodule names are absent from the Registro dashboard card.
+   * Comprueba que los nombres legacy de submódulo están ausentes en la tarjeta Registro del tablero.
    */
   async expectRegistroLegacySubmoduleAbsentOnCard(): Promise<void> {
     const card = this.registroDashboardCard();
@@ -74,7 +74,7 @@ export class RegistroNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts legacy submodule names are absent from the expanded Registro sidebar submenu.
+   * Comprueba que los nombres legacy de submódulo están ausentes en el submenú expandido de Registro.
    */
   async expectRegistroLegacySubmoduleAbsentOnSidebar(): Promise<void> {
     const submenu = this.registroSubmenu();
@@ -84,7 +84,7 @@ export class RegistroNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts the Registro sidebar submenu order, enabled/locked state, and absence of legacy labels.
+   * Comprueba el orden del submenú lateral de Registro, el estado habilitado/bloqueado y la ausencia de etiquetas legacy.
    */
   async expectRegistroSubmenuOrderAndLockState(): Promise<void> {
     await this.expandRegistroSidebar();
@@ -108,7 +108,7 @@ export class RegistroNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts locked Registro submodule rows are visible and disabled in the sidebar.
+   * Comprueba que las filas bloqueadas de submódulo de Registro son visibles y están deshabilitadas en el menú lateral.
    */
   async expectRegistroLockedSubmenuItemsVisible(): Promise<void> {
     await this.expandRegistroSidebar();

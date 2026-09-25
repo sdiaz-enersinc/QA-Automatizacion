@@ -22,18 +22,18 @@ export const REGISTRO_HISTORIAL_ENABLED_TAB_NAMES = getModuleEnabledTabNames(MOD
 
 export const REGISTRO_HISTORIAL_LOCKED_TAB_NAMES = cfg.registroHistorialLockedTabNames;
 
-/** Landing tab used as sidebar anchor and seed. */
+/** Pestaña de aterrizaje usada como ancla del menú lateral y semilla. */
 export const REGISTRO_HISTORIAL_DEFAULT_TAB = cfg.registroHistorialDefaultTab;
 
-/** Operaciones multiples tab label (tenant config). */
+/** Etiqueta de pestaña Operaciones multiples (config del tenant). */
 export const REGISTRO_HISTORIAL_OPERACIONES_MULTIPLES_TAB =
   cfg.registroHistorialOperacionesMultiplesTab;
 
-/** Operaciones individuales tab label (tenant config). */
+/** Etiqueta de pestaña Operaciones individuales (config del tenant). */
 export const REGISTRO_HISTORIAL_OPERACIONES_INDIVIDUALES_TAB =
   cfg.registroHistorialOperacionesIndividualesTab;
 
-/** Archivos cargados tab label (tenant config). */
+/** Etiqueta de pestaña Archivos cargados (config del tenant). */
 export const REGISTRO_HISTORIAL_ARCHIVOS_CARGADOS_TAB = cfg.registroHistorialArchivosCargadosTab;
 
 /** Encabezados de columna de la grilla Operaciones multiples (config del tenant). */

@@ -18,37 +18,37 @@ export type {
 
 const navigationCfg = getRegistroNavigationConfig();
 
-/** Exact submenu labels under Registro in QA (sidebar and dashboard copy). */
+/** Etiquetas exactas del submenú bajo Registro en QA (copia del menú lateral y del tablero). */
 export const REGISTRO_NAVIGATION_SUBMENU_LABELS = navigationCfg.registroNavigationSubmenuLabels;
 
-/** Dropzone copy shown in Registrar Información file-upload dialogs (singular or plural). */
+/** Texto de la zona de carga mostrado en los diálogos de subida de archivos de Registrar Información (singular o plural). */
 export const REGISTRO_CARGAR_ARCHIVO_DROPZONE_TEXT =
   /Haga clic aquí o arrastre (?:un archivo|los archivos) a esta área para preparar la carga/;
 
-/** How to close an open Ant Design select without dismissing the wizard modal. */
+/** Cómo cerrar un select de Ant Design abierto sin cerrar el modal del asistente. */
 export type RegistroWizardDismissDropdownStrategy = 'heading-click' | 'escape';
 
-/** Per-module overrides for wizard field assertions (combustible vs energía). */
+/** Sobrescrituras por módulo para las aserciones de campos del asistente (combustible vs energía). */
 export interface RegistroWizardFieldAssertOptions {
-  /** When true, combobox locators fall back to form-item scoped search (energía). */
+  /** Si es true, los localizadores de combobox recurren a una búsqueda acotada al form-item (energía). */
   comboboxFormItemFallback?: boolean;
   dismissDropdownStrategy?: RegistroWizardDismissDropdownStrategy;
-  /** Re-assert dialog footer after each combobox interaction (energía). */
+  /** Vuelve a comprobar el pie del diálogo tras cada interacción de combobox (energía). */
   assertFooterAfterCombobox?: boolean;
-  /** Force-click disabled combobox and assert dropdown stays closed (energía). */
+  /** Hace clic forzado en un combobox deshabilitado y comprueba que el desplegable permanece cerrado (energía). */
   assertDisabledComboboxNoDropdown?: boolean;
-  /** When true, only assert config fields exist in UI (subset). Default: exact field set match. */
+  /** Si es true, solo comprueba que los campos de la config existen en la UI (subconjunto). Por defecto: coincidencia exacta del conjunto de campos. */
   allowExtraFields?: boolean;
-  /** When true, open the wizard with the retrying Registrar Información click helper. */
+  /** Si es true, abre el asistente con el helper de clic reintentable de Registrar Información. */
   retryOpen?: boolean;
 }
 
-/** Field assert profile for Contratos combustible wizards. */
+/** Perfil de aserción de campos para los asistentes de Contratos combustible. */
 export const REGISTRO_WIZARD_FIELD_ASSERT_COMBUSTIBLE: RegistroWizardFieldAssertOptions = {
   dismissDropdownStrategy: 'heading-click',
 };
 
-/** Field assert profile for Contratos energía wizards. */
+/** Perfil de aserción de campos para los asistentes de Contratos energía. */
 export const REGISTRO_WIZARD_FIELD_ASSERT_ENERGIA: RegistroWizardFieldAssertOptions = {
   comboboxFormItemFallback: true,
   dismissDropdownStrategy: 'escape',
@@ -57,7 +57,7 @@ export const REGISTRO_WIZARD_FIELD_ASSERT_ENERGIA: RegistroWizardFieldAssertOpti
   retryOpen: true,
 };
 
-/** Options for opening a wizard, validating step-1 fields and dropdowns, then closing. */
+/** Opciones para abrir un asistente, validar los campos y desplegables del paso 1, y cerrarlo. */
 export interface RegistroWizardDialogOpensAndClosesOptions {
   ctaName: string | RegExp;
   stepTitle: string | RegExp;
@@ -66,23 +66,23 @@ export interface RegistroWizardDialogOpensAndClosesOptions {
   dropdownOptions: RegistroWizardDropdownOptionsMap;
   assertScrollableForm?: boolean;
   footerVariant?: 'standard' | 'misc';
-  /** Wizard step labels that must not appear (MISC energía layout). */
+  /** Etiquetas de paso del asistente que no deben aparecer (layout MISC de energía). */
   absentWizardSteps?: readonly string[];
-  /** Labels for spinbutton fields not modeled as wizard kinds. */
+  /** Etiquetas de campos spinbutton no modelados como tipos de asistente. */
   extraExpectedLabels?: readonly string[];
   spinbuttonLabels?: readonly string[];
   fieldAssertOptions?: RegistroWizardFieldAssertOptions;
 }
 
 /**
- * Reusable navigation for Registro (Gestor de datos) via sidebar or dashboard grid.
+ * Navegación reutilizable de Registro (Gestor de datos) por el menú lateral o la grilla del tablero.
  */
 export class RegistroNavigationBasePage {
   constructor(protected readonly page: Page) {}
 
   /**
-   * Returns the Registro module card in the authenticated dashboard grid.
-   * Scoped to main and disambiguated from other tiles that mention "Registro".
+   * Devuelve la tarjeta del módulo Registro en la grilla del tablero autenticado.
+   * Acotada a main y desambiguada de otros mosaicos que mencionan «Registro».
    */
   registroDashboardCard(): Locator {
     return this.page
@@ -93,13 +93,13 @@ export class RegistroNavigationBasePage {
       .first();
   }
 
-  /** Sidebar region (complementary landmark). */
+  /** Región del menú lateral (landmark complementary). */
   protected sidebar(): Locator {
     return this.page.getByRole('complementary').first();
   }
 
   /**
-   * Expands the sidebar when the layout collapsed it after in-app navigation.
+   * Expande el menú lateral cuando el layout lo plegó tras una navegación dentro de la app.
    */
   async expandSidebarIfCollapsed(): Promise<void> {
     const unfold = this.page.getByRole('button', { name: 'menu-unfold' });
@@ -109,13 +109,13 @@ export class RegistroNavigationBasePage {
     }
   }
 
-  /** Second-level menu under expanded Registro. */
+  /** Menú de segundo nivel bajo Registro expandido. */
   protected registroSubmenu(): Locator {
     return this.sidebar().getByRole('menu').nth(1);
   }
 
   /**
-   * Expands the Registro section until submodule rows are visible in the sidebar.
+   * Expande la sección Registro hasta que las filas de submódulo son visibles en el menú lateral.
    */
   async expandRegistroSidebar(): Promise<void> {
     await this.expandSidebarIfCollapsed();
@@ -132,7 +132,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Expands a Registro submodule dropdown (parent row) in the sidebar.
+   * Expande un desplegable de submódulo de Registro (fila padre) en el menú lateral.
    */
   async expandRegistroSubmodule(submoduleLabel: string): Promise<void> {
     await this.expandRegistroSidebar();
@@ -146,7 +146,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Ensures a submodule flyout exposes at least one nested sidebar link.
+   * Asegura que el desplegable de un submódulo expone al menos un enlace anidado del menú lateral.
    */
   protected async ensureRegistroSubmoduleNestedLinksVisible(
     submoduleLabel: string,
@@ -166,7 +166,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Clicks a nested sidebar link inside the expanded Registro submenu.
+   * Hace clic en un enlace anidado del menú lateral dentro del submenú expandido de Registro.
    */
   protected async clickRegistroSubmenuLink(linkName: string): Promise<void> {
     const link = this.registroSubmenu().getByRole('link', { name: linkName });
@@ -176,21 +176,21 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Clicks the navigable link inside an expanded Registro submodule dropdown.
+   * Hace clic en el enlace navegable dentro de un desplegable de submódulo de Registro expandido.
    */
   async clickRegistroSubmoduleLink(linkName: string): Promise<void> {
     await this.clickRegistroSubmenuLink(linkName);
   }
 
   /**
-   * Nested flyout menuitems under an expanded Registro submodule row.
+   * Ítems de menú del desplegable anidado bajo una fila de submódulo de Registro expandida.
    */
   protected registroSubmoduleNestedItems(): Locator {
     return this.registroSubmenu().locator('[role=menu]').first().getByRole('menuitem');
   }
 
   /**
-   * Asserts the Registro sidebar submenu labels match tenant config exactly (no extras).
+   * Comprueba que las etiquetas del submenú lateral de Registro coinciden exactamente con la config del tenant (sin extras).
    */
   async expectRegistroSubmenuLabelsVisible(): Promise<void> {
     await assertSidebarLabelsMatchConfig(
@@ -201,7 +201,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Hovers the Registro dashboard card to surface submodule navigation affordances.
+   * Pasa el cursor sobre la tarjeta Registro del tablero para mostrar las opciones de navegación a submódulos.
    */
   async hoverRegistroDashboardCard(): Promise<void> {
     const card = this.page
@@ -212,13 +212,13 @@ export class RegistroNavigationBasePage {
     await card.hover();
   }
 
-  /** Main content region for Gestor de datos grids (Empresas, Contratos energía, etc.). */
+  /** Región de contenido principal de las grillas de Gestor de datos (Empresas, Contratos energía, etc.). */
   protected gestorMain(): Locator {
     return this.page.getByRole('main');
   }
 
   /**
-   * Waits until Ant Design modal overlays and dialog nodes are fully dismissed.
+   * Espera hasta que los overlays de modal de Ant Design y los nodos de diálogo estén completamente cerrados.
    */
   protected async expectNoVisibleModals(): Promise<void> {
     await this.dismissOpenSelectDropdowns();
@@ -227,7 +227,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Closes any open Ant Design select dropdown portals that can swallow toolbar clicks.
+   * Cierra cualquier portal de desplegable de select de Ant Design abierto que pueda interceptar clics de la barra.
    */
   protected async dismissOpenSelectDropdowns(): Promise<void> {
     const openDropdown = this.page.locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)');
@@ -238,7 +238,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Resets focus to a neutral toolbar control after closing a modal or calendar interaction.
+   * Restablece el foco a un control neutro de la barra tras cerrar un modal o una interacción de calendario.
    */
   protected async resetGestorToolbarFocus(): Promise<void> {
     const main = this.gestorMain();
@@ -254,7 +254,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Clicks a toolbar CTA and waits for the Registrar Información dialog, retrying flaky opens.
+   * Hace clic en un CTA de la barra y espera el diálogo Registrar Información, reintentando aperturas inestables.
    */
   protected async openRegistrarInformacionDialog(buttonName: string | RegExp): Promise<Locator> {
     const button = this.gestorMain().getByRole('button', { name: buttonName });
@@ -278,9 +278,9 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts a file-upload dialog shows the shared dropzone copy and Guardar CTA.
+   * Comprueba que un diálogo de subida de archivos muestra el texto compartido de la zona de carga y el CTA Guardar.
    *
-   * @param dialog - Visible Registrar Información dialog locator.
+   * @param dialog - Localizador del diálogo visible de Registrar Información.
    */
   protected async expectCargarArchivoDropzone(dialog: Locator): Promise<void> {
     await expect(dialog.getByText(REGISTRO_CARGAR_ARCHIVO_DROPZONE_TEXT)).toBeVisible();
@@ -288,9 +288,9 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts Registrar Información file-upload dialog content, then closes it.
+   * Comprueba el contenido del diálogo de subida de archivos de Registrar Información y luego lo cierra.
    *
-   * @param options - Optional template-download assertion.
+   * @param options - Aserción opcional de descarga de plantilla.
    */
   async expectFileUploadDialog(options?: { withTemplate?: boolean }): Promise<void> {
     const dialog = this.page.getByRole('dialog').filter({ hasText: 'Registrar Información' }).last();
@@ -305,10 +305,10 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Clicks a CTA, opens the file-upload dialog, validates dropzone and Guardar, then closes.
+   * Hace clic en un CTA, abre el diálogo de subida de archivos, valida la zona de carga y Guardar, y lo cierra.
    *
-   * @param buttonName - Toolbar button that opens Registrar Información.
-   * @param options - Optional template-download assertion.
+   * @param buttonName - Botón de la barra que abre Registrar Información.
+   * @param options - Aserción opcional de descarga de plantilla.
    */
   async expectFileUploadDialogOpensAndCloses(
     buttonName: string | RegExp,
@@ -319,7 +319,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Closes Ant Design notification toasts that can intercept dialog button clicks.
+   * Cierra los toasts de notificación de Ant Design que pueden interceptar clics en botones del diálogo.
    */
   protected async dismissNotificationToasts(): Promise<void> {
     const alerts = this.page.locator('[role="alert"]');
@@ -333,10 +333,10 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Immediately dismisses Ant Design popups triggered by filter interactions.
-   * Clicks close on notification toasts ([role="alert"]) and force-removes any
-   * remaining `.ant-message-notice` / `.ant-notification-notice` elements from
-   * the DOM so tests never wait for the auto-dismiss timer.
+   * Descarta de inmediato los popups de Ant Design disparados por interacciones de filtro.
+   * Hace clic en cerrar de los toasts de notificación ([role="alert"]) y elimina a la fuerza
+   * cualquier elemento restante `.ant-message-notice` / `.ant-notification-notice` del
+   * DOM para que las pruebas no esperen el temporizador de cierre automático.
    */
   protected async dismissFilterPopups(): Promise<void> {
     const alert = this.page.locator('[role="alert"]').first();
@@ -365,8 +365,8 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Returns a toolbar filter chip (.filter-btn) by exact label.
-   * Does not match grid column headers such as Estado or Usuario, nor the Usuarios NR tab.
+   * Devuelve un chip de filtro de la barra (.filter-btn) por etiqueta exacta.
+   * No coincide con encabezados de columna de la grilla como Estado o Usuario, ni con la pestaña Usuarios NR.
    */
   protected filterChip(label: 'Modo Yo' | 'Estado' | 'Usuarios'): Locator {
     return this.gestorMain()
@@ -375,28 +375,28 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Returns the Filtros toolbar control (.filter-btn), not a dialog title or grid header.
+   * Devuelve el control Filtros de la barra (.filter-btn), no un título de diálogo ni un encabezado de grilla.
    */
   protected filtrosControl(): Locator {
     return this.gestorMain().locator('.filter-btn').filter({ hasText: /^Filtros$/ });
   }
 
   /**
-   * Asserts the Filtros toolbar control is visible in main.
+   * Comprueba que el control Filtros de la barra es visible en main.
    */
   async expectFiltrosControlVisible(): Promise<void> {
     await expect(this.filtrosControl()).toBeVisible();
   }
 
   /**
-   * Asserts the Filtros toolbar control is absent from main.
+   * Comprueba que el control Filtros de la barra está ausente en main.
    */
   async expectFiltrosControlAbsent(): Promise<void> {
     await expect(this.filtrosControl()).toHaveCount(0);
   }
 
   /**
-   * Asserts Modo Yo, Estado, and Usuarios toolbar chips are absent from main.
+   * Comprueba que los chips de barra Modo Yo, Estado y Usuarios están ausentes en main.
    */
   async expectToolbarFilterChipsAbsent(): Promise<void> {
     await expect(this.filterChip('Modo Yo')).toHaveCount(0);
@@ -405,7 +405,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Opens the Filtros modal, asserts Añadir filtro and Limpiar todo, then dismisses with Close.
+   * Abre el modal Filtros, comprueba Añadir filtro y Limpiar todo, y lo cierra con Close.
    */
   async expectFiltrosModalOpensAndCloses(): Promise<void> {
     await this.expectNoVisibleModals();
@@ -423,8 +423,8 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Toggles Modo Yo on then off; expects no navigation away from the current view.
-   * Actively dismisses any filter-triggered popup instead of waiting for auto-dismiss.
+   * Alterna Modo Yo encendido y luego apagado; espera que no haya navegación fuera de la vista actual.
+   * Descarta de forma activa cualquier popup disparado por el filtro en lugar de esperar el cierre automático.
    */
   async expectModoYoFilterToggle(): Promise<void> {
     const chip = this.filterChip('Modo Yo');
@@ -436,7 +436,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Opens the Estado filter dialog and dismisses it with Close.
+   * Abre el diálogo de filtro Estado y lo cierra con Close.
    */
   async expectEstadoFilterDialog(): Promise<void> {
     await this.dismissNotificationToasts();
@@ -449,7 +449,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Opens the Usuarios filter dialog and dismisses it with Close.
+   * Abre el diálogo de filtro Usuarios y lo cierra con Close.
    */
   async expectUsuariosFilterDialog(): Promise<void> {
     await this.dismissNotificationToasts();
@@ -462,7 +462,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Clicks a primary CTA, asserts Registrar Información dialog content, then closes it.
+   * Hace clic en un CTA principal, comprueba el contenido del diálogo Registrar Información y lo cierra.
    */
   async expectPrimaryDialogOpensAndCloses(
     buttonName: string | RegExp,
@@ -483,21 +483,21 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Returns the Registrar Información dialog filtered by the active wizard step title.
+   * Devuelve el diálogo Registrar Información filtrado por el título del paso activo del asistente.
    */
   protected registroWizardDialog(stepTitle: string | RegExp): Locator {
     return this.page.getByRole('dialog').filter({ hasText: stepTitle }).last();
   }
 
   /**
-   * Builds the a11y name matcher for a wizard field control (handles required asterisk prefix).
+   * Construye el matcher de nombre a11y para un control de campo del asistente (maneja el prefijo de asterisco de obligatorio).
    */
   protected wizardFieldNameMatcher(field: RegistroWizardFieldDefinition): string {
     return field.required ? `* ${field.label}` : field.label;
   }
 
   /**
-   * Resolves the interactive control locator for a wizard field inside the dialog.
+   * Resuelve el localizador del control interactivo de un campo del asistente dentro del diálogo.
    */
   protected wizardFieldControl(
     dialog: Locator,
@@ -521,7 +521,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Resolves the label locator for a wizard field from its control's form-item ancestor.
+   * Resuelve el localizador de etiqueta de un campo del asistente desde el ancestro form-item de su control.
    */
   protected wizardFieldLabel(
     dialog: Locator,
@@ -535,9 +535,9 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Collects unique option labels from an Ant Design select, scrolling the virtual list when present.
+   * Recoge etiquetas únicas de opciones de un select de Ant Design, recorriendo la lista virtual cuando existe.
    *
-   * @param dropdown - Visible Ant Design select dropdown locator.
+   * @param dropdown - Localizador del desplegable visible de un select de Ant Design.
    */
   async collectWizardSelectOptions(dropdown: Locator): Promise<string[]> {
     const scrollHolder = dropdown.locator('.rc-virtual-list-holder');
@@ -561,19 +561,19 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts dropdown options match the expected list after one virtual-list pass.
-   * Extra UI options not listed in tenant JSON fail unless `allowExtra` is set.
+   * Comprueba que las opciones del desplegable coinciden con la lista esperada tras un recorrido de la lista virtual.
+   * Las opciones extra de la UI no listadas en el JSON del tenant fallan a menos que se establezca `allowExtra`.
    *
-   * @param dropdown - Visible Ant Design select dropdown locator.
-   * @param expectedOptions - Option labels registered in tenant JSON.
-   * @param options - Optional field label and subset mode.
+   * @param dropdown - Localizador del desplegable visible de un select de Ant Design.
+   * @param expectedOptions - Etiquetas de opción registradas en el JSON del tenant.
+   * @param options - Etiqueta de campo opcional y modo subconjunto.
    */
   protected async expectWizardSelectOptionsMatch(
     dropdown: Locator,
     expectedOptions: readonly string[],
     options?: { fieldLabel?: string; allowExtra?: boolean },
   ): Promise<void> {
-    const fieldContext = options?.fieldLabel ? ` for "${options.fieldLabel}"` : '';
+    const fieldContext = options?.fieldLabel ? ` para "${options.fieldLabel}"` : '';
 
     await expect(async () => {
       const collected = await this.collectWizardSelectOptions(dropdown);
@@ -592,20 +592,20 @@ export class RegistroNavigationBasePage {
       const parts: string[] = [];
       if (missing.length > 0) {
         const preview = missing.slice(0, 5).join(', ');
-        const suffix = missing.length > 5 ? ` (+${missing.length - 5} more)` : '';
-        parts.push(`missing from UI${fieldContext}: ${preview}${suffix}`);
+        const suffix = missing.length > 5 ? ` (+${missing.length - 5} más)` : '';
+        parts.push(`faltan en la UI${fieldContext}: ${preview}${suffix}`);
       }
       if (unexpected.length > 0) {
         const preview = unexpected.slice(0, 5).join(', ');
-        const suffix = unexpected.length > 5 ? ` (+${unexpected.length - 5} more)` : '';
-        parts.push(`in UI but not in config${fieldContext}: ${preview}${suffix}`);
+        const suffix = unexpected.length > 5 ? ` (+${unexpected.length - 5} más)` : '';
+        parts.push(`en la UI pero no en la config${fieldContext}: ${preview}${suffix}`);
       }
-      throw new Error(`Dropdown option mismatch — ${parts.join('; ')}`);
+      throw new Error(`Las opciones del desplegable no coinciden — ${parts.join('; ')}`);
     }).toPass({ timeout: 45_000 });
   }
 
   /**
-   * Asserts an open Ant Design select shows options or the empty-state message.
+   * Comprueba que un select de Ant Design abierto muestra opciones o el mensaje de estado vacío.
    */
   protected async expectWizardSelectHasOptionsOrEmptyState(dropdown: Locator): Promise<void> {
     const options = dropdown.locator('.ant-select-item-option');
@@ -620,7 +620,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Dismisses an open Ant Design select dropdown without closing the wizard modal.
+   * Cierra un desplegable de select de Ant Design abierto sin cerrar el modal del asistente.
    */
   protected async dismissOpenWizardSelectDropdown(
     dialog: Locator,
@@ -645,7 +645,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts a single wizard field label, control type, enabled state, and dropdown behaviour.
+   * Comprueba la etiqueta, el tipo de control, el estado habilitado y el comportamiento del desplegable de un campo del asistente.
    */
   protected async expectRegistroWizardField(
     dialog: Locator,
@@ -700,7 +700,7 @@ export class RegistroNavigationBasePage {
         });
       } else {
         throw new Error(
-          `Missing dropdown options in tenant config for combobox "${field.label}"`,
+          `Faltan las opciones del desplegable en la config del tenant para el combobox "${field.label}"`,
         );
       }
       await this.dismissOpenWizardSelectDropdown(
@@ -718,7 +718,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts scroll-requiring fields become reachable inside the wizard form body.
+   * Comprueba que los campos que requieren desplazamiento quedan al alcance dentro del cuerpo del formulario del asistente.
    */
   protected async expectWizardScrollableFieldsReachable(
     dialog: Locator,
@@ -741,7 +741,7 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Opens a wizard CTA, validates step shell, fields, dropdowns, footer CTAs, then closes.
+   * Abre un CTA de asistente, valida el contenedor del paso, campos, desplegables y CTAs del pie, y cierra.
    */
   protected async expectRegistroWizardDialogOpensAndCloses(
     options: RegistroWizardDialogOpensAndClosesOptions,
@@ -816,10 +816,10 @@ export class RegistroNavigationBasePage {
   }
 
   /**
-   * Opens a wizard CTA, collects combobox option labels for JSON array fields, then closes.
-   * Skips disabled fields, `"conditional"` maps, and `{ minimum }` maps. Used by the dropdown refresh script.
+   * Abre un CTA de asistente, recoge las etiquetas de opciones de combobox de los campos de array JSON, y cierra.
+   * Omite campos deshabilitados, mapas `"conditional"` y mapas `{ minimum }`. Lo usa el script de refresco de desplegables.
    *
-   * @param options - CTA name, wizard fields, current dropdown map, and field-assert profile.
+   * @param options - Nombre del CTA, campos del asistente, mapa actual de desplegables y perfil de aserción de campos.
    */
   async harvestWizardDropdownOptions(options: {
     ctaName: string | RegExp;

@@ -1,5 +1,5 @@
-// spec: specs/Registro/cttos-combustible-navigation-playwright-test.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/cttos-combustible/seed-cttos-combustible.spec.ts
+// plan: specs/Registro/cttos-combustible-navigation-playwright-test.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/cttos-combustible/seed-cttos-combustible.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
@@ -10,7 +10,7 @@ import {
   RegistroCttosCombustibleNavigationPage,
 } from '../../../../../support/pages/registro/cttos-combustible';
 
-test.describe('Contratos combustible — Layout A Transporte (Path A)', () => {
+test.describe('Contratos combustible — Layout A Transporte (Ruta A)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosCombustible);
     skipUnlessTabEnabled(MODULE_IDS.registroCttosCombustible, REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_A_TAB);

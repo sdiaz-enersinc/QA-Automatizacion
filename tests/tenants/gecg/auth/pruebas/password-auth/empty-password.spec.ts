@@ -1,5 +1,5 @@
-// spec: specs/post-email-login.plan.md
-// seed: tests/auth.setup.ts
+// plan: specs/post-email-login.plan.md
+// semilla: tests/auth.setup.ts
 
 import { test, expect } from '../../../../../support/fixtures';
 import { VALID_EMAIL } from '../../../../../support/env';

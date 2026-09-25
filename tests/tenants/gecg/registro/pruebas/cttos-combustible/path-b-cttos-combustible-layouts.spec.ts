@@ -1,5 +1,5 @@
-// spec: specs/Registro/cttos-combustible-navigation-playwright-test.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/cttos-combustible/seed-cttos-combustible.spec.ts
+// plan: specs/Registro/cttos-combustible-navigation-playwright-test.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/cttos-combustible/seed-cttos-combustible.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import {
@@ -18,13 +18,13 @@ import {
   RegistroCttosCombustibleNavigationPage,
 } from '../../../../../support/pages/registro/cttos-combustible';
 
-test.describe('Contratos combustible — Path B — comprobación puntual de layouts', () => {
+test.describe('Contratos combustible — Ruta B — comprobación puntual de layouts', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosCombustible);
     skipUnlessAnyTabEnabled(MODULE_IDS.registroCttosCombustible, REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_SPOT_CHECK_TABS);
   });
 
-  test('Path B — Un tablero por familia de layout (Transporte, Suministro e Inventarios)', async ({
+  test('Ruta B — Un tablero por familia de layout (Transporte, Suministro e Inventarios)', async ({
     page,
     dashboardPage,
   }) => {

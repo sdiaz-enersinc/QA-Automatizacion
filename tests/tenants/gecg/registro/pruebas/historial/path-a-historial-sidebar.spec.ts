@@ -1,5 +1,5 @@
-// spec: specs/Registro/historial-playwright-test.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/historial/seed-historial.spec.ts
+// plan: specs/Registro/historial-playwright-test.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/historial/seed-historial.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
@@ -9,12 +9,12 @@ import {
   RegistroHistorialNavigationPage,
 } from '../../../../../support/pages/registro/historial';
 
-test.describe('Historial — Path A (menú lateral)', () => {
+test.describe('Historial — Ruta A (menú lateral)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroHistorial);
   });
 
-  test('Path A — Historial accesible por enlaces anidados del menú lateral', async ({
+  test('Ruta A — Historial accesible por enlaces anidados del menú lateral', async ({
     page,
     dashboardPage,
   }) => {

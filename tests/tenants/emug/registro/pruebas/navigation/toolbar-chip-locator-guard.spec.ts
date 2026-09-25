@@ -1,5 +1,5 @@
-// spec: specs/Registro/emug-registro-toolbar-chips-removed.plan.md
-// seed: tests/tenants/emug/registro/pruebas/cttos-energia/seed-cttos-energia.spec.ts
+// plan: specs/Registro/emug-registro-toolbar-chips-removed.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/cttos-energia/seed-cttos-energia.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';

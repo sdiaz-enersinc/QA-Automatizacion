@@ -1,5 +1,5 @@
-// spec: specs/Registro/gecg-empresas-rpm-integration.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/rpm/seed-rpm.spec.ts
+// plan: specs/Registro/gecg-empresas-rpm-integration.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/rpm/seed-rpm.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';

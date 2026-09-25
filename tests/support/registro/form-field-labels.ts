@@ -2,21 +2,21 @@ import { expect, type Locator } from '@playwright/test';
 import type { RegistroWizardFieldDefinition } from '../config/types/registro-wizard';
 
 /**
- * Collects visible form field labels inside a Registro dialog.
+ * Recolecta etiquetas visibles de campos de formulario dentro de un diálogo de Registro.
  *
- * Rules:
- * - Scope is the dialog locator only (not page-level select dropdown portals).
- * - Only `.ant-form-item` rows with an interactive control are counted.
- * - Normalized labels are deduplicated while preserving first-seen order.
+ * Reglas:
+ * - El alcance es solo el localizador del diálogo (no los portales de select a nivel de página).
+ * - Solo se cuentan filas `.ant-form-item` con un control interactivo.
+ * - Las etiquetas normalizadas se deduplican conservando el orden de primera aparición.
  */
 
 const FORM_CONTROL_SELECTOR =
   'input, textarea, .ant-select, .ant-picker, [role="spinbutton"]';
 
 /**
- * Normalizes a form label for comparison with tenant config (no required asterisk).
+ * Normaliza una etiqueta de formulario para compararla con la config del tenant (sin asterisco de obligatorio).
  *
- * @param text - Raw label text from the DOM.
+ * @param text - Texto crudo de la etiqueta desde el DOM.
  */
 export function normalizeRegistroFormFieldLabel(text: string): string {
   return text
@@ -26,10 +26,10 @@ export function normalizeRegistroFormFieldLabel(text: string): string {
 }
 
 /**
- * Builds the expected label list from wizard field definitions and optional extras.
+ * Construye la lista de etiquetas esperadas a partir de las definiciones de campo del asistente y extras opcionales.
  *
- * @param fields - Configured wizard fields for the active step or form.
- * @param extraLabels - Labels not modeled as wizard fields (e.g. spinbuttons).
+ * @param fields - Campos del asistente configurados para el paso o formulario activo.
+ * @param extraLabels - Etiquetas no modeladas como campos del asistente (p. ej. spinbuttons).
  */
 export function expectedLabelsFromWizardFields(
   fields: readonly RegistroWizardFieldDefinition[],
@@ -43,15 +43,15 @@ export function expectedLabelsFromWizardFields(
 }
 
 export interface CollectRegistroFormFieldLabelsOptions {
-  /** When set, scrolls this element to the bottom before collecting (long forms). */
+  /** Si se define, hace scroll al final de este elemento antes de recolectar (formularios largos). */
   scrollContainer?: Locator;
 }
 
 /**
- * Reads normalized field labels from Ant Design form items inside a dialog.
+ * Lee etiquetas de campo normalizadas de los form-item de Ant Design dentro de un diálogo.
  *
- * @param dialog - Open modal or wizard dialog locator.
- * @param options - Optional scroll target before collection.
+ * @param dialog - Localizador del modal o asistente abierto.
+ * @param options - Destino de scroll opcional antes de recolectar.
  */
 export async function collectRegistroFormFieldLabels(
   dialog: Locator,
@@ -99,18 +99,18 @@ export async function collectRegistroFormFieldLabels(
 }
 
 export interface AssertRegistroFormFieldLabelsMatchConfigOptions {
-  /** When true, only fail on config labels missing from UI (subset mode). */
+  /** Si es true, solo falla cuando faltan etiquetas de la config en la UI (modo subconjunto). */
   allowExtra?: boolean;
-  /** Prefix for error messages (e.g. dialog name). */
+  /** Prefijo de los mensajes de error (p. ej. nombre del diálogo). */
   context?: string;
 }
 
 /**
- * Compares collected UI labels to the expected config set.
+ * Compara las etiquetas recolectadas de la UI con el conjunto esperado de la config.
  *
- * @param collected - Labels from {@link collectRegistroFormFieldLabels}.
- * @param expected - Configured label list.
- * @param options - Strict vs subset mode and message context.
+ * @param collected - Etiquetas de {@link collectRegistroFormFieldLabels}.
+ * @param expected - Lista de etiquetas configuradas.
+ * @param options - Modo estricto vs subconjunto y contexto del mensaje.
  */
 export function assertRegistroFormFieldLabelsMatchConfig(
   collected: readonly string[],
@@ -133,35 +133,35 @@ export function assertRegistroFormFieldLabelsMatchConfig(
   const parts: string[] = [];
   if (missing.length > 0) {
     const preview = missing.slice(0, 5).join(', ');
-    const suffix = missing.length > 5 ? ` (+${missing.length - 5} more)` : '';
-    parts.push(`missing from UI: ${preview}${suffix}`);
-  }
-  if (unexpected.length > 0) {
-    const preview = unexpected.slice(0, 5).join(', ');
-    const suffix = unexpected.length > 5 ? ` (+${unexpected.length - 5} more)` : '';
-    parts.push(`in UI but not in config: ${preview}${suffix}`);
-  }
-  throw new Error(`${prefix}Field label mismatch — ${parts.join('; ')}`);
+      const suffix = missing.length > 5 ? ` (+${missing.length - 5} más)` : '';
+      parts.push(`faltan en la UI: ${preview}${suffix}`);
+    }
+    if (unexpected.length > 0) {
+      const preview = unexpected.slice(0, 5).join(', ');
+      const suffix = unexpected.length > 5 ? ` (+${unexpected.length - 5} más)` : '';
+      parts.push(`en la UI pero no en la config: ${preview}${suffix}`);
+    }
+    throw new Error(`${prefix}Desajuste de etiquetas de campo — ${parts.join('; ')}`);
 }
 
 export interface AssertRegistroWizardFieldsMatchConfigOptions {
-  /** When true, only assert config fields exist in the UI. */
+  /** Si es true, solo aserta que los campos de la config existen en la UI. */
   allowExtra?: boolean;
-  /** Labels outside wizard field definitions (e.g. spinbuttons). */
+  /** Etiquetas fuera de las definiciones de campo del asistente (p. ej. spinbuttons). */
   extraExpectedLabels?: readonly string[];
-  /** Locator to scroll before collecting when any field uses requiresScroll. */
+  /** Localizador al que hacer scroll antes de recolectar si algún campo usa requiresScroll. */
   scrollContainer?: Locator;
-  /** Last scroll-requiring field control; scrolled into view before collect. */
+  /** Último control que requiere scroll; se lleva a la vista antes de recolectar. */
   scrollLastFieldControl?: Locator;
   context?: string;
 }
 
 /**
- * Scrolls if needed, collects dialog labels, and asserts they match config.
+ * Hace scroll si hace falta, recolecta etiquetas del diálogo y comprueba que coinciden con la config.
  *
- * @param dialog - Open wizard or flat-form dialog.
- * @param fields - Expected wizard fields for the current step.
- * @param options - allowExtra, extra labels, scroll hints, error context.
+ * @param dialog - Diálogo de asistente o formulario plano abierto.
+ * @param fields - Campos esperados del asistente para el paso actual.
+ * @param options - allowExtra, etiquetas extra, pistas de scroll y contexto de error.
  */
 export async function assertRegistroWizardFieldsMatchConfig(
   dialog: Locator,

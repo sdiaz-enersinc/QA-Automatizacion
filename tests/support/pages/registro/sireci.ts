@@ -17,65 +17,65 @@ export type { RegistroSireciTabName };
 
 const cfg = getRegistroSireciConfig();
 
-/** Whether the Registro Sireci module is enabled for the active tenant. */
+/** Indica si el módulo Registro Sireci está habilitado para el tenant activo. */
 export const REGISTRO_SIRECI_ENABLED = isModuleEnabled(MODULE_IDS.registroSireci);
 
-/** Tab labels on the Sireci module (tenant config). */
+/** Etiquetas de pestaña del módulo Sireci (config del tenant). */
 export const REGISTRO_SIRECI_TAB_NAMES = cfg.registroSireciTabNames;
 
-/** Tabs reachable with current tenant credentials. */
+/** Pestañas alcanzables con las credenciales actuales del tenant. */
 export const REGISTRO_SIRECI_ENABLED_TAB_NAMES = getModuleEnabledTabNames(MODULE_IDS.registroSireci);
 
 export const REGISTRO_SIRECI_LOCKED_TAB_NAMES = cfg.registroSireciLockedTabNames;
 
-/** Resumen grid column headers (tenant config). */
+/** Encabezados de columna de la grilla Resumen (config del tenant). */
 export const REGISTRO_SIRECI_RESUMEN_COLUMNS = cfg.registroSireciResumenColumns;
 
-/** Reporte grid column headers (tenant config). */
+/** Encabezados de columna de la grilla Reporte (config del tenant). */
 export const REGISTRO_SIRECI_REPORTE_COLUMNS = cfg.registroSireciReporteColumns;
 
-/** Nuevo Registro flat-form combobox fields (tenant config). */
+/** Campos combobox del formulario plano Nuevo Registro (config del tenant). */
 export const REGISTRO_SIRECI_NUEVO_REGISTRO_COMBOBOX_FIELDS: readonly RegistroWizardFieldDefinition[] =
   cfg.registroSireciNuevoRegistroComboboxFields;
 
-/** Nuevo Registro flat-form text and date fields (tenant config). */
+/** Campos de texto y fecha del formulario plano Nuevo Registro (config del tenant). */
 export const REGISTRO_SIRECI_NUEVO_REGISTRO_TEXT_DATE_FIELDS: readonly RegistroWizardFieldDefinition[] =
   cfg.registroSireciNuevoRegistroTextDateFields;
 
-/** Spinbutton labels on Nuevo Registro (tenant config). */
+/** Etiquetas de spinbutton en Nuevo Registro (config del tenant). */
 export const REGISTRO_SIRECI_NUEVO_REGISTRO_SPINBUTTON_LABELS =
   cfg.registroSireciNuevoRegistroSpinbuttonLabels;
 
-/** Expected dropdown options per Nuevo Registro combobox (tenant config). */
+/** Opciones esperadas por combobox de Nuevo Registro (config del tenant). */
 export const REGISTRO_SIRECI_NUEVO_REGISTRO_FIELDS_DROPDOWN_OPTIONS: RegistroWizardDropdownOptionsMap =
   cfg.registroSireciNuevoRegistroFieldsDropdownOptions;
 
 /**
- * Navigation and assertions for the Sireci submodule under Registro.
+ * Navegación y aserciones del submódulo Sireci bajo Registro.
  */
 export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
-  /** URL slug segment per Sireci tab (tenant config). */
+  /** Segmento de slug de URL por pestaña de Sireci (config del tenant). */
   static readonly REGISTRO_SIRECI_TAB_SLUGS: Record<string, RegExp> = toTabSlugRecord(
     cfg.registroSireciTabSlugs,
   );
 
-  /** Breadcrumb third-segment text per active tab (tenant config). */
+  /** Texto del tercer segmento del breadcrumb por pestaña activa (config del tenant). */
   static readonly REGISTRO_SIRECI_TAB_BREADCRUMBS: Record<string, string> =
     cfg.registroSireciTabBreadcrumbs;
 
-  /** Sidebar nested link href per tab (tenant config). */
+  /** Href del enlace anidado del menú lateral por pestaña (config del tenant). */
   static readonly REGISTRO_SIRECI_SIDEBAR_HREFS: Record<string, string> =
     cfg.registroSireciSidebarHrefs;
 
   /**
-   * Expands Registro and the Sireci submodule dropdown in the sidebar.
+   * Expande Registro y el desplegable del submódulo Sireci en el menú lateral.
    */
   async expandSireciSidebar(): Promise<void> {
     await this.expandRegistroSubmodule('Sireci');
   }
 
   /**
-   * Ensures Sireci is expanded and nested Resumen / Reporte sidebar links are visible.
+   * Asegura que Sireci está expandido y que los enlaces anidados Resumen / Reporte del menú lateral son visibles.
    */
   async ensureSireciSidebarExpanded(): Promise<void> {
     await this.expandRegistroSidebar();
@@ -90,7 +90,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts Sireci appears in the expanded Registro sidebar submenu.
+   * Comprueba que Sireci aparece en el submenú expandido de Registro.
    */
   async expectSireciSubmenuEntryVisible(): Promise<void> {
     await this.expandRegistroSidebar();
@@ -98,7 +98,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts Sireci is expanded and nested sidebar links match tenant config exactly.
+   * Comprueba que Sireci está expandido y que los enlaces anidados coinciden exactamente con la config del tenant.
    */
   async expectSireciNestedSidebarLinksVisible(): Promise<void> {
     await this.ensureSireciSidebarExpanded();
@@ -120,7 +120,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens a Sireci tab via sidebar nested links under Sireci.
+   * Abre una pestaña de Sireci por los enlaces anidados del menú lateral bajo Sireci.
    */
   async openSireciFromSidebar(tabName: RegistroSireciTabName): Promise<void> {
     await this.ensureSireciSidebarExpanded();
@@ -134,7 +134,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens Sireci from the dashboard grid (eye affordance under the Registro card).
+   * Abre Sireci desde la grilla del tablero (icono ojo bajo la tarjeta Registro).
    */
   async openSireciFromDashboardGrid(): Promise<void> {
     await expect(async () => {
@@ -149,7 +149,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts the Registro dashboard hover menu exposes Sireci with an eye affordance.
+   * Comprueba que el menú hover de la tarjeta Registro muestra Sireci con el icono ojo.
    */
   async expectSireciVisibleOnDashboardHover(): Promise<void> {
     await expect(async () => {
@@ -165,7 +165,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts Sireci gestor shell: URL, breadcrumb, tab strip, search, and data grid.
+   * Comprueba el shell del gestor de Sireci: URL, breadcrumb, tira de pestañas, búsqueda y grilla de datos.
    */
   async expectGestorDeDatosSireciShell(): Promise<void> {
     await expect(this.page).toHaveURL(/gestor-de-datos\/sireci\//);
@@ -182,7 +182,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts the tab is selected, breadcrumb shows the tab label, and URL matches the slug.
+   * Comprueba que la pestaña está seleccionada, el breadcrumb muestra su etiqueta y la URL coincide con el slug.
    */
   async expectSireciViewActive(tabName: RegistroSireciTabName): Promise<void> {
     await expect(this.page).toHaveURL(RegistroSireciNavigationPage.REGISTRO_SIRECI_TAB_SLUGS[tabName], {
@@ -198,7 +198,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens an in-module tab and asserts URL, breadcrumb, and aria-selected state.
+   * Abre una pestaña del módulo y comprueba URL, breadcrumb y estado aria-selected.
    */
   async openSireciTab(tabName: RegistroSireciTabName): Promise<void> {
     await this.page.getByRole('tab', { name: tabName, exact: true }).click();
@@ -206,9 +206,9 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts the tab strip matches tenant config and the partner tab is visible but not selected.
+   * Comprueba que la tira de pestañas coincide con la config del tenant y que la pestaña hermana es visible pero no está seleccionada.
    *
-   * @param activeTab - Currently selected Sireci tab whose mate must stay unselected.
+   * @param activeTab - Pestaña de Sireci actualmente seleccionada cuya pareja debe permanecer sin seleccionar.
    */
   async expectSireciPairTabVisible(activeTab: RegistroSireciTabName): Promise<void> {
     await assertTabStripMatchesConfig(this.page, {
@@ -227,9 +227,9 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts data-table column headers in the first main grid match tenant config exactly.
+   * Comprueba que los encabezados de columna de la primera grilla principal coinciden exactamente con la config del tenant.
    *
-   * @param columnNames - Expected column header labels.
+   * @param columnNames - Etiquetas esperadas de encabezado de columna.
    */
   async expectGridColumnHeaders(columnNames: readonly string[]): Promise<void> {
     const table = this.gestorMain().getByRole('table').first();
@@ -237,7 +237,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts pagination footer with item count and page-size selector.
+   * Comprueba el pie de paginación con el recuento de ítems y el selector de tamaño de página.
    */
   async expectGridPaginationFooter(pageSizeLabel: string): Promise<void> {
     const main = this.gestorMain();
@@ -246,7 +246,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts the grid shows at least one data row or an explicit empty-state heading.
+   * Comprueba que la grilla muestra al menos una fila de datos o un encabezado explícito de estado vacío.
    */
   async expectGridHasDataOrEmptyState(): Promise<void> {
     const main = this.gestorMain();
@@ -261,7 +261,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts Resumen toolbar: search, filter chips, CTAs, and no Filtros chip.
+   * Comprueba la barra de Resumen: búsqueda, chips de filtro, CTAs y ausencia del chip Filtros.
    */
   async expectSireciResumenToolbar(): Promise<void> {
     const main = this.gestorMain();
@@ -277,7 +277,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts Reporte toolbar: search, Filtros chip, filter chips, and Descargar Reporte only.
+   * Comprueba la barra de Reporte: búsqueda, chip Filtros, chips de filtro y solo Descargar Reporte.
    */
   async expectSireciReporteToolbar(): Promise<void> {
     const main = this.gestorMain();
@@ -293,8 +293,8 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Toggles Modo Yo on then off and asserts the view URL is restored.
-   * Actively dismisses any filter-triggered popup instead of waiting for auto-dismiss.
+   * Alterna Modo Yo encendido y luego apagado, y comprueba que se restaura la URL de la vista.
+   * Descarta de forma activa cualquier popup disparado por el filtro en lugar de esperar el cierre automático.
    */
   async expectModoYoFilterToggle(): Promise<void> {
     const chip = this.filterChip('Modo Yo');
@@ -306,7 +306,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts Reporte grid column headers in the first main table.
+   * Comprueba los encabezados de columna de la grilla Reporte en la primera tabla principal.
    */
   async expectSireciReporteGridColumnHeaders(
     columnNames: readonly string[] = REGISTRO_SIRECI_REPORTE_COLUMNS,
@@ -315,7 +315,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Clicks the Reporte Filtros chip and returns the opened dialog locator.
+   * Hace clic en el chip Filtros de Reporte y devuelve el localizador del diálogo abierto.
    */
   protected filtrosChip(): Locator {
     return this.gestorMain()
@@ -325,7 +325,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens the Filtros modal, asserts structure, then dismisses with Close.
+   * Abre el modal Filtros, comprueba su estructura y lo cierra con Close.
    */
   async expectFiltrosModalOpensAndCloses(): Promise<void> {
     await this.expectNoVisibleModals();
@@ -341,7 +341,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens Descargar Reporte confirmation dialog, asserts content, dismisses with Cancelar.
+   * Abre el diálogo de confirmación de Descargar Reporte, comprueba el contenido y lo cierra con Cancelar.
    */
   async expectDescargarReporteDialogOpensAndCloses(): Promise<void> {
     await this.expectNoVisibleModals();
@@ -359,7 +359,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens Estado filter dialog, asserts combobox placeholder, then dismisses with Close.
+   * Abre el diálogo de filtro Estado, comprueba el placeholder del combobox y lo cierra con Close.
    */
   async expectEstadoFilterDialogWithCombobox(): Promise<void> {
     await this.dismissNotificationToasts();
@@ -373,7 +373,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens Usuarios filter dialog, asserts combobox placeholder, then dismisses with Close.
+   * Abre el diálogo de filtro Usuarios, comprueba el placeholder del combobox y lo cierra con Close.
    */
   async expectUsuariosFilterDialogWithCombobox(): Promise<void> {
     await this.dismissNotificationToasts();
@@ -387,7 +387,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts Nuevo Registro spinbutton fields are present in the flat form.
+   * Comprueba que los campos spinbutton de Nuevo Registro están presentes en el formulario plano.
    */
   async expectNuevoRegistroSpinbuttonsPresent(dialog: Locator): Promise<void> {
     for (const label of REGISTRO_SIRECI_NUEVO_REGISTRO_SPINBUTTON_LABELS) {
@@ -399,7 +399,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens Nuevo Registro, validates shell, fields, dropdowns, and spinbuttons, then closes.
+   * Abre Nuevo Registro, valida el contenedor, campos, desplegables y spinbuttons, y cierra.
    */
   async expectNuevoRegistroDialogOpensAndCloses(): Promise<void> {
     await this.expectNoVisibleModals();

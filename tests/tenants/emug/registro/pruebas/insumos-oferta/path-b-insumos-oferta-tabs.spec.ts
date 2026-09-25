@@ -1,5 +1,5 @@
-// spec: specs/Registro/insumos-oferta-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/pruebas/insumos-oferta/seed-insumos-oferta.spec.ts
+// plan: specs/Registro/insumos-oferta-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/insumos-oferta/seed-insumos-oferta.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessAnyTabEnabled, skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
@@ -17,14 +17,14 @@ test.describe('Insumos oferta', () => {
     skipUnlessAnyTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_ENABLED_TAB_NAMES);
   });
 
-  test('Path B — hover de Registro lista Insumos oferta y la tira de pestañas recorre las habilitadas', async ({
+  test('Ruta B — el hover de Registro lista Insumos oferta y la tira de pestañas recorre las habilitadas', async ({
     page,
     dashboardPage,
   }) => {
     const registro = new RegistroInsumosOfertaNavigationPage(page);
     const card = registro.registroDashboardCard();
 
-    // 1. En dashboard, localizar la tarjeta Registro y comprobar filas visibles de Empresas, Cttos energía y Cttos combustible.
+    // 1. En el tablero, localizar la tarjeta Registro y comprobar filas visibles de Empresas, Cttos energía y Cttos combustible.
     await dashboardPage.expectLoaded();
     await expect(card).toBeVisible();
     for (const label of REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS) {

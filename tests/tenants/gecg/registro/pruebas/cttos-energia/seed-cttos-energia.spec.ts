@@ -14,7 +14,7 @@ test.beforeEach(() => {
   skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_DEFAULT_TAB);
 });
 
-test('Seed — shell de Contratos de energía por menú lateral', async ({ page, dashboardPage }) => {
+test('Semilla — shell de Contratos de energía por menú lateral', async ({ page, dashboardPage }) => {
   const registro = new RegistroCttosEnergiaNavigationPage(page);
 
   await test.step('Abrir Contratos de energía y validar el shell del gestor', async () => {

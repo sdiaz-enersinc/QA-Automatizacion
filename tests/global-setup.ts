@@ -8,8 +8,8 @@ dotenv.config({ quiet: true });
 const DEFAULT_TENANT = 'emug';
 
 /**
- * Validates TEST_TENANT, the tenant spec directory, and tenant.json before the run.
- * Does not initialize CSV catalogs (reporters are out of scope for this slice).
+ * Valida TEST_TENANT, el directorio de specs del tenant y tenant.json antes de la corrida.
+ * No inicializa catálogos CSV (los reporters quedan fuera de alcance).
  */
 export default async function globalSetup(): Promise<void> {
   const tenant = process.env.TEST_TENANT ?? DEFAULT_TENANT;
@@ -17,14 +17,14 @@ export default async function globalSetup(): Promise<void> {
 
   if (!fs.existsSync(tenantDir)) {
     throw new Error(
-      `Tenant spec directory not found: ${tenantDir} (TEST_TENANT=${tenant})`,
+      `No se encontró el directorio de specs del tenant: ${tenantDir} (TEST_TENANT=${tenant})`,
     );
   }
 
   const tenantJson = path.join(tenantDir, 'tenant.json');
   if (!fs.existsSync(tenantJson)) {
     throw new Error(
-      `Tenant manifest not found: ${tenantJson} (TEST_TENANT=${tenant})`,
+      `No se encontró el manifiesto del tenant: ${tenantJson} (TEST_TENANT=${tenant})`,
     );
   }
 

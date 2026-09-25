@@ -11,39 +11,39 @@ export type { RegistroOtrosDocumentosViewName };
 
 const cfg = getRegistroOtrosDocumentosConfig();
 
-/** Whether the Registro Otros documentos module is enabled for the active tenant. */
+/** Indica si el módulo Registro Otros documentos está habilitado para el tenant activo. */
 export const REGISTRO_OTROS_DOCUMENTOS_ENABLED = isModuleEnabled(MODULE_IDS.registroOtrosDocumentos);
 
-/** All Otros documentos sidebar/tab views (tenant config). */
+/** Todas las vistas de menú/pestaña de Otros documentos (config del tenant). */
 export const REGISTRO_OTROS_DOCUMENTOS_VIEW_NAMES = cfg.registroOtrosDocumentosViewNames;
 
-/** Views reachable with current tenant credentials. */
+/** Vistas alcanzables con las credenciales actuales del tenant. */
 export const REGISTRO_OTROS_DOCUMENTOS_ENABLED_VIEW_NAMES = getModuleEnabledTabNames(
   MODULE_IDS.registroOtrosDocumentos,
 );
 
-/** Landing view used as sidebar anchor and seed. */
+/** Vista de aterrizaje usada como ancla del menú lateral y semilla. */
 export const REGISTRO_OTROS_DOCUMENTOS_DEFAULT_VIEW = cfg.registroOtrosDocumentosDefaultView;
 
-/** Hidrologia views under Otros documentos (tenant config). */
+/** Vistas de Hidrologia bajo Otros documentos (config del tenant). */
 export const REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS = cfg.registroOtrosDocumentosHidrologiaViews;
 
-/** Contadores views under Otros documentos (tenant config). */
+/** Vistas de Contadores bajo Otros documentos (config del tenant). */
 export const REGISTRO_OTROS_DOCUMENTOS_CONTADORES_VIEWS = cfg.registroOtrosDocumentosContadoresViews;
 
-/** Hidrologia Horaria grid column headers (tenant config). */
+/** Encabezados de columna de la grilla Hidrologia Horaria (config del tenant). */
 export const REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_HORARIA_COLUMNS =
   cfg.registroOtrosDocumentosHidrologiaHorariaColumns;
 
-/** Hidrologia Diaria grid column headers (tenant config). */
+/** Encabezados de columna de la grilla Hidrologia Diaria (config del tenant). */
 export const REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_DIARIA_COLUMNS =
   cfg.registroOtrosDocumentosHidrologiaDiariaColumns;
 
-/** Contadores Frt / INTI grid column headers (tenant config). */
+/** Encabezados de columna de la grilla Contadores Frt / INTI (config del tenant). */
 export const REGISTRO_OTROS_DOCUMENTOS_CONTADORES_COLUMNS =
   cfg.registroOtrosDocumentosContadoresColumns;
 
-/** Nested sidebar group labels under Otros documentos (unique values from tenant config). */
+/** Etiquetas de grupos anidados del menú lateral bajo Otros documentos (valores únicos de la config del tenant). */
 export const REGISTRO_OTROS_DOCUMENTOS_NESTED_GROUPS = [
   ...new Set(Object.values(cfg.registroOtrosDocumentosNestedGroup)),
 ];
@@ -51,37 +51,37 @@ export const REGISTRO_OTROS_DOCUMENTOS_NESTED_GROUPS = [
 type OtrosDocumentosNestedGroup = 'Hidrologia' | 'Contadores';
 
 /**
- * Navigation and assertions for the Otros documentos submodule under Registro.
+ * Navegación y aserciones del submódulo Otros documentos bajo Registro.
  */
 export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBasePage {
-  /** URL slug segment per Otros documentos view (tenant config). */
+  /** Segmento de slug de URL por vista de Otros documentos (config del tenant). */
   static readonly REGISTRO_OTROS_DOCUMENTOS_VIEW_SLUGS: Record<string, RegExp> = toTabSlugRecord(
     cfg.registroOtrosDocumentosViewSlugs,
   );
 
-  /** Breadcrumb third-segment text per active view (tenant config). */
+  /** Texto del tercer segmento del breadcrumb por vista activa (config del tenant). */
   static readonly REGISTRO_OTROS_DOCUMENTOS_VIEW_BREADCRUMBS: Record<string, string> =
     cfg.registroOtrosDocumentosViewBreadcrumbs;
 
-  /** Sidebar nested flyout group per view (tenant config). */
+  /** Grupo del desplegable anidado del menú lateral por vista (config del tenant). */
   static readonly REGISTRO_OTROS_DOCUMENTOS_NESTED_GROUP: Record<string, OtrosDocumentosNestedGroup> =
     cfg.registroOtrosDocumentosNestedGroup as Record<string, OtrosDocumentosNestedGroup>;
 
-  /** Cross-navigation tab partner within each pair (tenant config). */
+  /** Pestaña pareja de navegación cruzada dentro de cada par (config del tenant). */
   static readonly REGISTRO_OTROS_DOCUMENTOS_TAB_PAIR_MATE: Record<string, string> =
     cfg.registroOtrosDocumentosTabPairMate;
 
   /**
-   * Expands Registro and the Otros documentos submodule dropdown in the sidebar.
+   * Expande Registro y el desplegable del submódulo Otros documentos en el menú lateral.
    */
   async expandOtrosDocumentosSidebar(): Promise<void> {
     await this.expandRegistroSubmodule('Otros documentos');
   }
 
   /**
-   * Expands a nested sidebar group (Hidrologia or Contadores) under Otros documentos.
+   * Expande un grupo anidado del menú lateral (Hidrologia o Contadores) bajo Otros documentos.
    *
-   * @param group - Nested flyout group under Otros documentos.
+   * @param group - Grupo del desplegable anidado bajo Otros documentos.
    */
   async expandOtrosDocumentosNestedGroup(group: OtrosDocumentosNestedGroup): Promise<void> {
     await this.expandOtrosDocumentosSidebar();
@@ -95,7 +95,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts Otros documentos nested groups match tenant config exactly (Hidrologia / Contadores).
+   * Comprueba que los grupos anidados de Otros documentos coinciden exactamente con la config del tenant (Hidrologia / Contadores).
    */
   async expectOtrosDocumentosSubmenuGroupsVisible(): Promise<void> {
     await this.expandOtrosDocumentosSidebar();
@@ -107,9 +107,9 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Opens an Otros documentos view via sidebar nested menuitems.
+   * Abre una vista de Otros documentos por los ítems de menú anidados del menú lateral.
    *
-   * @param viewName - Enabled view label.
+   * @param viewName - Etiqueta de vista habilitada.
    */
   async openOtrosDocumentosFromSidebar(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     const group =
@@ -128,9 +128,9 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Opens an in-module tab and asserts URL, breadcrumb, and aria-selected state.
+   * Abre una pestaña del módulo y comprueba URL, breadcrumb y estado aria-selected.
    *
-   * @param viewName - Target tab label.
+   * @param viewName - Etiqueta de pestaña destino.
    */
   async openOtrosDocumentosTab(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     await this.page.getByRole('tab', { name: viewName, exact: true }).click();
@@ -138,9 +138,9 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts the view tab is selected, breadcrumb matches, URL slug matches, and main grid is visible.
+   * Comprueba que la pestaña de la vista está seleccionada, el breadcrumb coincide, el slug de URL coincide y la grilla principal es visible.
    *
-   * @param viewName - Expected active view label.
+   * @param viewName - Etiqueta de vista activa esperada.
    */
   async expectOtrosDocumentosViewActive(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     await expect(this.page).toHaveURL(
@@ -159,9 +159,9 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts the tab strip matches the active pair and the partner tab is visible but not selected.
+   * Comprueba que la tira de pestañas coincide con el par activo y que la pestaña pareja es visible pero no está seleccionada.
    *
-   * @param viewName - Active view whose pair mate must be visible.
+   * @param viewName - Vista activa cuya pareja debe ser visible.
    */
   async expectOtrosDocumentosPairTabVisible(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     await assertTabStripMatchesConfig(this.page, {
@@ -175,7 +175,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts Otros documentos toolbar: search, filter chips, Cargar archivo, and no Filtros chip.
+   * Comprueba la barra de Otros documentos: búsqueda, chips de filtro, Cargar archivo y ausencia del chip Filtros.
    */
   async expectOtrosDocumentosToolbar(): Promise<void> {
     const main = this.gestorMain();
@@ -186,9 +186,9 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Opens an Otros documentos view by deep-linking the tenant slug (sidebar workaround).
+   * Abre una vista de Otros documentos con un enlace directo al slug del tenant (solución alternativa al menú lateral).
    *
-   * @param viewName - Enabled view label.
+   * @param viewName - Etiqueta de vista habilitada.
    */
   async openOtrosDocumentosByUrl(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     const slug = cfg.registroOtrosDocumentosViewSlugs[viewName];
@@ -200,7 +200,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts Otros documentos gestor shell: URL, breadcrumb, and the active pair's tabs.
+   * Comprueba el shell del gestor de Otros documentos: URL, breadcrumb y las pestañas del par activo.
    */
   async expectGestorDeDatosOtrosDocumentosShell(): Promise<void> {
     await expect(this.page).toHaveURL(/gestor-de-datos\/otros-documentos\//);
@@ -212,9 +212,9 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts data-table column headers in the first main grid.
+   * Comprueba los encabezados de columna de la primera grilla principal.
    *
-   * @param columnNames - Expected column header labels.
+   * @param columnNames - Etiquetas esperadas de encabezado de columna.
    */
   async expectGridColumnHeaders(columnNames: readonly string[]): Promise<void> {
     const table = this.gestorMain().getByRole('table').first();
@@ -222,9 +222,9 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts grid columns and view-specific extras for an Otros documentos layout.
+   * Comprueba las columnas de la grilla y los extras específicos de cada layout de Otros documentos.
    *
-   * @param viewName - Active Hidrologia or Contadores view label.
+   * @param viewName - Etiqueta de vista activa de Hidrologia o Contadores.
    */
   async expectOtrosDocumentosLayout(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     await this.expectGridColumnHeaders(this.columnsForView(viewName));
@@ -247,7 +247,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts pagination footer with item count and default page size selector.
+   * Comprueba el pie de paginación con el recuento de ítems y el selector de tamaño de página por defecto.
    */
   async expectGridPaginationFooter(): Promise<void> {
     const main = this.gestorMain();
@@ -256,7 +256,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts the grid shows at least one data row or an explicit empty-state heading.
+   * Comprueba que la grilla muestra al menos una fila de datos o un encabezado explícito de estado vacío.
    */
   async expectGridHasDataOrEmptyState(): Promise<void> {
     const main = this.gestorMain();
@@ -267,14 +267,14 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Asserts Contadores Frt sample rows include Frontera codes prefixed with Frt.
+   * Comprueba que las filas de muestra de Contadores Frt incluyen códigos de Frontera con prefijo Frt.
    */
   async expectContadoresFrtSampleRows(): Promise<void> {
     await expect(this.gestorMain().getByRole('table').first().getByText(/^Frt/)).toBeVisible();
   }
 
   /**
-   * Asserts no application error banner is shown on the current view.
+   * Comprueba que no se muestra un banner de error de la aplicación en la vista actual.
    */
   async expectNoErrorBanner(): Promise<void> {
     await expect(this.page.getByText('404')).toHaveCount(0);
@@ -282,7 +282,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Opens Cargar archivo upload dialog, validates dropzone and Guardar, then closes it.
+   * Abre el diálogo de subida Cargar archivo, valida la zona de carga y Guardar, y lo cierra.
    */
   async expectCargarArchivoDialogOpensAndCloses(): Promise<void> {
     await this.expectFileUploadDialogOpensAndCloses('Cargar archivo');
@@ -290,7 +290,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Hovers the Registro dashboard card and asserts Otros documentos appears with an eye icon.
+   * Pasa el cursor sobre la tarjeta Registro del tablero y comprueba que Otros documentos aparece con un icono ojo.
    */
   async expectOtrosDocumentosVisibleOnDashboardHover(): Promise<void> {
     await this.hoverRegistroDashboardCard();
@@ -303,7 +303,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Path B: asserts pinned Registro card rows, hovers to reveal Otros documentos, and clicks the eye.
+   * Ruta B: comprueba las filas fijas de la tarjeta Registro, pasa el cursor para revelar Otros documentos y hace clic en el ojo.
    */
   async openOtrosDocumentosFromDashboardHover(): Promise<void> {
     const card = this.registroDashboardCard();
@@ -319,7 +319,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Clicks the Otros documentos eye icon on the Registro dashboard card.
+   * Hace clic en el icono ojo de Otros documentos en la tarjeta Registro del tablero.
    */
   async openOtrosDocumentosFromDashboardGrid(): Promise<void> {
     await this.hoverRegistroDashboardCard();
@@ -331,7 +331,7 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Returns Hidrologia or Contadores views matching the current gestor URL.
+   * Devuelve las vistas de Hidrologia o Contadores que coinciden con la URL actual del gestor.
    */
   private activeOtrosDocumentosPairViews(): readonly string[] {
     const url = this.page.url();
@@ -344,9 +344,9 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
   }
 
   /**
-   * Returns tenant-configured column headers for an Otros documentos view.
+   * Devuelve los encabezados de columna configurados en el tenant para una vista de Otros documentos.
    *
-   * @param viewName - Hidrologia or Contadores view label.
+   * @param viewName - Etiqueta de vista de Hidrologia o Contadores.
    */
   private columnsForView(viewName: RegistroOtrosDocumentosViewName): readonly string[] {
     const columnsByView: Record<string, readonly string[]> = {
@@ -360,13 +360,13 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
     }
     const columns = columnsByView[viewName];
     if (!columns) {
-      throw new Error(`No column config for Otros documentos view: ${viewName}`);
+      throw new Error(`No hay configuración de columnas para la vista de Otros documentos: ${viewName}`);
     }
     return columns;
   }
 
   /**
-   * Asserts dashboard hover entry lands on the broken Otros documentos root URL with a 404 banner.
+   * Comprueba que la entrada hover del tablero aterriza en la URL raíz rota de Otros documentos con un banner 404.
    */
   async expectOtrosDocumentosDashboard404(): Promise<void> {
     await expect(this.page).toHaveURL(/gestor-de-datos\/otros-documentos\/?$/);

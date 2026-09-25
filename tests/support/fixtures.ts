@@ -1,5 +1,5 @@
-// Tests using a fixture from this module MUST import test/expect from here,
-// not from '@playwright/test', otherwise the fixture will be undefined.
+// Los tests que usen un fixture de este módulo DEBEN importar test/expect desde aquí,
+// no desde '@playwright/test'; de lo contrario el fixture queda undefined.
 import { expect } from '@playwright/test';
 import { extendWithSharedSession } from './shared-session';
 import { entryUrl } from './urls';
@@ -16,10 +16,9 @@ type AuthFixtures = {
 
 export const test = extendWithSharedSession<AuthFixtures>({
   /**
-   * Drives the UI through the email step using VALID_EMAIL and
-   * yields a PasswordStepPage already verified as ready. Test
-   * scoped, so each test gets a fresh page and clean state.
-   * Use only in unauthenticated projects (email-auth, password-auth).
+   * Recorre el paso de correo con VALID_EMAIL y entrega un PasswordStepPage
+   * ya verificado como listo. Alcance de test: cada prueba obtiene una página
+   * nueva y estado limpio. Usar solo en proyectos no autenticados (email-auth, password-auth).
    */
   passwordStepPage: async ({ page }, use) => {
     await page.goto(entryUrl());
@@ -32,9 +31,9 @@ export const test = extendWithSharedSession<AuthFixtures>({
   },
 
   /**
-   * Opens the authenticated dashboard in the shared worker session.
-   * Navigates back to the main page before each test so the next test
-   * starts from a known authenticated shell.
+   * Abre el tablero autenticado en la sesión compartida del worker.
+   * Navega de vuelta a la página principal antes de cada test para que el siguiente
+   * arranque desde un shell autenticado conocido.
    */
   dashboardPage: async ({ page }, use) => {
     await page.goto(entryUrl());

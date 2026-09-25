@@ -7,7 +7,7 @@ test.beforeEach(() => {
   skipUnlessModuleEnabled(MODULE_IDS.registroEmpresas);
 });
 
-test('Seed — shell de Empresas por menú lateral', async ({ page, dashboardPage }) => {
+test('Semilla — shell de Empresas por menú lateral', async ({ page, dashboardPage }) => {
   const registro = new RegistroEmpresasNavigationPage(page);
 
   await test.step('Abrir Empresas y validar el shell del gestor', async () => {

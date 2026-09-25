@@ -1,6 +1,6 @@
 /**
- * Collects all option labels from an open Ant Design select dropdown element.
- * Self-contained for Playwright Locator.evaluate (helpers must live inside this function).
+ * Recolecta todas las etiquetas de opción de un desplegable Ant Design abierto.
+ * Autocontenida para Locator.evaluate de Playwright (los helpers deben vivir dentro de esta función).
  */
 export async function collectAntSelectDropdownOptionsInBrowser(root: Element): Promise<string[]> {
   const VIRTUAL_LIST_RENDER_WAIT_MS = 100;

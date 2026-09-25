@@ -7,10 +7,10 @@ import { DashboardPage } from './pages/DashboardPage';
 import { CREDENTIALS_VIEW_TIMEOUT_MS, DASHBOARD_LOAD_TIMEOUT_MS } from './timeouts';
 
 /**
- * Signs in through the email and password UI until the authenticated dashboard loads.
- * Login screens are shared; tenant-specific data is not required for this flow.
+ * Inicia sesión por la UI de correo y contraseña hasta que carga el tablero autenticado.
+ * Las pantallas de login son compartidas; este flujo no requiere datos específicos del tenant.
  *
- * @param page - Playwright page used for the login flow.
+ * @param page - Página de Playwright usada para el login.
  */
 export async function loginViaUi(page: Page): Promise<void> {
   await page.goto(entryUrl());

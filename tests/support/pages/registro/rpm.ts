@@ -15,49 +15,49 @@ export type { RegistroRpmTabName };
 
 const cfg = getRegistroRpmConfig();
 
-/** Whether the Registro RPM module is enabled for the active tenant. */
+/** Indica si el módulo Registro RPM está habilitado para el tenant activo. */
 export const REGISTRO_RPM_ENABLED = isModuleEnabled(MODULE_IDS.registroRpm);
 
-/** Tab labels on the RPM module (tenant config). */
+/** Etiquetas de pestaña del módulo RPM (config del tenant). */
 export const REGISTRO_RPM_TAB_NAMES = cfg.registroRpmTabNames;
 
-/** Tabs reachable with current tenant credentials. */
+/** Pestañas alcanzables con las credenciales actuales del tenant. */
 export const REGISTRO_RPM_ENABLED_TAB_NAMES = getModuleEnabledTabNames(MODULE_IDS.registroRpm);
 
 export const REGISTRO_RPM_LOCKED_TAB_NAMES = cfg.registroRpmLockedTabNames;
 
-/** XML grid column headers (tenant config). */
+/** Encabezados de columna de la grilla XML (config del tenant). */
 export const REGISTRO_RPM_XML_COLUMNS = cfg.registroRpmXmlColumns;
 
-/** Crear Registro / Cargar Archivo flat-form fields (tenant config). */
+/** Campos del formulario plano Crear Registro / Cargar Archivo (config del tenant). */
 export const REGISTRO_RPM_CREAR_REGISTRO_FIELDS: readonly RegistroWizardFieldDefinition[] =
   cfg.registroRpmCrearRegistroFields;
 
-/** Expected dropdown options per RPM flat-form combobox (tenant config). */
+/** Opciones esperadas por combobox del formulario plano de RPM (config del tenant). */
 export const REGISTRO_RPM_CREAR_REGISTRO_FIELDS_DROPDOWN_OPTIONS: RegistroWizardDropdownOptionsMap =
   cfg.registroRpmCrearRegistroFieldsDropdownOptions;
 
 /**
- * Navigation and assertions for the RPM submodule under Registro.
+ * Navegación y aserciones del submódulo RPM bajo Registro.
  */
 export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
-  /** URL slug segment per RPM tab (tenant config). */
+  /** Segmento de slug de URL por pestaña de RPM (config del tenant). */
   static readonly REGISTRO_RPM_TAB_SLUGS: Record<string, RegExp> = toTabSlugRecord(
     cfg.registroRpmTabSlugs,
   );
 
-  /** Breadcrumb third-segment text per active tab (tenant config). */
+  /** Texto del tercer segmento del breadcrumb por pestaña activa (config del tenant). */
   static readonly REGISTRO_RPM_TAB_BREADCRUMBS: Record<string, string> = cfg.registroRpmTabBreadcrumbs;
 
   /**
-   * Expands Registro and the RPM submodule dropdown in the sidebar.
+   * Expande Registro y el desplegable del submódulo RPM en el menú lateral.
    */
   async expandRpmSidebar(): Promise<void> {
     await this.expandRegistroSubmodule('RPM');
   }
 
   /**
-   * Ensures RPM is expanded and the nested XML sidebar entry is visible.
+   * Asegura que RPM está expandido y que la entrada anidada XML del menú lateral es visible.
    */
   async ensureRpmSidebarExpanded(): Promise<void> {
     await this.expandRegistroSidebar();
@@ -72,7 +72,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts RPM appears in the expanded Registro sidebar submenu.
+   * Comprueba que RPM aparece en el submenú expandido de Registro.
    */
   async expectRpmSubmenuEntryVisible(): Promise<void> {
     await this.expandRegistroSidebar();
@@ -80,7 +80,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts RPM is expanded and nested sidebar entries match tenant config exactly.
+   * Comprueba que RPM está expandido y que las entradas anidadas coinciden exactamente con la config del tenant.
    */
   async expectRpmXmlSidebarEntryVisible(): Promise<void> {
     await this.ensureRpmSidebarExpanded();
@@ -95,7 +95,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens an RPM tab via sidebar nested menuitems under RPM.
+   * Abre una pestaña de RPM por los ítems de menú anidados bajo RPM.
    */
   async openRpmFromSidebar(tabName: RegistroRpmTabName): Promise<void> {
     await this.ensureRpmSidebarExpanded();
@@ -109,7 +109,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens RPM from the dashboard grid (eye affordance under the Registro card).
+   * Abre RPM desde la grilla del tablero (icono ojo bajo la tarjeta Registro).
    */
   async openRpmFromDashboardGrid(): Promise<void> {
     await expect(async () => {
@@ -124,7 +124,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts the Registro dashboard hover menu exposes RPM with an eye affordance.
+   * Comprueba que el menú hover de la tarjeta Registro muestra RPM con el icono ojo.
    */
   async expectRpmVisibleOnDashboardHover(): Promise<void> {
     await expect(async () => {
@@ -137,7 +137,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts RPM gestor shell: URL, breadcrumb, tab strip, search, and data grid.
+   * Comprueba el shell del gestor de RPM: URL, breadcrumb, tira de pestañas, búsqueda y grilla de datos.
    */
   async expectGestorDeDatosRpmShell(): Promise<void> {
     await expect(this.page).toHaveURL(/gestor-de-datos\/rpm\//);
@@ -154,7 +154,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts the tab is selected, breadcrumb shows the tab label, and URL matches the slug.
+   * Comprueba que la pestaña está seleccionada, el breadcrumb muestra su etiqueta y la URL coincide con el slug.
    */
   async expectRpmViewActive(tabName: RegistroRpmTabName): Promise<void> {
     await expect(this.page).toHaveURL(RegistroRpmNavigationPage.REGISTRO_RPM_TAB_SLUGS[tabName], {
@@ -170,7 +170,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts XML toolbar: search, Filtros chip, filter chips, and primary CTAs.
+   * Comprueba la barra XML: búsqueda, chip Filtros, chips de filtro y CTAs principales.
    */
   async expectRpmXmlToolbar(): Promise<void> {
     const main = this.gestorMain();
@@ -185,7 +185,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Asserts XML grid column headers in the first main table.
+   * Comprueba los encabezados de columna de la grilla XML en la primera tabla principal.
    */
   async expectRpmXmlGridColumnHeaders(
     columnNames: readonly string[] = REGISTRO_RPM_XML_COLUMNS,
@@ -197,7 +197,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens the Filtros modal, asserts structure, then dismisses with Close.
+   * Abre el modal Filtros, comprueba su estructura y lo cierra con Close.
    */
   async expectFiltrosModalOpensAndCloses(): Promise<void> {
     await this.expectNoVisibleModals();
@@ -213,7 +213,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens Crear Registro, validates flat-form fields and dropdowns, then closes.
+   * Abre Crear Registro, valida los campos y desplegables del formulario plano, y cierra.
    */
   async expectCrearRegistroDialogOpensAndCloses(): Promise<void> {
     await this.expectRegistroWizardDialogOpensAndCloses({
@@ -227,7 +227,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Opens Cargar Archivo, validates shared fields, dropdowns, dropzone and Guardar, then closes.
+   * Abre Cargar Archivo, valida campos compartidos, desplegables, zona de carga y Guardar, y cierra.
    */
   async expectCargarArchivoDialogOpensAndCloses(): Promise<void> {
     await this.expectNoVisibleModals();

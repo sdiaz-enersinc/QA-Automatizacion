@@ -3,7 +3,7 @@ import type {
   RegistroWizardFieldDefinition,
 } from './registro-wizard';
 
-/** Tenant-specific test data for the Registro Otros contratos module. */
+/** Datos de prueba específicos del tenant para el módulo Registro Otros contratos. */
 export interface RegistroOtrosContratosTenantConfig {
   registroOtrosContratosTabNames: readonly string[];
   registroOtrosContratosEnabledTabNames: readonly string[];
@@ -19,5 +19,5 @@ export interface RegistroOtrosContratosTenantConfig {
   registroOtrosContratosTabBreadcrumbs: Record<string, string>;
 }
 
-/** Otros contratos tab label (tenant-specific at runtime). */
+/** Etiqueta de pestaña de Otros contratos (específica del tenant en runtime). */
 export type RegistroOtrosContratosTabName = string;

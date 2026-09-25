@@ -1,17 +1,17 @@
-// spec: specs/Registro/gecg-empresas-rpm-integration.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/empresas/seed-empresas.spec.ts
+// plan: specs/Registro/gecg-empresas-rpm-integration.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/empresas/seed-empresas.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
 import { RegistroEmpresasNavigationPage } from '../../../../../support/pages/registro/empresas';
 
-test.describe('Empresas — Path A (menú lateral)', () => {
+test.describe('Empresas — Ruta A (menú lateral)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroEmpresas);
   });
 
-  test('Path A — Empresas accesible por Registro → Empresas en el menú lateral', async ({
+  test('Ruta A — Empresas accesible por Registro → Empresas en el menú lateral', async ({
     page,
     dashboardPage,
   }) => {

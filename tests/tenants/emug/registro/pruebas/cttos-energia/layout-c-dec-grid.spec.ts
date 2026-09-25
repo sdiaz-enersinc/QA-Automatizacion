@@ -1,5 +1,5 @@
-// spec: specs/Registro/cttos-energia-dialog-buttons-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/cttos-energia/seed-cttos-energia.spec.ts
+// plan: specs/Registro/cttos-energia-dialog-buttons-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/cttos-energia/seed-cttos-energia.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
@@ -10,7 +10,7 @@ import {
   RegistroCttosEnergiaNavigationPage,
 } from '../../../../../support/pages/registro/cttos-energia';
 
-test.describe('Contratos de energía — Botones de diálogo (Path A)', () => {
+test.describe('Contratos de energía — Botones de diálogo (Ruta A)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosEnergia);
     skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB);

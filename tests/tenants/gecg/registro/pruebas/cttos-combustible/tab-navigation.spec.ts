@@ -1,5 +1,5 @@
-// spec: specs/Registro/cttos-combustible-navigation-playwright-test.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/cttos-combustible/seed-cttos-combustible.spec.ts
+// plan: specs/Registro/cttos-combustible-navigation-playwright-test.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/cttos-combustible/seed-cttos-combustible.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';

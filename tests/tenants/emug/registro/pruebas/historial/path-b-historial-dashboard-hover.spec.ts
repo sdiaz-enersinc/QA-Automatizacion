@@ -1,5 +1,5 @@
-// spec: specs/Registro/historial-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/historial/seed-historial.spec.ts
+// plan: specs/Registro/historial-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/historial/seed-historial.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
@@ -10,12 +10,12 @@ import {
   RegistroHistorialNavigationPage,
 } from '../../../../../support/pages/registro/historial';
 
-test.describe('Historial — Path B (hover del tablero)', () => {
+test.describe('Historial — Ruta B (hover del tablero)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroHistorial);
   });
 
-  test('Path B — El hover del tablero abre Historial en Operaciones multiples', async ({
+  test('Ruta B — El hover del tablero abre Historial en Operaciones multiples', async ({
     page,
     dashboardPage,
   }) => {

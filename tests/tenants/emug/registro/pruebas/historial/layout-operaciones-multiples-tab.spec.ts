@@ -1,5 +1,5 @@
-// spec: specs/Registro/historial-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/historial/seed-historial.spec.ts
+// plan: specs/Registro/historial-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/historial/seed-historial.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';

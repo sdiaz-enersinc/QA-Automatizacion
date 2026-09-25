@@ -14,7 +14,7 @@ test.beforeEach(() => {
 /**
  * Abre Otros contratos en Miscelaneos para que los specs de generador y layout partan de un shell conocido.
  */
-test('Seed — shell de Otros contratos en Miscelaneos', async ({ page, dashboardPage }) => {
+test('Semilla — shell de Otros contratos en Miscelaneos', async ({ page, dashboardPage }) => {
   const registro = new RegistroOtrosContratosNavigationPage(page);
   await dashboardPage.expectLoaded();
   await registro.openOtrosContratosFromSidebar(REGISTRO_OTROS_CONTRATOS_DEFAULT_TAB);

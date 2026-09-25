@@ -1,5 +1,5 @@
-// spec: specs/Registro/otros-documentos-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/pruebas/otros-documentos/seed-otros-documentos.spec.ts
+// plan: specs/Registro/otros-documentos-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/otros-documentos/seed-otros-documentos.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessAllTabsEnabled, skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
@@ -18,7 +18,7 @@ test.describe('Escenario 2 — Navegación por menú lateral y cruce de pestaña
     );
   });
 
-  test('Path B — Cruce de pestañas Par A (Hidrologia Horaria ↔ Hidrologia Diaria)', async ({
+  test('Ruta B — Cruce de pestañas Par A (Hidrologia Horaria ↔ Hidrologia Diaria)', async ({
     page,
     dashboardPage,
   }) => {

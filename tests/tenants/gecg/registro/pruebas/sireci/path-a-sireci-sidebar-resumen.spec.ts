@@ -1,17 +1,17 @@
-// spec: specs/Registro/sireci-playwright-test.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/sireci/seed-sireci.spec.ts
+// plan: specs/Registro/sireci-playwright-test.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/sireci/seed-sireci.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
 import { RegistroSireciNavigationPage } from '../../../../../support/pages/registro/sireci';
 
-test.describe('Sireci — Path A (menú lateral)', () => {
+test.describe('Sireci — Ruta A (menú lateral)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroSireci);
   });
 
-  test('Path A — Sireci Resumen y Reporte accesibles por el menú lateral', async ({
+  test('Ruta A — Sireci Resumen y Reporte accesibles por el menú lateral', async ({
     page,
     dashboardPage,
   }) => {

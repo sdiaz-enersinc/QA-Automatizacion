@@ -8,7 +8,7 @@ test.beforeEach(() => {
   skipUnlessTabEnabled(MODULE_IDS.registroRpm, 'XML');
 });
 
-test('Seed — shell de RPM por menú lateral', async ({ page, dashboardPage }) => {
+test('Semilla — shell de RPM por menú lateral', async ({ page, dashboardPage }) => {
   const registro = new RegistroRpmNavigationPage(page);
 
   await test.step('Abrir RPM XML y validar el shell del gestor', async () => {

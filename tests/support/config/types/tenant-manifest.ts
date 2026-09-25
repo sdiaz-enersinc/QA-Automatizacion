@@ -1,19 +1,19 @@
-/** Per-module or module-group enable/disable entry in a tenant manifest. */
+/** Entrada de habilitación por módulo o grupo en el manifiesto del tenant. */
 export interface TenantModuleEntry {
   enabled: boolean;
-  /** When true on a submodule, all tabs/views from the module JSON are active (not only *EnabledTabNames). */
+  /** Si es true en un submódulo, todas las pestañas/vistas del JSON del módulo están activas (no solo *EnabledTabNames). */
   full?: boolean;
 }
 
-/** Module value in tenant.json: boolean shorthand or explicit entry. */
+/** Valor de módulo en tenant.json: booleano corto o entrada explícita. */
 export type TenantModuleManifestValue = boolean | TenantModuleEntry;
 
-/** Raw tenant manifest as stored in tenant.json (before normalization). */
+/** Manifiesto crudo de tenant.json (antes de normalizar). */
 export interface TenantManifestRaw {
   modules: Record<string, TenantModuleManifestValue>;
 }
 
-/** Tenant-level registry of which test modules are active (single source for module on/off). */
+/** Registro a nivel tenant de qué módulos de prueba están activos (fuente única de encendido/apagado). */
 export interface TenantManifest {
   modules: Record<string, TenantModuleEntry>;
 }

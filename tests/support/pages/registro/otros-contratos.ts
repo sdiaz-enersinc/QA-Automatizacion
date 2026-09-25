@@ -18,58 +18,58 @@ import { REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS } from './navigation';
 
 const cfg = getRegistroOtrosContratosConfig();
 
-/** Whether the Registro Otros contratos module is enabled for the active tenant. */
+/** Indica si el módulo Registro Otros contratos está habilitado para el tenant activo. */
 export const REGISTRO_OTROS_CONTRATOS_ENABLED = isModuleEnabled(MODULE_IDS.registroOtrosContratos);
 
-/** Tab labels on the Otros contratos module (tenant config). */
+/** Etiquetas de pestaña del módulo Otros contratos (config del tenant). */
 export const REGISTRO_OTROS_CONTRATOS_TAB_NAMES = cfg.registroOtrosContratosTabNames;
 
-/** Tabs reachable with current tenant credentials. */
+/** Pestañas alcanzables con las credenciales actuales del tenant. */
 export const REGISTRO_OTROS_CONTRATOS_ENABLED_TAB_NAMES = getModuleEnabledTabNames(
   MODULE_IDS.registroOtrosContratos,
 );
 
 export const REGISTRO_OTROS_CONTRATOS_LOCKED_TAB_NAMES = cfg.registroOtrosContratosLockedTabNames;
 
-/** Landing tab used as sidebar anchor and seed. */
+/** Pestaña de aterrizaje usada como ancla del menú lateral y semilla. */
 export const REGISTRO_OTROS_CONTRATOS_DEFAULT_TAB = cfg.registroOtrosContratosDefaultTab;
 
-/** Miscelaneos tab label (tenant config). */
+/** Etiqueta de pestaña Miscelaneos (config del tenant). */
 export const REGISTRO_OTROS_CONTRATOS_MISC_TAB = cfg.registroOtrosContratosMiscTab;
 
-/** AGR tab label (tenant config). */
+/** Etiqueta de pestaña AGR (config del tenant). */
 export const REGISTRO_OTROS_CONTRATOS_AGR_TAB = cfg.registroOtrosContratosAgrTab;
 
-/** Miscelaneos grid columns (standard set plus Producto Facturable). */
+/** Columnas de la grilla Miscelaneos (conjunto estándar más Producto Facturable). */
 export const REGISTRO_OTROS_CONTRATOS_MISC_CONTRACT_COLUMNS =
   cfg.registroOtrosContratosMiscContractColumns;
 
-/** AGR grid columns (standard contract set, no Producto Facturable). */
+/** Columnas de la grilla AGR (conjunto de contrato estándar, sin Producto Facturable). */
 export const REGISTRO_OTROS_CONTRATOS_AGR_CONTRACT_COLUMNS =
   cfg.registroOtrosContratosAgrContractColumns;
 
 /**
- * Navigation and assertions for the Otros contratos submodule under Registro.
+ * Navegación y aserciones del submódulo Otros contratos bajo Registro.
  */
 export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBasePage {
-  /** URL slug segment per Otros contratos tab (tenant config). */
+  /** Segmento de slug de URL por pestaña de Otros contratos (config del tenant). */
   static readonly REGISTRO_OTROS_CONTRATOS_TAB_SLUGS: Record<string, RegExp> = toTabSlugRecord(
     cfg.registroOtrosContratosTabSlugs,
   );
 
-  /** Breadcrumb third-segment text per active tab. */
+  /** Texto del tercer segmento del breadcrumb por pestaña activa. */
   static readonly REGISTRO_OTROS_CONTRATOS_TAB_BREADCRUMBS: Record<string, string> =
     cfg.registroOtrosContratosTabBreadcrumbs;
 
   /**
-   * Expands Registro and the Otros contratos submodule dropdown in the sidebar.
+   * Expande Registro y el desplegable del submódulo Otros contratos en el menú lateral.
    */
   async expandOtrosContratosSidebar(): Promise<void> {
     await this.expandRegistroSubmodule('Otros contratos');
   }
 
   /**
-   * Re-expands Registro and Otros contratos when navigation collapsed the sidebar flyouts.
+   * Vuelve a expandir Registro y Otros contratos cuando la navegación plegó los menús laterales.
    */
   async ensureOtrosContratosSidebarExpanded(): Promise<void> {
     await this.ensureRegistroSubmoduleNestedLinksVisible(
@@ -79,7 +79,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Clicks an Otros contratos tab link inside the expanded sidebar submenu.
+   * Hace clic en el enlace de una pestaña de Otros contratos dentro del submenú expandido.
    */
   async clickOtrosContratosSidebarLink(tabName: RegistroOtrosContratosTabName): Promise<void> {
     await this.ensureOtrosContratosSidebarExpanded();
@@ -97,9 +97,9 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Opens an Otros contratos tab via sidebar nested links under Otros contratos.
+   * Abre una pestaña de Otros contratos por los enlaces anidados del menú lateral bajo Otros contratos.
    *
-   * @param entryLink - Sidebar nested link to open; defaults to the tenant landing tab.
+   * @param entryLink - Enlace anidado del menú lateral a abrir; por defecto, la pestaña de aterrizaje del tenant.
    */
   async openOtrosContratosFromSidebar(
     entryLink: RegistroOtrosContratosTabName = REGISTRO_OTROS_CONTRATOS_DEFAULT_TAB,
@@ -109,7 +109,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Opens Otros contratos from the dashboard grid (eye affordance under the Registro card).
+   * Abre Otros contratos desde la grilla del tablero (icono ojo bajo la tarjeta Registro).
    */
   async openOtrosContratosFromDashboardGrid(): Promise<void> {
     await this.hoverRegistroDashboardCard();
@@ -121,7 +121,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Path B: asserts the Registro card pinned rows, hovers to reveal Otros contratos, opens it, and lands on Miscelaneos.
+   * Ruta B: comprueba las filas fijas de la tarjeta Registro, pasa el cursor para revelar Otros contratos, lo abre y aterriza en Miscelaneos.
    */
   async openOtrosContratosFromDashboardHover(): Promise<void> {
     const card = this.registroDashboardCard();
@@ -139,7 +139,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Asserts nested Otros contratos sidebar items match tenant config exactly, plus href and legacy absences.
+   * Comprueba que los ítems anidados de Otros contratos coinciden exactamente con la config del tenant, más href y ausencias legacy.
    */
   async expectOtrosContratosNestedSidebarItems(): Promise<void> {
     await this.expandOtrosContratosSidebar();
@@ -167,7 +167,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Asserts Otros contratos is listed on the Registro dashboard hover card with an eye affordance.
+   * Comprueba que Otros contratos aparece en la tarjeta hover de Registro con un icono ojo.
    */
   async expectOtrosContratosVisibleOnDashboardHover(): Promise<void> {
     await this.hoverRegistroDashboardCard();
@@ -179,7 +179,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Asserts the first main contract table has no Select all column header.
+   * Comprueba que la primera tabla principal de contratos no tiene encabezado de columna Select all.
    */
   async expectSelectAllColumnAbsent(): Promise<void> {
     await expect(
@@ -188,7 +188,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Asserts Otros contratos gestor shell: URL, breadcrumb, and enabled/locked tab strip.
+   * Comprueba el shell del gestor de Otros contratos: URL, breadcrumb y tira de pestañas habilitadas/bloqueadas.
    */
   async expectGestorDeDatosOtrosContratosShell(): Promise<void> {
     await expect(this.page).toHaveURL(/gestor-de-datos\/(otros-contratos|contratos-energia)\//);
@@ -202,7 +202,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Opens an Otros contratos tab and asserts selection, breadcrumb, and URL slug.
+   * Abre una pestaña de Otros contratos y comprueba selección, breadcrumb y slug de URL.
    */
   async openOtrosContratosTab(tabName: RegistroOtrosContratosTabName): Promise<void> {
     await this.page.getByRole('tab', { name: tabName, exact: true }).click();
@@ -210,7 +210,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Asserts the tab is selected, breadcrumb shows the configured segment, and URL matches the slug.
+   * Comprueba que la pestaña está seleccionada, el breadcrumb muestra el segmento configurado y la URL coincide con el slug.
    */
   async expectOtrosContratosTabActive(tabName: RegistroOtrosContratosTabName): Promise<void> {
     await expect(this.page).toHaveURL(
@@ -226,7 +226,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Asserts Otros contratos toolbar: search, Filtros, Nuevo Registro, and no Modo Yo / Estado / Usuarios chips.
+   * Comprueba la barra de Otros contratos: búsqueda, Filtros, Nuevo Registro y ausencia de chips Modo Yo / Estado / Usuarios.
    */
   async expectOtrosContratosToolbar(): Promise<void> {
     const main = this.gestorMain();
@@ -238,7 +238,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Asserts contract grid column headers in the first main table; Acciones is optional visibility only.
+   * Comprueba los encabezados de columna de la grilla de contratos en la primera tabla principal; Acciones es visibilidad opcional.
    */
   async expectContractGridColumnHeaders(columnNames: readonly string[]): Promise<void> {
     const table = this.gestorMain().getByRole('table').first();
@@ -248,7 +248,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Opens Miscelaneos Nuevo Registro, validates fields and dropdowns (no wizard steps), then closes.
+   * Abre Nuevo Registro de Miscelaneos, valida campos y desplegables (sin pasos de asistente), y cierra.
    */
   async expectMiscNuevoRegistroDialogOpensAndCloses(): Promise<void> {
     await this.expectRegistroWizardDialogOpensAndCloses({
@@ -263,7 +263,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Opens AGR Nuevo Registro, validates fields without Producto Facturable (no wizard steps), then closes.
+   * Abre Nuevo Registro de AGR, valida campos sin Producto Facturable (sin pasos de asistente), y cierra.
    */
   async expectAgrNuevoRegistroDialogOpensAndCloses(): Promise<void> {
     const fields = cfg.registroOtrosContratosMiscNuevoRegistroFields.filter(

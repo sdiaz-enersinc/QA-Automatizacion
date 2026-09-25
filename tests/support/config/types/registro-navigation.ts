@@ -1,4 +1,4 @@
-/** Tenant-specific shared Registro navigation labels. */
+/** Etiquetas de navegación compartida de Registro específicas del tenant. */
 export interface RegistroNavigationTenantConfig {
   registroNavigationSubmenuLabels: readonly string[];
   registroNavigationEnabledSubmenuLabels: readonly string[];

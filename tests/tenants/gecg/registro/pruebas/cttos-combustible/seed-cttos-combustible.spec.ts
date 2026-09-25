@@ -11,7 +11,7 @@ test.beforeEach(() => {
   skipUnlessTabEnabled(MODULE_IDS.registroCttosCombustible, REGISTRO_CTTS_COMBUSTIBLE_DEFAULT_TAB);
 });
 
-test('Seed — shell de Contratos combustible por menú lateral', async ({ page, dashboardPage }) => {
+test('Semilla — shell de Contratos combustible por menú lateral', async ({ page, dashboardPage }) => {
   const registro = new RegistroCttosCombustibleNavigationPage(page);
 
   await test.step('Abrir Contratos combustible y validar el shell del gestor', async () => {

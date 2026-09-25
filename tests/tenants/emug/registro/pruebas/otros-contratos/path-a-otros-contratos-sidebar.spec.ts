@@ -1,5 +1,5 @@
-// spec: specs/Registro/otros-contratos-agr-navigation-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/pruebas/otros-contratos/seed-otros-contratos.spec.ts
+// plan: specs/Registro/otros-contratos-agr-navigation-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/otros-contratos/seed-otros-contratos.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessAnyTabEnabled, skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
@@ -9,7 +9,7 @@ import {
   RegistroOtrosContratosNavigationPage,
 } from '../../../../../support/pages/registro/otros-contratos';
 
-test.describe('Otros contratos — Path A y Path B (pestañas habilitadas, AGR incluida)', () => {
+test.describe('Otros contratos — Ruta A y Ruta B (pestañas habilitadas, AGR incluida)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosContratos);
     skipUnlessAnyTabEnabled(
@@ -18,14 +18,14 @@ test.describe('Otros contratos — Path A y Path B (pestañas habilitadas, AGR i
     );
   });
 
-  test('Path A — cada pestaña habilitada por Registro → Otros contratos en el menú lateral', async ({
+  test('Ruta A — cada pestaña habilitada por Registro → Otros contratos en el menú lateral', async ({
     page,
     dashboardPage,
   }) => {
     test.setTimeout(120_000);
     const registro = new RegistroOtrosContratosNavigationPage(page);
 
-    // 1. Partir del dashboard autenticado. Expandir Registro y luego Otros contratos en el menú lateral hasta ver el submenú anidado.
+    // 1. Partir del tablero autenticado. Expandir Registro y luego Otros contratos en el menú lateral hasta ver el submenú anidado.
     await dashboardPage.expectLoaded();
     await registro.expectOtrosContratosNestedSidebarItems();
 

@@ -25,13 +25,13 @@ export type { RegistroCttosCombustibleTabName };
 
 const cfg = getRegistroCttosCombustibleConfig();
 
-/** Whether the Registro Contratos combustible module is enabled for the active tenant. */
+/** Indica si el módulo Registro Contratos combustible está habilitado para el tenant activo. */
 export const REGISTRO_CTTS_COMBUSTIBLE_ENABLED = isModuleEnabled(MODULE_IDS.registroCttosCombustible);
 
-/** Tab labels on the Contratos combustible module (tenant config). */
+/** Etiquetas de pestaña del módulo Contratos combustible (config del tenant). */
 export const REGISTRO_CTTS_COMBUSTIBLE_TAB_NAMES = cfg.registroCttosCombustibleTabNames;
 
-/** Tabs reachable with current tenant credentials. */
+/** Pestañas alcanzables con las credenciales actuales del tenant. */
 export const REGISTRO_CTTS_COMBUSTIBLE_ENABLED_TAB_NAMES = getModuleEnabledTabNames(
   MODULE_IDS.registroCttosCombustible,
 );
@@ -39,87 +39,87 @@ export const REGISTRO_CTTS_COMBUSTIBLE_ENABLED_TAB_NAMES = getModuleEnabledTabNa
 export const REGISTRO_CTTS_COMBUSTIBLE_LOCKED_TAB_NAMES =
   cfg.registroCttosCombustibleLockedTabNames;
 
-/** Landing tab used as sidebar anchor, seed, and post-Inventarios recovery. */
+/** Pestaña de aterrizaje usada como ancla del menú lateral, semilla y recuperación tras Inventarios. */
 export const REGISTRO_CTTS_COMBUSTIBLE_DEFAULT_TAB = cfg.registroCttosCombustibleDefaultTab;
 
-/** Layout A tab (Transporte grid with Select all and Carga Ramales). */
+/** Pestaña Layout A (grilla Transporte con Select all y Carga Ramales). */
 export const REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_A_TAB = cfg.registroCttosCombustibleLayoutATab;
 
-/** Layout B tab (Suministro grid without Select all). */
+/** Pestaña Layout B (grilla Suministro sin Select all). */
 export const REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_B_TAB = cfg.registroCttosCombustibleLayoutBTab;
 
-/** Layout C tab (Inventarios; currently a 404 empty state in QA). */
+/** Pestaña Layout C (Inventarios; actualmente un estado vacío 404 en QA). */
 export const REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_C_TAB = cfg.registroCttosCombustibleLayoutCTab;
 
-/** First locked tab (Insumos); used by the locked-tab spec. */
+/** Primera pestaña bloqueada (Insumos); la usa la spec de pestaña bloqueada. */
 export const REGISTRO_CTTS_COMBUSTIBLE_LOCKED_TAB = REGISTRO_CTTS_COMBUSTIBLE_LOCKED_TAB_NAMES[0];
 
-/** One tab per layout family for Path B spot-checks. */
+/** Una pestaña por familia de layout para las comprobaciones puntuales de Ruta B. */
 export const REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_SPOT_CHECK_TABS = [
   REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_A_TAB,
   REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_B_TAB,
   REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_C_TAB,
 ] as const;
 
-/** Transporte grid column headers (Layout A, excluding Select all and Acciones). */
+/** Encabezados de columna de la grilla Transporte (Layout A, sin Select all ni Acciones). */
 export const REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_COLUMNS =
   cfg.registroCttosCombustibleTransporteColumns;
 
-/** Suministro grid column headers (Layout B, excluding Acciones). */
+/** Encabezados de columna de la grilla Suministro (Layout B, sin Acciones). */
 export const REGISTRO_CTTS_COMBUSTIBLE_SUMINISTRO_COLUMNS =
   cfg.registroCttosCombustibleSuministroColumns;
 
-/** Wizard step titles for Transporte Nuevo Registro (step 1 and 2). */
+/** Títulos de paso del asistente Nuevo Registro de Transporte (pasos 1 y 2). */
 export const REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_NUEVO_REGISTRO_WIZARD_STEPS =
   cfg.registroCttosCombustibleTransporteNuevoRegistroWizardSteps;
 
-/** Wizard step titles for Suministro Nuevo Registro (step 1 and 2). */
+/** Títulos de paso del asistente Nuevo Registro de Suministro (pasos 1 y 2). */
 export const REGISTRO_CTTS_COMBUSTIBLE_SUMINISTRO_NUEVO_REGISTRO_WIZARD_STEPS =
   cfg.registroCttosCombustibleSuministroNuevoRegistroWizardSteps;
 
-/** Expected dropdown options per Transporte wizard combobox (tenant config). */
+/** Opciones esperadas por combobox del asistente de Transporte (config del tenant). */
 export const REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_NUEVO_REGISTRO_FIELDS_DROPDOWN_OPTIONS: CombustibleWizardDropdownOptionsMap =
   cfg.registroCttosCombustibleTransporteNuevoRegistroFieldsDropdownOptions;
 
-/** Expected dropdown options per Suministro wizard combobox (tenant config). */
+/** Opciones esperadas por combobox del asistente de Suministro (config del tenant). */
 export const REGISTRO_CTTS_COMBUSTIBLE_SUMINISTRO_NUEVO_REGISTRO_FIELDS_DROPDOWN_OPTIONS: CombustibleWizardDropdownOptionsMap =
   cfg.registroCttosCombustibleSuministroNuevoRegistroFieldsDropdownOptions;
 
-/** Step-1 form fields for Transporte Nuevo Registro (tenant config). */
+/** Campos del paso 1 de Nuevo Registro de Transporte (config del tenant). */
 export const REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_NUEVO_REGISTRO_FIELDS: readonly CombustibleWizardFieldDefinition[] =
   cfg.registroCttosCombustibleTransporteNuevoRegistroFields;
 
-/** Transporte form labels in GECG QA not modeled as wizard field kinds. */
+/** Etiquetas del formulario de Transporte en GECG QA no modeladas como tipos de campo de asistente. */
 export const REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_NUEVO_REGISTRO_EXTRA_LABELS = [
   'Incluye Transporte',
 ] as const;
 
-/** Step-1 form fields for Suministro Nuevo Registro (tenant config). */
+/** Campos del paso 1 de Nuevo Registro de Suministro (config del tenant). */
 export const REGISTRO_CTTS_COMBUSTIBLE_SUMINISTRO_NUEVO_REGISTRO_FIELDS: readonly CombustibleWizardFieldDefinition[] =
   cfg.registroCttosCombustibleSuministroNuevoRegistroFields;
 
 /**
- * Navigation and assertions for the Contratos combustible submodule under Registro.
+ * Navegación y aserciones del submódulo Contratos combustible bajo Registro.
  */
 export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBasePage {
-  /** URL slug segment per Contratos combustible tab (tenant config). */
+  /** Segmento de slug de URL por pestaña de Contratos combustible (config del tenant). */
   static readonly REGISTRO_CTTS_COMBUSTIBLE_TAB_SLUGS: Record<string, RegExp> = toTabSlugRecord(
     cfg.registroCttosCombustibleTabSlugs,
   );
 
-  /** Breadcrumb third-segment text per active tab. */
+  /** Texto del tercer segmento del breadcrumb por pestaña activa. */
   static readonly REGISTRO_CTTS_COMBUSTIBLE_TAB_BREADCRUMBS: Record<string, string> =
     cfg.registroCttosCombustibleTabBreadcrumbs;
 
   /**
-   * Expands Registro and the Cttos combustible submodule dropdown in the sidebar.
+   * Expande Registro y el desplegable del submódulo Cttos combustible en el menú lateral.
    */
   async expandCttosCombustibleSidebar(): Promise<void> {
     await this.expandRegistroSubmodule('Cttos combustible');
   }
 
   /**
-   * Asserts nested Contratos combustible sidebar items match enabled + locked labels exactly.
+   * Comprueba que los ítems anidados de Contratos combustible coinciden exactamente con enabled + locked.
    */
   async expectCttosCombustibleSidebarLinksVisible(): Promise<void> {
     await this.expandCttosCombustibleSidebar();
@@ -141,7 +141,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Re-expands Registro and Cttos combustible when navigation collapsed the sidebar flyouts.
+   * Vuelve a expandir Registro y Cttos combustible cuando la navegación plegó los menús laterales.
    */
   async ensureCttosCombustibleSidebarExpanded(): Promise<void> {
     await this.ensureRegistroSubmoduleNestedLinksVisible(
@@ -151,8 +151,8 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Clicks a Contratos combustible sidebar row. Tabs without a nested link (Inventarios)
-   * land on Transporte and then switch from the tab strip.
+   * Hace clic en una fila del menú lateral de Contratos combustible. Las pestañas sin enlace anidado (Inventarios)
+   * aterrizan en Transporte y luego cambian desde la tira de pestañas.
    */
   async clickCttosCombustibleSidebarLink(tabName: RegistroCttosCombustibleTabName): Promise<void> {
     await this.ensureCttosCombustibleSidebarExpanded();
@@ -179,7 +179,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Opens a Contratos combustible tab via sidebar nested links under Cttos combustible.
+   * Abre una pestaña de Contratos combustible por los enlaces anidados del menú lateral bajo Cttos combustible.
    */
   async openCttosCombustibleFromSidebar(tabName: RegistroCttosCombustibleTabName): Promise<void> {
     await this.expandCttosCombustibleSidebar();
@@ -187,7 +187,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Opens Cttos combustible from the dashboard grid (eye affordance under the Registro card).
+   * Abre Cttos combustible desde la grilla del tablero (icono ojo bajo la tarjeta Registro).
    */
   async openCttosCombustibleFromDashboardGrid(): Promise<void> {
     await this.registroDashboardCard()
@@ -198,7 +198,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts locked Contratos combustible tabs (Insumos) are visible but disabled.
+   * Comprueba que las pestañas bloqueadas de Contratos combustible (Insumos) son visibles pero están deshabilitadas.
    */
   async expectLockedTabsDisabled(): Promise<void> {
     for (const tabName of REGISTRO_CTTS_COMBUSTIBLE_LOCKED_TAB_NAMES) {
@@ -209,9 +209,9 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts a forced click on a locked tab does not navigate away from the current view.
+   * Comprueba que un clic forzado en una pestaña bloqueada no navega fuera de la vista actual.
    *
-   * @param tabName - Locked tab label (e.g. Insumos).
+   * @param tabName - Etiqueta de pestaña bloqueada (p. ej. Insumos).
    */
   async expectLockedTabDoesNotNavigate(tabName: RegistroCttosCombustibleTabName): Promise<void> {
     const url = this.page.url();
@@ -229,7 +229,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts Contratos combustible gestor shell: URL, breadcrumb, and tab strip state.
+   * Comprueba el shell del gestor de Contratos combustible: URL, breadcrumb y estado de la tira de pestañas.
    */
   async expectGestorDeDatosCttosCombustibleShell(): Promise<void> {
     await expect(this.page).toHaveURL(/gestor-de-datos\/contratos-combustible\//);
@@ -244,7 +244,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Opens a Contratos combustible tab and asserts selection, breadcrumb, and URL slug.
+   * Abre una pestaña de Contratos combustible y comprueba selección, breadcrumb y slug de URL.
    */
   async openContratosCombustibleTab(tabName: RegistroCttosCombustibleTabName): Promise<void> {
     await this.page.getByRole('tab', { name: tabName, exact: true }).click();
@@ -252,7 +252,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts the tab is selected, breadcrumb shows the tab label, and URL matches the slug.
+   * Comprueba que la pestaña está seleccionada, el breadcrumb muestra su etiqueta y la URL coincide con el slug.
    */
   async expectContratosCombustibleTabActive(tabName: RegistroCttosCombustibleTabName): Promise<void> {
     await expect(this.page).toHaveURL(
@@ -268,7 +268,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts Layout A Transporte toolbar: search, Filtros, Carga Ramales, and Nuevo Registro.
+   * Comprueba la barra Layout A Transporte: búsqueda, Filtros, Carga Ramales y Nuevo Registro.
    */
   async expectLayoutATransporteToolbar(): Promise<void> {
     const main = this.gestorMain();
@@ -280,7 +280,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts Layout B Suministro toolbar: search, Filtros, and Nuevo Registro (no Carga Ramales).
+   * Comprueba la barra Layout B Suministro: búsqueda, Filtros y Nuevo Registro (sin Carga Ramales).
    */
   async expectLayoutBSuministroToolbar(): Promise<void> {
     const main = this.gestorMain();
@@ -292,8 +292,8 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts Inventarios currently lands on the Gestor 404 empty state (QA v2.7.0),
-   * then returns to Transporte so the shared session is not left on the broken route.
+   * Comprueba que Inventarios aterriza actualmente en el estado vacío 404 del Gestor (QA v2.7.0),
+   * y luego vuelve a Transporte para no dejar la sesión compartida en la ruta rota.
    */
   async expectInventariosUnavailablePage(): Promise<void> {
     await expect(this.page.getByText('404')).toBeVisible();
@@ -305,7 +305,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Leaves the Inventarios 404 route by selecting Transporte when that tab is available.
+   * Sale de la ruta 404 de Inventarios seleccionando Transporte cuando esa pestaña está disponible.
    */
   async restoreDefaultCombustibleView(): Promise<void> {
     const defaultTab = this.page.getByRole('tab', { name: REGISTRO_CTTS_COMBUSTIBLE_DEFAULT_TAB, exact: true });
@@ -317,7 +317,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts Transporte grid column headers including Select all and Acciones.
+   * Comprueba los encabezados de columna de la grilla Transporte, incluido Select all y Acciones.
    */
   async expectTransporteGridColumnHeaders(
     columnNames: readonly string[] = REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_COLUMNS,
@@ -331,7 +331,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts Suministro grid column headers without Select all; Acciones included.
+   * Comprueba los encabezados de columna de la grilla Suministro sin Select all; Acciones incluida.
    */
   async expectSuministroGridColumnHeaders(
     columnNames: readonly string[] = REGISTRO_CTTS_COMBUSTIBLE_SUMINISTRO_COLUMNS,
@@ -345,7 +345,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts the Select all column header is visible (Layout A Transporte grid).
+   * Comprueba que el encabezado de la columna Select all está visible (grilla Layout A Transporte).
    */
   async expectSelectAllColumnVisible(): Promise<void> {
     await expect(
@@ -354,7 +354,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts the bulk-select column header is absent (Layout B Suministro grid).
+   * Comprueba que el encabezado de la columna de selección masiva está ausente (grilla Layout B Suministro).
    */
   async expectNoSelectAllColumn(): Promise<void> {
     const table = this.gestorMain().getByRole('table').first();
@@ -362,14 +362,14 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Opens Carga Ramales, validates the Registrar Información dropzone, then closes the dialog.
+   * Abre Carga Ramales, valida la zona de carga de Registrar Información y cierra el diálogo.
    */
   async expectCargaRamalesDialogOpensAndCloses(): Promise<void> {
     await this.expectFileUploadDialogOpensAndCloses('Carga Ramales');
   }
 
   /**
-   * Opens Transporte Nuevo Registro, validates step-1 fields and dropdowns, then closes the wizard.
+   * Abre Nuevo Registro de Transporte, valida los campos y desplegables del paso 1, y cierra el asistente.
    */
   async expectTransporteNuevoRegistroDialogOpensAndCloses(): Promise<void> {
     await this.expectCombustibleNuevoRegistroDialogOpensAndCloses({
@@ -382,7 +382,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Opens Suministro Nuevo Registro, validates step-1 fields (including scrollable rows), then closes.
+   * Abre Nuevo Registro de Suministro, valida los campos del paso 1 (incluidas filas con desplazamiento), y cierra.
    */
   async expectSuministroNuevoRegistroDialogOpensAndCloses(): Promise<void> {
     await this.expectCombustibleNuevoRegistroDialogOpensAndCloses({
@@ -395,7 +395,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Asserts Transporte/Suministro Nuevo Registro wizard shell, fields, and footer, then closes.
+   * Comprueba el contenedor, campos y pie del asistente Nuevo Registro de Transporte/Suministro, y cierra.
    */
   private async expectCombustibleNuevoRegistroDialogOpensAndCloses(options: {
     stepTitle: string | RegExp;

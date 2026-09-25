@@ -1,5 +1,5 @@
-// spec: specs/Registro/insumos-oferta-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/pruebas/insumos-oferta/seed-insumos-oferta.spec.ts
+// plan: specs/Registro/insumos-oferta-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/pruebas/insumos-oferta/seed-insumos-oferta.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
@@ -15,13 +15,13 @@ test.describe('Insumos oferta', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_DEFAULT_TAB);
   });
 
-  test('Seed — dashboard autenticado y shell de Insumos oferta en Oferta Diaria', async ({
+  test('Semilla — tablero autenticado y shell de Insumos oferta en Oferta Diaria', async ({
     page,
     dashboardPage,
   }) => {
     const registro = new RegistroInsumosOfertaNavigationPage(page);
 
-    // 1. Partir de sesión autenticada (bypass) en el dashboard de Enersinc.
+    // 1. Partir de sesión autenticada (bypass) en el tablero de Enersinc.
     await dashboardPage.expectLoaded();
     await expect(page.getByText('Bienvenido a Enersinc')).toBeVisible();
     await expect(page.getByRole('menuitem', { name: 'Registro' })).toBeVisible();

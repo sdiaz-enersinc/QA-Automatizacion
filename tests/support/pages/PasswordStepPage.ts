@@ -1,10 +1,9 @@
 import { Locator, Page, expect } from '@playwright/test';
 
 /**
- * Page object for the credentials view shown after a successful
- * email authorization. Exposes role-based locators for the
- * username, password, primary action, SSO buttons and the forgot
- * password link, plus a readiness assertion helper.
+ * Page object de la vista de credenciales tras una autorización de correo exitosa.
+ * Expone localizadores por rol para usuario, contraseña, acción primaria, botones SSO
+ * y el enlace de contraseña olvidada, más un helper de aserción de listo.
  */
 export class PasswordStepPage {
   constructor(private readonly page: Page) {}
@@ -17,13 +16,13 @@ export class PasswordStepPage {
   azureSsoBtn = () => this.page.getByRole('button', { name: 'path21 Ingresar con Azure' });
 
   /**
-   * Locator for invalid-credentials feedback after a failed login.
-   * Matches either the inline alert under `#normal_login` or an Ant
-   * Design notification title (WebKit runs have been observed to show
-   * only the toast). `.first()` avoids strict-mode violations when
-   * both surfaces render, as on Chromium.
+   * Localizador del feedback de credenciales inválidas tras un login fallido.
+   * Coincide con la alerta en línea bajo `#normal_login` o con el título de una
+   * notificación Ant Design (en WebKit a veces solo aparece el toast).
+   * `.first()` evita violaciones de modo estricto cuando ambas superficies
+   * se renderizan, como en Chromium.
    *
-   * @returns Locator for the first matching error title node.
+   * @returns Localizador del primer nodo de título de error coincidente.
    */
   invalidCredentialsFeedback(): Locator {
     const inline = this.page
@@ -36,13 +35,12 @@ export class PasswordStepPage {
   }
 
   /**
-   * Asserts the credentials view is fully rendered and that the
-   * username field is prefilled with the expected value. The
-   * Entrar button is expected to be visible but disabled because
-   * no password has been entered yet.
+   * Comprueba que la vista de credenciales está renderizada y que el campo de
+   * usuario viene precargado con el valor esperado. El botón Entrar debe verse
+   * pero permanecer deshabilitado porque aún no hay contraseña.
    *
-   * @param expectedUsername - Email or username shown in the read-only field after verification.
-   * @param timeoutMs - Max wait per assertion (needed when the UI lingers on email verification).
+   * @param expectedUsername - Correo o usuario mostrado en el campo de solo lectura tras la verificación.
+   * @param timeoutMs - Espera máxima por aserción (necesaria si la UI se detiene en la verificación de correo).
    */
   async expectReady(expectedUsername: string, timeoutMs: number = 10_000): Promise<void> {
     await expect(this.usernameInput()).toBeVisible({ timeout: timeoutMs });

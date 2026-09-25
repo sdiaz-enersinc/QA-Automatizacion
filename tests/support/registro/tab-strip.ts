@@ -1,27 +1,27 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
 /**
- * Normalizes a tab label for comparison with tenant config.
+ * Normaliza la etiqueta de una pestaña para compararla con la config del tenant.
  *
- * @param text - Raw tab text from the DOM.
+ * @param text - Texto crudo de la pestaña desde el DOM.
  */
 export function normalizeRegistroTabLabel(text: string): string {
   return text.replace(/\s+/g, ' ').trim();
 }
 
 export interface AssertTabStripMatchesConfigOptions {
-  /** Tabs that must be visible and enabled. */
+  /** Pestañas que deben verse y estar habilitadas. */
   enabledTabs: readonly string[];
-  /** Tabs that must be visible and disabled (ACL-locked). */
+  /** Pestañas que deben verse y estar deshabilitadas (bloqueadas por ACL). */
   lockedTabs?: readonly string[];
-  /** Prefix for error messages (e.g. module name). */
+  /** Prefijo de los mensajes de error (p. ej. nombre del módulo). */
   context?: string;
 }
 
 /**
- * Reads visible tab labels from a tablist, preserving first-seen order.
+ * Lee las etiquetas visibles de un tablist, conservando el orden de primera aparición.
  *
- * @param tablist - Tablist locator (typically `page.getByRole('tablist').first()`).
+ * @param tablist - Localizador del tablist (típicamente `page.getByRole('tablist').first()`).
  */
 export async function collectTabStripLabels(tablist: Locator): Promise<string[]> {
   const tabs = tablist.getByRole('tab');
@@ -40,11 +40,11 @@ export async function collectTabStripLabels(tablist: Locator): Promise<string[]>
 }
 
 /**
- * Asserts the gestor tab strip matches tenant config exactly.
- * Extra tabs in the UI are treated as ACL/config errors.
+ * Comprueba que la tira de pestañas del gestor coincide exactamente con la config del tenant.
+ * Pestañas extra en la UI se tratan como error de ACL/config.
  *
- * @param page - Playwright page containing the module tab strip.
- * @param options - Enabled/locked tab names and message context.
+ * @param page - Página de Playwright que contiene la tira de pestañas del módulo.
+ * @param options - Nombres de pestañas habilitadas/bloqueadas y contexto del mensaje.
  */
 export async function assertTabStripMatchesConfig(
   page: Page,
@@ -55,7 +55,7 @@ export async function assertTabStripMatchesConfig(
   const expected = [...enabledTabs, ...lockedTabs];
   const expectedSet = new Set(expected);
   const tablist = page.getByRole('tablist').first();
-  const prefix = options.context ? `${options.context} — ` : '';
+  const prefix = options?.context ? `${options.context} — ` : '';
 
   await expect(async () => {
     await expect(tablist).toBeVisible();
@@ -101,23 +101,23 @@ export async function assertTabStripMatchesConfig(
     const parts: string[] = [];
     if (missing.length > 0) {
       const preview = missing.slice(0, 5).join(', ');
-      const suffix = missing.length > 5 ? ` (+${missing.length - 5} more)` : '';
-      parts.push(`missing from UI: ${preview}${suffix}`);
+      const suffix = missing.length > 5 ? ` (+${missing.length - 5} más)` : '';
+      parts.push(`faltan en la UI: ${preview}${suffix}`);
     }
     if (unexpected.length > 0) {
       const preview = unexpected.slice(0, 5).join(', ');
-      const suffix = unexpected.length > 5 ? ` (+${unexpected.length - 5} more)` : '';
-      parts.push(`in UI but not in config (ACL): ${preview}${suffix}`);
+      const suffix = unexpected.length > 5 ? ` (+${unexpected.length - 5} más)` : '';
+      parts.push(`en la UI pero no en la config (ACL): ${preview}${suffix}`);
     }
     if (duplicates.length > 0) {
-      parts.push(`duplicate tabs in UI: ${duplicates.join(', ')}`);
+      parts.push(`pestañas duplicadas en la UI: ${duplicates.join(', ')}`);
     }
     if (lockedButEnabled.length > 0) {
-      parts.push(`locked tabs enabled in UI (ACL): ${lockedButEnabled.join(', ')}`);
+      parts.push(`pestañas bloqueadas habilitadas en la UI (ACL): ${lockedButEnabled.join(', ')}`);
     }
     if (enabledButDisabled.length > 0) {
-      parts.push(`enabled tabs disabled in UI (ACL): ${enabledButDisabled.join(', ')}`);
+      parts.push(`pestañas habilitadas deshabilitadas en la UI (ACL): ${enabledButDisabled.join(', ')}`);
     }
-    throw new Error(`${prefix}Tab strip mismatch — ${parts.join('; ')}`);
+    throw new Error(`${prefix}Desajuste de la tira de pestañas — ${parts.join('; ')}`);
   }).toPass({ timeout: 30_000 });
 }

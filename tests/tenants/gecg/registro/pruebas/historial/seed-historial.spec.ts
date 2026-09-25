@@ -11,7 +11,7 @@ test.beforeEach(() => {
   skipUnlessTabEnabled(MODULE_IDS.registroHistorial, REGISTRO_HISTORIAL_DEFAULT_TAB);
 });
 
-test('Seed — shell de Historial por menú lateral', async ({ page, dashboardPage }) => {
+test('Semilla — shell de Historial por menú lateral', async ({ page, dashboardPage }) => {
   const registro = new RegistroHistorialNavigationPage(page);
 
   await test.step('Abrir Historial y validar el shell del gestor', async () => {

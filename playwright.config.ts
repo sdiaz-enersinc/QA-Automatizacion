@@ -16,9 +16,9 @@ const BROWSERS = [
 ] as const;
 
 /**
- * Configuración mínima de Playwright para el import progresivo.
- * Specs viven en tests/tenants/<tenant>/<modulo>/pruebas/.
- * Aún no incluye reporters CSV ni harvest.
+ * Configuración de Playwright de la suite por tenant.
+ * Los specs viven en tests/tenants/<tenant>/<modulo>/pruebas/.
+ * Sin reporters CSV ni harvest histórico.
  */
 export default defineConfig({
   testDir: './tests',

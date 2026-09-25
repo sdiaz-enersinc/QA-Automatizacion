@@ -1,17 +1,17 @@
-// spec: specs/Registro/sireci-playwright-test.plan.md
-// seed: tests/tenants/gecg/registro/pruebas/sireci/seed-sireci.spec.ts
+// plan: specs/Registro/sireci-playwright-test.plan.md
+// semilla: tests/tenants/gecg/registro/pruebas/sireci/seed-sireci.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
 import { test, expect } from '../../../../../support/fixtures';
 import { RegistroSireciNavigationPage } from '../../../../../support/pages/registro/sireci';
 
-test.describe('Sireci — Path B (hover del tablero)', () => {
+test.describe('Sireci — Ruta B (hover del tablero)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroSireci);
   });
 
-  test('Path B — El hover del tablero abre Sireci en Resumen', async ({ page, dashboardPage }) => {
+  test('Ruta B — El hover del tablero abre Sireci en Resumen', async ({ page, dashboardPage }) => {
     const registro = new RegistroSireciNavigationPage(page);
 
     await test.step('1. Validar el shell del tablero y la tarjeta de Registro', async () => {

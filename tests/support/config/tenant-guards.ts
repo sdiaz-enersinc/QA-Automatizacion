@@ -3,23 +3,23 @@ import { isModuleEnabled, isTabEnabled } from './load-tenant-config';
 import type { ModuleId } from './module-registry';
 
 /**
- * Skips the current test when the module or its parent group is disabled in tenant.json.
+ * Omite el test actual si el módulo o su grupo padre está desactivado en tenant.json.
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
- * @param reason - Optional skip message; defaults to a module-disabled notice.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
+ * @param reason - Mensaje de skip opcional; por defecto avisa que el módulo está desactivado.
  */
 export function skipUnlessModuleEnabled(moduleId: ModuleId | string, reason?: string): void {
   if (!isModuleEnabled(moduleId)) {
-    test.skip(true, reason ?? `Module ${moduleId} disabled for tenant`);
+    test.skip(true, reason ?? `Módulo ${moduleId} desactivado para el tenant`);
   }
 }
 
 /**
- * Skips the current test when the tab is not in the module's enabled tab list.
+ * Omite el test actual si la pestaña no está en la lista habilitada del módulo.
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
- * @param tabName - Visible tab label from module JSON.
- * @param reason - Optional skip message; defaults to a tab-disabled notice.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
+ * @param tabName - Etiqueta visible de pestaña según el JSON del módulo.
+ * @param reason - Mensaje de skip opcional; por defecto avisa que la pestaña está desactivada.
  */
 export function skipUnlessTabEnabled(
   moduleId: ModuleId | string,
@@ -27,16 +27,16 @@ export function skipUnlessTabEnabled(
   reason?: string,
 ): void {
   if (!isTabEnabled(moduleId, tabName)) {
-    test.skip(true, reason ?? `Tab ${tabName} disabled for module ${moduleId}`);
+    test.skip(true, reason ?? `Pestaña ${tabName} desactivada para el módulo ${moduleId}`);
   }
 }
 
 /**
- * Skips the current test when none of the given tabs is enabled for the module.
+ * Omite el test actual si ninguna de las pestañas dadas está habilitada para el módulo.
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
- * @param tabNames - Tab labels; skip if every one is disabled.
- * @param reason - Optional skip message.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
+ * @param tabNames - Etiquetas de pestaña; se omite si todas están desactivadas.
+ * @param reason - Mensaje de skip opcional.
  */
 export function skipUnlessAnyTabEnabled(
   moduleId: ModuleId | string,
@@ -47,18 +47,18 @@ export function skipUnlessAnyTabEnabled(
   if (!anyEnabled) {
     test.skip(
       true,
-      reason ?? `All tabs disabled for module ${moduleId}: ${tabNames.join(', ')}`,
+      reason ?? `Todas las pestañas desactivadas para el módulo ${moduleId}: ${tabNames.join(', ')}`,
     );
   }
 }
 
 /**
- * Skips the current test when any of the given tabs is disabled for the module.
- * Use for cross-navigation tests that require every tab in the pair (e.g. tab cross-over).
+ * Omite el test actual si alguna de las pestañas dadas está desactivada para el módulo.
+ * Usar en pruebas de cruce que requieren todas las pestañas del par.
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
- * @param tabNames - Tab labels that must all be enabled.
- * @param reason - Optional skip message.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
+ * @param tabNames - Etiquetas de pestaña que deben estar todas habilitadas.
+ * @param reason - Mensaje de skip opcional.
  */
 export function skipUnlessAllTabsEnabled(
   moduleId: ModuleId | string,
@@ -69,18 +69,18 @@ export function skipUnlessAllTabsEnabled(
   if (disabled.length > 0) {
     test.skip(
       true,
-      reason ?? `Tabs disabled for module ${moduleId}: ${disabled.join(', ')}`,
+      reason ?? `Pestañas desactivadas para el módulo ${moduleId}: ${disabled.join(', ')}`,
     );
   }
 }
 
 /**
- * Runs the callback only when the tab is enabled for the module; no-op when disabled.
+ * Ejecuta el callback solo si la pestaña está habilitada para el módulo; no-op si está desactivada.
  *
- * @param moduleId - Canonical module id or a string key from tenant.json.
- * @param tabName - Visible tab label from module JSON.
- * @param fn - Work to run when the tab is enabled.
- * @param stepName - Optional Playwright step title.
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
+ * @param tabName - Etiqueta visible de pestaña según el JSON del módulo.
+ * @param fn - Trabajo a ejecutar cuando la pestaña está habilitada.
+ * @param stepName - Título opcional del paso de Playwright.
  */
 export async function whenTabEnabled(
   moduleId: ModuleId | string,

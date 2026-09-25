@@ -1,5 +1,5 @@
-// spec: specs/Registro/empresas-playwright-test.plan.md
-// seed: tests/tenants/emug/registro/empresas/seed-empresas.spec.ts
+// plan: specs/Registro/empresas-playwright-test.plan.md
+// semilla: tests/tenants/emug/registro/empresas/seed-empresas.spec.ts
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
