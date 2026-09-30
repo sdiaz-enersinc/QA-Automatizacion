@@ -32,6 +32,7 @@
     "Fecha inicial",
     "Fecha final",
     "Contraparte del Contrato",
+    "Código IE",
     "Estado",
     "Usuario"
   ],
@@ -91,14 +92,23 @@
       "VENTA"
     ],
     "Negocio": {
-      "minimum": ["COMERCIALIZADOR", "GENERADOR"]
+      "minimum": [
+        "COMERCIALIZADOR",
+        "GENERADOR"
+      ]
     },
     "Contraparte del Contrato": [
+      "PRUEBA EMPRESA SAS",
+      "1",
+      "123",
+      "PRUEBA QA",
       "TRANSMISORA COLOMBIANA DE ENERGIA S.A.S. E.S.P.",
       "AMERICANA DE ENERGIA S.A.S. E.S.P.",
       "AGENTE EXPERTO EN SERVICIOS PÚBLICOS S.A.S E.S.P",
       "COMPANIA DE ELECTRICIDAD DE TULUA S.A. E.S.P.",
       "EMPRESAS MUNICIPALES DE CALI E.I.C.E. E.S.P.",
+      "NO REGISTRA",
+      "ENERGY TRADING AND RISK MANAGEMENT S.A.S.",
       "CARBOENERGY SAS ESP",
       "MINEX COMPAÑIA INTERNACIONAL S.A.S. C.I.",
       "MANSAROVAR ENERGY COLOMBIA LTD.",
@@ -115,6 +125,7 @@
       "ELECTRIFICADORA DEL CAQUETA S.A. E.S.P.",
       "GENERADORA BUENAVISTA S.A.S.E.S.P.",
       "AMPERIA S.A.E.S.P.",
+      "TRANSPORTADORA DE GAS INTERNACIONAL S.A. E.S.P.",
       "EMPRESA DE ENERGIA DEL BAJO PUTUMAYO SAS",
       "ELECTRIFICADORA DEL META S.A. E.S.P.",
       "SOL & CIELO ENERGIA S.A.S. E.S.P",
@@ -192,6 +203,8 @@
       "TRINA SOLAR GENERADOR COLOMBIA - CARTAGO S.A.S. E.S.P.",
       "TRANSPORTE LA COLINA S.A.S.",
       "BIA ENERGY S.A.S. E.S.P.",
+      "AMPERIA S.A. E.S.P.",
+      "OTACC GENERACION S.A.S. E.S.P.",
       "AES COLOMBIA & CIA SCA ESP",
       "IAC ENERGY S.A.S. E.S.P.",
       "GENERADORA ALEJANDRIA S.A.S. E.S.P.",
@@ -216,6 +229,7 @@
       "ENERVISA S.A.S E.S.P",
       "ECOPETROL S.A.",
       "ENEL GREEN POWER COLOMBIA S.A.S. E.S.P.",
+      "2T ENERGY S.A.S. E.S.P.",
       "CENTRALES ELECTRICAS DE NARIÑO S.A.E.S.P.",
       "COMPAÑIA ENERGETICA DE OCCIDENTE S.A.S. ESP",
       "CENTRAL HIDROELECTRICA DE CALDAS S.A. E.S.P.",
@@ -224,9 +238,11 @@
       "CENTRALES ELÉCTRICAS DEL NORTE DE SANTANDER SAS ESP",
       "AIR- E S.A.S. E.S.P - INTERVENIDA",
       "DEPI ENERGY S.A.S. E.S.P.",
+      "DUCK ENERGY S.A.S ESP",
       "EMPRESA DE ENERGÍA DE BOYACA S.A E.S.P",
       "EMPRESA DISTRIBUIDORA DEL PACIFICO S.A. E.S.P.",
       "EMPRESA DE ENERGIA DEL QUINDIO S.A. E.S.P.",
+      "4E GROUP S.A.S E.S.P.",
       "EMPRESA DE ENERGÍA ELÉCTRICA DEL DEPARTAMENTO DEL GUAVIARE S.A. E.S.P.",
       "ECOMMERCIAL S.A.S E.S.P",
       "EMPRESA URRA S.A. E.S.P.",
@@ -285,9 +301,20 @@
       "UNERGY ENERGIA DIGITAL S.A.S E.S.P",
       "VACHE S.A.S. ESP",
       "VIENTOS DEL NORTE S.A.S. E.S.P.",
+      "UNE EPM TELECOMUNICACIONES S.A.",
+      "COLOMBIA TELECOMUNICACIONES S.A. E.S.P. BIC",
+      "COMUNICACIÓN CELULAR S.A.",
       "SISTEMA DE TRANSMISION NACIONAL",
       "MESSER ENERGY SERVICES SAS ESP",
-      "ENERCO S.A. E.S.P."
+      "ENERCO S.A. E.S.P.",
+      "COMERCIALIZADORA 4G ENERGIA S.A.S E.S.P",
+      "C.I. EMPRESA COLOMBIANA DE SERVICIOS PETROLEROS S.A. - C.I. ECOS S.A.",
+      "ASOCIACION DE CARBONEROS DE LAS MERCEDES",
+      "DEMAND RESPONSE S.A.S. E.S.P.",
+      "FORTIA ROCKS S.A.S.",
+      "MINISTERIO DE MINAS Y ENERGIA",
+      "LUMINA ENERGY S.A.S. E.S.P",
+      "E2 ENERGÍA EFICIENTE S.A. E.S.P"
     ],
     "Estado": [
       "ACTIVO",
@@ -303,7 +330,10 @@
       "VENTA"
     ],
     "Negocio": {
-      "minimum": ["COMERCIALIZADOR", "GENERADOR"]
+      "minimum": [
+        "COMERCIALIZADOR",
+        "GENERADOR"
+      ]
     },
     "Contraparte del Contrato": [
       "TRANSMISORA COLOMBIANA DE ENERGIA S.A.S. E.S.P.",
@@ -504,7 +534,7 @@
       "DEMAND RESPONSE S.A.S. E.S.P.",
       "FORTIA ROCKS S.A.S.",
       "MINISTERIO DE MINAS Y ENERGIA",
-      "LUMINA ENERGY S.A.S. E.S.P",   
+      "LUMINA ENERGY S.A.S. E.S.P",
       "E2 ENERGÍA EFICIENTE S.A. E.S.P"
     ],
     "Destino": [
@@ -530,7 +560,10 @@
       "VENTA"
     ],
     "Negocio": {
-      "minimum": ["COMERCIALIZADOR", "GENERADOR"]
+      "minimum": [
+        "COMERCIALIZADOR",
+        "GENERADOR"
+      ]
     },
     "Contraparte del Contrato": [
       "AMERICANA DE ENERGIA S.A.S. E.S.P.",
@@ -739,7 +772,10 @@
       "VENTA"
     ],
     "Negocio": {
-      "minimum": ["COMERCIALIZADOR", "GENERADOR"]
+      "minimum": [
+        "COMERCIALIZADOR",
+        "GENERADOR"
+      ]
     },
     "Contraparte del Contrato": [
       "TRANSMISORA COLOMBIANA DE ENERGIA S.A.S. E.S.P.",
@@ -953,7 +989,7 @@
       "DEMAND RESPONSE S.A.S. E.S.P.",
       "FORTIA ROCKS S.A.S.",
       "MINISTERIO DE MINAS Y ENERGIA",
-      "LUMINA ENERGY S.A.S. E.S.P", 
+      "LUMINA ENERGY S.A.S. E.S.P",
       "E2 ENERGÍA EFICIENTE S.A. E.S.P"
     ],
     "Modalidad": [
@@ -982,7 +1018,10 @@
       "VENTA"
     ],
     "Negocio": {
-      "minimum": ["COMERCIALIZADOR", "GENERADOR"]
+      "minimum": [
+        "COMERCIALIZADOR",
+        "GENERADOR"
+      ]
     },
     "Contraparte del Contrato": [
       "AMERICANA DE ENERGIA S.A.S. E.S.P.",
@@ -1198,7 +1237,10 @@
       "VENTA"
     ],
     "Negocio": {
-      "minimum": ["COMERCIALIZADOR", "GENERADOR"]
+      "minimum": [
+        "COMERCIALIZADOR",
+        "GENERADOR"
+      ]
     },
     "Contraparte del Contrato": [
       "TRANSMISORA COLOMBIANA DE ENERGIA S.A.S. E.S.P.",
@@ -1412,7 +1454,7 @@
       "DEMAND RESPONSE S.A.S. E.S.P.",
       "FORTIA ROCKS S.A.S.",
       "MINISTERIO DE MINAS Y ENERGIA",
-      "LUMINA ENERGY S.A.S. E.S.P", 
+      "LUMINA ENERGY S.A.S. E.S.P",
       "E2 ENERGÍA EFICIENTE S.A. E.S.P"
     ],
     "Estado": [
