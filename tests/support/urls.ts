@@ -7,3 +7,10 @@ import { BASE_URL } from './env';
 export function entryUrl(): string {
   return `${BASE_URL.replace(/\/$/, '')}/`;
 }
+
+/**
+ * URL del endpoint que invalida `access_token` y `refresh_token` del contexto autenticado.
+ */
+export function logoutUrl(): string {
+  return `${BASE_URL.replace(/\/$/, '')}/api-token-logout/`;
+}

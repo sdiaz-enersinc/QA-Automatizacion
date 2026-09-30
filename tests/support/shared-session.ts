@@ -1,4 +1,5 @@
 import { test as base, Browser, BrowserContext, Fixtures, Page } from '@playwright/test';
+import { logoutViaApi } from './api-logout';
 import { loginViaUi } from './ui-login';
 
 type WorkerFixtures = {
@@ -65,7 +66,11 @@ export function extendWithSharedSession<Extra extends object>(
           await loginViaUi(page);
 
           await use(context);
-          await context.close();
+          try {
+            await logoutViaApi(context);
+          } finally {
+            await context.close();
+          }
         },
         { scope: 'worker' },
       ],
