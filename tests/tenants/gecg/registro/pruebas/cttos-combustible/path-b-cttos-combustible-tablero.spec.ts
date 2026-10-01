@@ -18,13 +18,13 @@ import {
   RegistroCttosCombustibleNavigationPage,
 } from '../../../../../support/pages/registro/cttos-combustible';
 
-test.describe('Contratos combustible — Ruta B — comprobación puntual de layouts', () => {
+test.describe('Contratos combustible — Ruta B (tablero)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosCombustible);
     skipUnlessAnyTabEnabled(MODULE_IDS.registroCttosCombustible, REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_SPOT_CHECK_TABS);
   });
 
-  test('Ruta B — Un tablero por familia de layout (Transporte, Suministro e Inventarios)', async ({
+  test('Ruta B — Un tablero por Transporte, Suministro e Inventarios', async ({
     page,
     dashboardPage,
   }) => {
@@ -44,7 +44,7 @@ test.describe('Contratos combustible — Ruta B — comprobación puntual de lay
         await registro.expectTransporteGridColumnHeaders(REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_COLUMNS);
         await registro.expectLayoutATransporteToolbar();
       },
-      '2. Layout A Transporte — validar Select all, columnas y Carga Ramales',
+      '2. Transporte — validar Select all, columnas y Carga Ramales',
     );
 
     await whenTabEnabled(
@@ -56,7 +56,7 @@ test.describe('Contratos combustible — Ruta B — comprobación puntual de lay
         await registro.expectSuministroGridColumnHeaders(REGISTRO_CTTS_COMBUSTIBLE_SUMINISTRO_COLUMNS);
         await registro.expectLayoutBSuministroToolbar();
       },
-      '3. Layout B Suministro — validar ausencia de Select all, columnas y barra',
+      '3. Suministro — validar ausencia de Select all, columnas y barra',
     );
 
     await whenTabEnabled(
@@ -66,7 +66,7 @@ test.describe('Contratos combustible — Ruta B — comprobación puntual de lay
         await registro.openContratosCombustibleTab(REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_C_TAB);
         await registro.expectInventariosUnavailablePage();
       },
-      '4. Layout C Inventarios — validar pestaña habilitada y estado 404',
+      '4. Inventarios — validar pestaña habilitada y estado 404',
     );
   });
 });

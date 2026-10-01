@@ -5,18 +5,18 @@ import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
 import {
-  REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB,
-  REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS,
+  REGISTRO_CTTS_ENERGIA_LAYOUT_MISC_TAB,
+  REGISTRO_CTTS_ENERGIA_MISC_CONTRACT_COLUMNS,
   RegistroCttosEnergiaNavigationPage,
 } from '../../../../../support/pages/registro/cttos-energia';
 
 test.describe('Contratos de energía — Botones de diálogo (Ruta A)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosEnergia);
-    skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB);
+    skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_MISC_TAB);
   });
 
-  test('Layout A LP — Pie de página y desplegables del asistente Nuevo Contrato', async ({
+  test('MISC — Pie simplificado y desplegables de Nuevo Registro', async ({
     page,
     dashboardPage,
   }) => {
@@ -29,17 +29,17 @@ test.describe('Contratos de energía — Botones de diálogo (Ruta A)', () => {
       await registro.expectGestorDeDatosCttosEnergiaShell();
     });
 
-    await test.step('2. Abrir la pestaña Largo plazo y validar la barra de herramientas y columnas de la grilla', async () => {
-      await registro.openContratosEnergiaTab(REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB);
-      await registro.expectLayoutBStandardToolbar();
-      await registro.expectSelectAllColumnVisible();
-      await registro.expectContractGridColumnHeaders(REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS, {
-        allowSelectAll: true,
-      });
+    await test.step('2. Abrir Contratos MISC y validar columnas, CTA Nuevo Registro y modal Filtros', async () => {
+      await registro.openContratosEnergiaTab(REGISTRO_CTTS_ENERGIA_LAYOUT_MISC_TAB);
+      await registro.expectContractGridColumnHeaders(REGISTRO_CTTS_ENERGIA_MISC_CONTRACT_COLUMNS);
+      await registro.expectNoSelectAllColumn();
+      await registro.expectFiltrosControlVisible();
+      await registro.expectToolbarFilterChipsAbsent();
+      await registro.expectFiltrosModalOpensAndCloses();
     });
 
-    await test.step('3. Validar apertura y cierre del asistente Nuevo Contrato', async () => {
-      await registro.expectLpNuevoContratoDialogOpensAndCloses();
+    await test.step('3. Validar apertura y cierre del diálogo Nuevo Registro', async () => {
+      await registro.expectMiscNuevoRegistroDialogOpensAndCloses();
     });
   });
 });

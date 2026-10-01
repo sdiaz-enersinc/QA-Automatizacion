@@ -1,6 +1,11 @@
 import { expect } from '@playwright/test';
 import { getRegistroNavigationConfig } from '../../config/load-tenant-config';
 import {
+  REGISTRO_NAVIGATION_DASHBOARD_HOVER_LABELS,
+  REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS,
+  REGISTRO_NAVIGATION_LEGACY_SUBMODULE_LABELS,
+} from '../../registro/navigation-dashboard-labels';
+import {
   REGISTRO_NAVIGATION_SUBMENU_LABELS,
   RegistroNavigationBasePage,
 } from './registro-navigation-base';
@@ -15,15 +20,14 @@ export const REGISTRO_NAVIGATION_ENABLED_SUBMENU_LABELS = cfg.registroNavigation
 /** Filas bloqueadas del submenú de Registro (visibles y deshabilitadas). */
 export const REGISTRO_NAVIGATION_LOCKED_SUBMENU_LABELS = cfg.registroNavigationLockedSubmenuLabels;
 
-/** Etiquetas legacy de submódulo que no deben aparecer tras el cambio de nombre. */
-export const REGISTRO_NAVIGATION_LEGACY_SUBMODULE_LABELS = cfg.registroNavigationLegacySubmoduleLabels;
-
-/** Filas de submódulo visibles en la tarjeta Registro del tablero sin pasar el cursor. */
-export const REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS =
-  cfg.registroNavigationDashboardPreviewLabels;
-
-/** Etiquetas de submódulo de la tarjeta hover (mismo orden que el submenú lateral). */
-export const REGISTRO_NAVIGATION_DASHBOARD_HOVER_LABELS = REGISTRO_NAVIGATION_SUBMENU_LABELS;
+export {
+  REGISTRO_NAVIGATION_DASHBOARD_HOVER_LABELS,
+  REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS,
+  REGISTRO_NAVIGATION_LEGACY_SUBMODULE_LABELS,
+  registroDashboardHoverLabelsEmpresasContext,
+  registroDashboardHoverLabelsFromInsumosOfertaThroughHistorial,
+  sliceRegistroDashboardHoverLabels,
+} from '../../registro/navigation-dashboard-labels';
 
 /**
  * Quita el prefijo de emoji de candado del nombre accesible de un ítem del submenú de Registro.

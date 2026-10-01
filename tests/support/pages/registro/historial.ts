@@ -145,16 +145,10 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
    * Comprueba que el menú hover de la tarjeta Registro muestra Historial con el icono ojo.
    */
   async expectHistorialVisibleOnDashboardHover(): Promise<void> {
-    await expect(async () => {
-      await this.hoverRegistroDashboardCard();
-      const card = this.registroDashboardCard();
-      for (const label of ['Insumos oferta', 'Otros documentos', 'RPM', 'SIRECI', 'Historial']) {
-        await expect(card.getByText(label, { exact: true })).toBeVisible();
-      }
-      await expect(
-        card.getByRole('listitem').filter({ hasText: 'Historial' }).getByLabel('eye'),
-      ).toBeVisible();
-    }).toPass({ timeout: 15_000 });
+    await this.expectRegistroDashboardHoverSubmoduleVisible(
+      'Historial',
+      this.registroDashboardHoverLabelsFromInsumosOfertaThroughHistorial(),
+    );
   }
 
   /**

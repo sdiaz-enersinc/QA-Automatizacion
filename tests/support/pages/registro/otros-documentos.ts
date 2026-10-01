@@ -321,27 +321,17 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
    * Pasa el cursor sobre la tarjeta Registro del tablero y comprueba que Otros documentos aparece con un icono ojo.
    */
   async expectOtrosDocumentosVisibleOnDashboardHover(): Promise<void> {
-    await this.hoverRegistroDashboardCard();
-    const card = this.registroDashboardCard();
-    for (const label of ['Insumos oferta', 'Otros documentos', 'RPM', 'SIRECI', 'Historial']) {
-      await expect(card.getByText(label, { exact: true })).toBeVisible();
-    }
-    const otrosRow = card.getByRole('listitem').filter({ hasText: 'Otros documentos' });
-    await expect(otrosRow.getByLabel('eye')).toBeVisible();
+    await this.expectRegistroDashboardHoverSubmoduleVisible(
+      'Otros documentos',
+      this.registroDashboardHoverLabelsFromInsumosOfertaThroughHistorial(),
+    );
   }
 
   /**
    * Ruta B: comprueba las filas fijas de la tarjeta Registro, pasa el cursor para revelar Otros documentos y hace clic en el ojo.
    */
   async openOtrosDocumentosFromDashboardHover(): Promise<void> {
-    const card = this.registroDashboardCard();
-    await expect(card).toBeVisible();
-    for (const label of ['Empresas', 'Cttos energía', 'Cttos combustible'] as const) {
-      await expect(card.getByText(label)).toBeVisible();
-      await expect(
-        card.getByRole('listitem').filter({ hasText: label }).getByLabel('eye'),
-      ).toBeVisible();
-    }
+    await this.expectRegistroDashboardPreviewRowsVisible();
     await this.expectOtrosDocumentosVisibleOnDashboardHover();
     await this.openOtrosDocumentosFromDashboardGrid();
   }

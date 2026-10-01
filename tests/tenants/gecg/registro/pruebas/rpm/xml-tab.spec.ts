@@ -32,9 +32,6 @@ test.describe('RPM XML — Grilla y diálogos', () => {
       await registro.expectRpmXmlGridColumnHeaders(REGISTRO_RPM_XML_COLUMNS);
       await registro.expectRpmXmlToolbar();
       await registro.expectFiltrosModalOpensAndCloses();
-      await registro.expectModoYoFilterToggle();
-      await registro.expectEstadoFilterDialog();
-      await registro.expectUsuariosFilterDialog();
       await registro.expectCrearRegistroDialogOpensAndCloses();
       await registro.expectCargarArchivoDialogOpensAndCloses();
     });

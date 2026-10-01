@@ -204,14 +204,8 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
    * Comprueba que Insumos oferta aparece en la tarjeta hover de Registro y que el nombre legacy está ausente.
    */
   async expectInsumosOfertaVisibleOnDashboardHover(): Promise<void> {
-    await this.hoverRegistroDashboardCard();
-    const card = this.registroDashboardCard();
-    const row = card.getByRole('listitem').filter({ hasText: REGISTRO_INSUMOS_OFERTA_SUBMODULE_LABEL });
-    await expect(row).toBeVisible();
-    await expect(row.getByLabel('eye')).toBeVisible();
-    await expect(card.getByText(REGISTRO_INSUMOS_OFERTA_LEGACY_SUBMODULE_LABEL, { exact: true })).toHaveCount(
-      0,
-    );
+    await this.expectRegistroDashboardHoverSubmoduleVisible(REGISTRO_INSUMOS_OFERTA_SUBMODULE_LABEL);
+    await this.expectRegistroLegacySubmoduleAbsentOnDashboardCard();
   }
 
   /**

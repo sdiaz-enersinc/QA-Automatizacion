@@ -127,13 +127,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
    * Comprueba que el menú hover de la tarjeta Registro muestra RPM con el icono ojo.
    */
   async expectRpmVisibleOnDashboardHover(): Promise<void> {
-    await expect(async () => {
-      await this.hoverRegistroDashboardCard();
-      await expect(this.registroDashboardCard().getByText('RPM')).toBeVisible();
-      await expect(
-        this.registroDashboardCard().getByRole('listitem').filter({ hasText: 'RPM' }).getByLabel('eye'),
-      ).toBeVisible();
-    }).toPass({ timeout: 15_000 });
+    await this.expectRegistroDashboardHoverSubmoduleVisible('RPM');
   }
 
   /**
@@ -170,18 +164,17 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Comprueba la barra XML: búsqueda, chip Filtros, chips de filtro y CTAs principales.
+   * Comprueba la barra XML: búsqueda, Filtros (sin chips Modo Yo/Estado/Usuarios) y CTAs principales.
    */
   async expectRpmXmlToolbar(): Promise<void> {
     const main = this.gestorMain();
     await expect(main.getByRole('searchbox', { name: /Buscar/i })).toBeVisible();
     await expect(main.getByRole('button', { name: 'search' })).toBeVisible();
-    await expect(main.getByText('Filtros', { exact: true })).toBeVisible();
-    await expect(this.filterChip('Modo Yo')).toBeVisible();
-    await expect(this.filterChip('Estado')).toBeVisible();
-    await expect(this.filterChip('Usuarios')).toBeVisible();
+    await this.expectFiltrosControlVisible();
+    await this.expectToolbarFilterChipsAbsent();
     await expect(main.getByRole('button', { name: 'Crear Registro' })).toBeVisible();
     await expect(main.getByRole('button', { name: 'Cargar Archivo' })).toBeVisible();
+    await expect(main.getByRole('button', { name: 'Cargar lote de Archivos' })).toBeVisible();
   }
 
   /**

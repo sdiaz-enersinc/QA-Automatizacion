@@ -3,25 +3,29 @@
     "Empresas",
     "Cttos energía",
     "Cttos combustible",
-    "Planta y consumos",
-    "RPM",
+    "Otros contratos",
+    "Insumos oferta",
     "Otros documentos",
+    "RPM",
     "SIRECI",
+    "Gestion de archivos",
     "Historial"
   ],
   "registroNavigationEnabledSubmenuLabels": [
     "Empresas",
     "Cttos energía",
     "Cttos combustible",
+    "Otros contratos",
     "RPM",
     "SIRECI",
     "Historial"
   ],
   "registroNavigationLockedSubmenuLabels": [
-    "Planta y consumos",
-    "Otros documentos"
+    "Insumos oferta",
+    "Otros documentos",
+    "Gestion de archivos"
   ],
-  "registroNavigationLegacySubmoduleLabels": [],
+  "registroNavigationLegacySubmoduleLabels": ["Planta y consumos"],
   "registroNavigationDashboardPreviewLabels": [
     "Empresas",
     "Cttos energía",

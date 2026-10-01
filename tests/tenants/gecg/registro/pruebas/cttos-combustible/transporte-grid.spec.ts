@@ -10,7 +10,7 @@ import {
   RegistroCttosCombustibleNavigationPage,
 } from '../../../../../support/pages/registro/cttos-combustible';
 
-test.describe('Contratos combustible — Layout A Transporte (Ruta A)', () => {
+test.describe('Contratos combustible — Transporte (Ruta A)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosCombustible);
     skipUnlessTabEnabled(MODULE_IDS.registroCttosCombustible, REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_A_TAB);

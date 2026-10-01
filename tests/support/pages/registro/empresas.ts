@@ -64,16 +64,10 @@ export class RegistroEmpresasNavigationPage extends RegistroNavigationBasePage {
    * Comprueba que el menú hover de la tarjeta Registro muestra Empresas con el icono ojo.
    */
   async expectEmpresasVisibleOnDashboardHover(): Promise<void> {
-    await expect(async () => {
-      await this.hoverRegistroDashboardCard();
-      const card = this.registroDashboardCard();
-      for (const label of ['Cttos energía', 'Cttos combustible', 'Insumos oferta']) {
-        await expect(card.getByText(label, { exact: true })).toBeVisible();
-      }
-      await expect(
-        card.getByRole('listitem').filter({ hasText: 'Empresas' }).getByLabel('eye'),
-      ).toBeVisible();
-    }).toPass({ timeout: 15_000 });
+    await this.expectRegistroDashboardHoverSubmoduleVisible(
+      'Empresas',
+      this.registroDashboardHoverLabelsEmpresasContext(),
+    );
   }
 
   /**

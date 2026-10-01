@@ -16,7 +16,7 @@ test.describe('Contratos de energía — Botones de diálogo (Ruta A)', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_D_TAB);
   });
 
-  test('Layout D — Respaldos Cargar Archivo', async ({ page, dashboardPage }) => {
+  test('Respaldos — Cargar Archivo', async ({ page, dashboardPage }) => {
     test.setTimeout(90_000);
 
     const registro = new RegistroCttosEnergiaNavigationPage(page);

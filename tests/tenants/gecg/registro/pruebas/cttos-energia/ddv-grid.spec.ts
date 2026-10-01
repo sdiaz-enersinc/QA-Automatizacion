@@ -5,22 +5,22 @@ import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
 import {
-  REGISTRO_CTTS_ENERGIA_LAYOUT_MISC_TAB,
-  REGISTRO_CTTS_ENERGIA_MISC_CONTRACT_COLUMNS,
+  REGISTRO_CTTS_ENERGIA_DDV_CONTRACT_COLUMNS,
+  REGISTRO_CTTS_ENERGIA_DDV_TAB,
   RegistroCttosEnergiaNavigationPage,
 } from '../../../../../support/pages/registro/cttos-energia';
 
 test.describe('Contratos de energía — Botones de diálogo (Ruta A)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosEnergia);
-    skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_MISC_TAB);
+    skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_DDV_TAB);
   });
 
-  test('Layout B MISC — Pie simplificado y desplegables de Nuevo Registro', async ({
+  test('DDV — Pie de página y desplegables del asistente Nuevo Contrato', async ({
     page,
     dashboardPage,
   }) => {
-    test.setTimeout(180_000);
+    test.setTimeout(240_000);
     const registro = new RegistroCttosEnergiaNavigationPage(page);
 
     await test.step('1. Abrir Contratos de energía desde el menú lateral y validar el shell', async () => {
@@ -29,17 +29,16 @@ test.describe('Contratos de energía — Botones de diálogo (Ruta A)', () => {
       await registro.expectGestorDeDatosCttosEnergiaShell();
     });
 
-    await test.step('2. Abrir Contratos MISC y validar columnas, CTA Nuevo Registro y modal Filtros', async () => {
-      await registro.openContratosEnergiaTab(REGISTRO_CTTS_ENERGIA_LAYOUT_MISC_TAB);
-      await registro.expectContractGridColumnHeaders(REGISTRO_CTTS_ENERGIA_MISC_CONTRACT_COLUMNS);
-      await registro.expectNoSelectAllColumn();
-      await registro.expectFiltrosControlVisible();
-      await registro.expectToolbarFilterChipsAbsent();
-      await registro.expectFiltrosModalOpensAndCloses();
+    await test.step('2. Abrir la pestaña DDV y validar la barra de herramientas y columnas de la grilla', async () => {
+      await registro.openContratosEnergiaTab(REGISTRO_CTTS_ENERGIA_DDV_TAB);
+      await registro.expectLayoutBAdjudicacionesToolbar();
+      await registro.expectContractGridColumnHeaders(REGISTRO_CTTS_ENERGIA_DDV_CONTRACT_COLUMNS, {
+        allowSelectAll: true,
+      });
     });
 
-    await test.step('3. Validar apertura y cierre del diálogo Nuevo Registro', async () => {
-      await registro.expectMiscNuevoRegistroDialogOpensAndCloses();
+    await test.step('3. Validar apertura y cierre del asistente Nuevo Contrato', async () => {
+      await registro.expectDdvNuevoContratoDialogOpensAndCloses();
     });
   });
 });

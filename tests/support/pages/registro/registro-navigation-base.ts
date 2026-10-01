@@ -8,6 +8,12 @@ import {
 } from '../../config/types/registro-wizard';
 import { assertRegistroWizardFieldsMatchConfig } from '../../registro/form-field-labels';
 import { assertSidebarLabelsMatchConfig } from '../../registro/sidebar-labels';
+import {
+  registroDashboardHoverLabelsEmpresasContext,
+  registroDashboardHoverLabelsFromInsumosOfertaThroughHistorial,
+  REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS,
+  REGISTRO_NAVIGATION_LEGACY_SUBMODULE_LABELS,
+} from '../../registro/navigation-dashboard-labels';
 
 export type {
   RegistroWizardFieldKind,
@@ -210,6 +216,60 @@ export class RegistroNavigationBasePage {
       .filter({ hasText: 'Empresas' })
       .locator('xpath=ancestor::div[.//text()[normalize-space(.)="Registro"]][1]');
     await card.hover();
+  }
+
+  /**
+   * Comprueba filas de contexto en el hover de la tarjeta Registro y que el submódulo objetivo tiene icono ojo.
+   *
+   * @param submoduleLabel - Texto de la fila de submódulo a abrir (p. ej. Empresas, Sireci).
+   * @param contextLabels - Etiquetas adicionales que deben ser visibles en la tarjeta expandida.
+   */
+  protected async expectRegistroDashboardHoverSubmoduleVisible(
+    submoduleLabel: string,
+    contextLabels: readonly string[] = [],
+  ): Promise<void> {
+    await expect(async () => {
+      await this.hoverRegistroDashboardCard();
+      const card = this.registroDashboardCard();
+      for (const label of contextLabels) {
+        await expect(card.getByText(label, { exact: true })).toBeVisible();
+      }
+      const row = card.getByRole('listitem').filter({ hasText: submoduleLabel });
+      await expect(row).toBeVisible();
+      await expect(row.getByLabel('eye')).toBeVisible();
+    }).toPass({ timeout: 15_000 });
+  }
+
+  /**
+   * Comprueba las filas de vista previa de la tarjeta Registro (sin hover) con iconos ojo.
+   */
+  protected async expectRegistroDashboardPreviewRowsVisible(): Promise<void> {
+    const card = this.registroDashboardCard();
+    await expect(card).toBeVisible();
+    for (const label of REGISTRO_NAVIGATION_DASHBOARD_PREVIEW_LABELS) {
+      await expect(card.getByText(label, { exact: true })).toBeVisible();
+      await expect(card.getByRole('listitem').filter({ hasText: label }).getByLabel('eye')).toBeVisible();
+    }
+  }
+
+  /**
+   * Comprueba que las etiquetas legacy de submódulo no aparecen en la tarjeta Registro del tablero.
+   */
+  protected async expectRegistroLegacySubmoduleAbsentOnDashboardCard(): Promise<void> {
+    const card = this.registroDashboardCard();
+    for (const label of REGISTRO_NAVIGATION_LEGACY_SUBMODULE_LABELS) {
+      await expect(card.getByText(label, { exact: true })).toHaveCount(0);
+    }
+  }
+
+  /** Etiquetas de contexto del hover para validaciones de Empresas en la tarjeta Registro. */
+  protected registroDashboardHoverLabelsEmpresasContext(): readonly string[] {
+    return registroDashboardHoverLabelsEmpresasContext();
+  }
+
+  /** Etiquetas de contexto del hover desde Insumos oferta hasta Historial (config del tenant). */
+  protected registroDashboardHoverLabelsFromInsumosOfertaThroughHistorial(): readonly string[] {
+    return registroDashboardHoverLabelsFromInsumosOfertaThroughHistorial();
   }
 
   /** Región de contenido principal de las grillas de Gestor de datos (Empresas, Contratos energía, etc.). */

@@ -152,16 +152,10 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
    * Comprueba que el menú hover de la tarjeta Registro muestra Sireci con el icono ojo.
    */
   async expectSireciVisibleOnDashboardHover(): Promise<void> {
-    await expect(async () => {
-      await this.hoverRegistroDashboardCard();
-      const card = this.registroDashboardCard();
-      for (const label of ['Planta y consumos', 'Otros documentos', 'RPM', 'SIRECI', 'Historial']) {
-        await expect(card.getByText(label, { exact: true })).toBeVisible();
-      }
-      await expect(
-        card.getByRole('listitem').filter({ hasText: 'Sireci' }).getByLabel('eye'),
-      ).toBeVisible();
-    }).toPass({ timeout: 15_000 });
+    await this.expectRegistroDashboardHoverSubmoduleVisible(
+      'Sireci',
+      this.registroDashboardHoverLabelsFromInsumosOfertaThroughHistorial(),
+    );
   }
 
   /**

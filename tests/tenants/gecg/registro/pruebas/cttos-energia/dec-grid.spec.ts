@@ -16,7 +16,7 @@ test.describe('Contratos de energía — Botones de diálogo (Ruta A)', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_C_TAB);
   });
 
-  test('Layout C — DEC Nuevon contrato y Cargar archivos', async ({ page, dashboardPage }) => {
+  test('DEC — Nuevon contrato y Cargar archivos', async ({ page, dashboardPage }) => {
     test.setTimeout(240_000);
 
     const registro = new RegistroCttosEnergiaNavigationPage(page);

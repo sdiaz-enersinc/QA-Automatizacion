@@ -9,12 +9,12 @@ import {
   RegistroEmpresasNavigationPage,
 } from '../../../../../support/pages/registro/empresas';
 
-test.describe('Empresas — Grilla Layout A', () => {
+test.describe('Empresas — Grilla', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroEmpresas);
   });
 
-  test('Layout A — Discrepancia del breadcrumb, barra de herramientas, columnas de grilla y diálogo Nuevo Cliente/Proveedor', async ({
+  test('Discrepancia del breadcrumb, barra de herramientas, columnas de grilla y diálogo Nuevo Cliente/Proveedor', async ({
     page,
     dashboardPage,
   }) => {

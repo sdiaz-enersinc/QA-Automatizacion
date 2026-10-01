@@ -35,6 +35,28 @@
     "Estado",
     "Usuario"
   ],
+  "registroCttosEnergiaDdvContractColumns": [
+    "ID",
+    "Compra/Venta",
+    "Negocio",
+    "Nombre del Contrato",
+    "Fecha inicial",
+    "Fecha final",
+    "Contraparte del Contrato",
+    "Estado",
+    "Usuario"
+  ],
+  "registroCttosEnergiaRmsContractColumns": [
+    "ID",
+    "Compra/Venta",
+    "Negocio",
+    "Nombre del Contrato",
+    "Fecha inicial",
+    "Fecha final",
+    "Contraparte del Contrato",
+    "Estado",
+    "Usuario"
+  ],
   "registroCttosEnergiaMiscContractColumns": [
     "ID",
     "Producto Facturable",

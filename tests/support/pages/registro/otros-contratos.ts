@@ -170,12 +170,7 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
    * Comprueba que Otros contratos aparece en la tarjeta hover de Registro con un icono ojo.
    */
   async expectOtrosContratosVisibleOnDashboardHover(): Promise<void> {
-    await this.hoverRegistroDashboardCard();
-    const row = this.registroDashboardCard()
-      .getByRole('listitem')
-      .filter({ hasText: 'Otros contratos' });
-    await expect(row).toBeVisible();
-    await expect(row.getByLabel('eye')).toBeVisible();
+    await this.expectRegistroDashboardHoverSubmoduleVisible('Otros contratos');
   }
 
   /**

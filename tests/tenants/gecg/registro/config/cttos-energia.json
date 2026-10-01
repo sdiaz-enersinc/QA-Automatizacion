@@ -36,6 +36,28 @@
     "Estado",
     "Usuario"
   ],
+  "registroCttosEnergiaDdvContractColumns": [
+    "ID",
+    "Compra/Venta",
+    "Negocio",
+    "Nombre del Contrato",
+    "Fecha inicial",
+    "Fecha final",
+    "Contraparte del Contrato",
+    "Estado",
+    "Usuario"
+  ],
+  "registroCttosEnergiaRmsContractColumns": [
+    "ID",
+    "Compra/Venta",
+    "Negocio",
+    "Nombre del Contrato",
+    "Fecha inicial",
+    "Fecha final",
+    "Contraparte del Contrato",
+    "Estado",
+    "Usuario"
+  ],
   "registroCttosEnergiaMiscContractColumns": [
     "ID",
     "Producto Facturable",
@@ -776,6 +798,10 @@
       ]
     },
     "Contraparte del Contrato": [
+      "PRUEBA EMPRESA SAS",
+      "1",
+      "123",
+      "PRUEBA QA",
       "TRANSMISORA COLOMBIANA DE ENERGIA S.A.S. E.S.P.",
       "AMERICANA DE ENERGIA S.A.S. E.S.P.",
       "AGENTE EXPERTO EN SERVICIOS PÚBLICOS S.A.S E.S.P",

@@ -65,6 +65,12 @@ export const REGISTRO_CTTS_ENERGIA_LAYOUT_SPOT_CHECK_TABS =
 export const REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS =
   cfg.registroCttosEnergiaStandardContractColumns;
 
+/** Columnas de la grilla DDV (config del tenant; en gecg no incluye Código IE). */
+export const REGISTRO_CTTS_ENERGIA_DDV_CONTRACT_COLUMNS = cfg.registroCttosEnergiaDdvContractColumns;
+
+/** Columnas de la grilla RMS (config del tenant; en gecg no incluye Código IE). */
+export const REGISTRO_CTTS_ENERGIA_RMS_CONTRACT_COLUMNS = cfg.registroCttosEnergiaRmsContractColumns;
+
 /** Columnas de la grilla estándar cuyos encabezados se parecen a los chips antiguos de la barra (Estado / Usuario). */
 export const REGISTRO_CTTS_ENERGIA_TOOLBAR_CHIP_LOOKALIKE_COLUMNS =
   REGISTRO_CTTS_ENERGIA_STANDARD_CONTRACT_COLUMNS.filter(
@@ -86,15 +92,6 @@ export const REGISTRO_CTTS_ENERGIA_DDV_TAB = cfg.registroCttosEnergiaDdvTab;
 
 /** Etiqueta de pestaña RMS (config del tenant). */
 export const REGISTRO_CTTS_ENERGIA_RMS_TAB = cfg.registroCttosEnergiaRmsTab;
-
-/**
- * Pestañas de contrato estándar Layout B, derivadas de las claves DDV y RMS.
- * Conservado para el spec conjunto de gecg hasta que ese tenant se separe.
- */
-export const REGISTRO_CTTS_ENERGIA_LAYOUT_B_STANDARD_TABS = [
-  REGISTRO_CTTS_ENERGIA_DDV_TAB,
-  REGISTRO_CTTS_ENERGIA_RMS_TAB,
-] as const;
 
 /** Pestañas de contrato estándar cuya grilla muestra columna de selección masiva (Layout A). */
 export const REGISTRO_CTTS_ENERGIA_LAYOUT_A_STANDARD_TABS = cfg.registroCttosEnergiaLayoutAStandardTabs;
@@ -580,35 +577,6 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
       footerVariant: 'misc',
       absentWizardSteps: ['Código SIC', 'Datos macro', 'Carga archivos'],
     });
-  }
-
-  /**
-   * Despacha la aserción correcta del diálogo Nuevo Contrato para una pestaña estándar Layout B.
-   *
-   * Empareja por la familia de contrato que aparece en la etiqueta, no por igualdad exacta, porque
-   * cada tenant nombra la misma pestaña de forma distinta (`DDV` en emug, `Contratos DDV` en gecg).
-   *
-   * @param tabName - Etiqueta de pestaña estándar Layout B del JSON del tenant.
-   */
-  async expectStandardTabNuevoContratoDialogOpensAndCloses(
-    tabName: (typeof REGISTRO_CTTS_ENERGIA_LAYOUT_B_STANDARD_TABS)[number],
-  ): Promise<void> {
-    if (/UNR|Usuarios\s+NR/i.test(tabName)) {
-      await this.expectUnrNuevoContratoDialogOpensAndCloses();
-      return;
-    }
-    if (/DDV/i.test(tabName)) {
-      await this.expectDdvNuevoContratoDialogOpensAndCloses();
-      return;
-    }
-    if (/RMS/i.test(tabName)) {
-      await this.expectRmsNuevoContratoDialogOpensAndCloses();
-      return;
-    }
-
-    throw new Error(
-      `No hay aserción de asistente Nuevo Contrato mapeada para la pestaña «${tabName}»`,
-    );
   }
 
   /**

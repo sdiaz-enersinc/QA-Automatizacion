@@ -16,13 +16,13 @@ import {
   RegistroCttosEnergiaNavigationPage,
 } from '../../../../../support/pages/registro/cttos-energia';
 
-test.describe('Contratos de energía — Ruta B (tablero) — comprobación puntual de layouts', () => {
+test.describe('Contratos de energía — Ruta B (tablero)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroCttosEnergia);
     skipUnlessAnyTabEnabled(MODULE_IDS.registroCttosEnergia, REGISTRO_CTTS_ENERGIA_LAYOUT_SPOT_CHECK_TABS);
   });
 
-  test('Ruta B — Un tablero por familia de layout (Layout A LP y Layout C DEC)', async ({
+  test('Ruta B — Un tablero por Largo plazo y DEC', async ({
     page,
     dashboardPage,
   }) => {
@@ -41,7 +41,7 @@ test.describe('Contratos de energía — Ruta B (tablero) — comprobación punt
         await registro.openContratosEnergiaTab(REGISTRO_CTTS_ENERGIA_LAYOUT_A_TAB);
         await registro.expectSelectAllColumnVisible();
       },
-      '2. Layout A LP — abrir Largo plazo y validar la columna Select all',
+      '2. Largo plazo — abrir y validar la columna Select all',
     );
 
     await whenTabEnabled(
@@ -56,7 +56,7 @@ test.describe('Contratos de energía — Ruta B (tablero) — comprobación punt
           0,
         );
       },
-      '3. Layout C DEC — abrir DEC y validar la barra de herramientas y columnas sin Estado',
+      '3. DEC — abrir y validar la barra de herramientas y columnas sin Estado',
     );
   });
 });
