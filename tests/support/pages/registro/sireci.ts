@@ -271,16 +271,14 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Comprueba la barra de Reporte: búsqueda, chip Filtros, chips de filtro y solo Descargar Reporte.
+   * Comprueba la barra de Reporte: búsqueda y Descargar Reporte, sin Filtros ni chips de filtro.
    */
   async expectSireciReporteToolbar(): Promise<void> {
     const main = this.gestorMain();
     await expect(main.getByRole('searchbox', { name: /Buscar/i })).toBeVisible();
     await expect(main.getByRole('button', { name: 'search' })).toBeVisible();
-    await expect(main.getByText('Filtros', { exact: true })).toBeVisible();
-    await expect(this.filterChip('Modo Yo')).toBeVisible();
-    await expect(this.filterChip('Estado')).toBeVisible();
-    await expect(this.filterChip('Usuarios')).toBeVisible();
+    await this.expectFiltrosControlAbsent();
+    await this.expectToolbarFilterChipsAbsent();
     await expect(main.getByRole('button', { name: 'Descargar Reporte' })).toBeVisible();
     await expect(main.getByRole('button', { name: 'Nuevo Registro' })).toHaveCount(0);
     await this.expectGridPaginationFooter('10 / página');

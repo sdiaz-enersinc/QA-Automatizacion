@@ -15,7 +15,7 @@ test.describe('Sireci — Pestaña Reporte', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroSireci, 'Reporte');
   });
 
-  test('Reporte — Columnas, barra, modal Filtros y chips compartidos', async ({
+  test('Reporte — Columnas, barra y Descargar Reporte', async ({
     page,
     dashboardPage,
   }) => {
@@ -30,15 +30,10 @@ test.describe('Sireci — Pestaña Reporte', () => {
       await registro.expectSireciPairTabVisible('Reporte');
     });
 
-    await test.step('2. Validar columnas, barra, filtros y Descargar Reporte', async () => {
+    await test.step('2. Validar columnas, barra y Descargar Reporte', async () => {
       await registro.expectSireciReporteGridColumnHeaders(REGISTRO_SIRECI_REPORTE_COLUMNS);
       await registro.expectSireciReporteToolbar();
       await registro.expectGridHasDataOrEmptyState();
-      await registro.expectFiltrosModalOpensAndCloses();
-      await registro.expectEstadoFilterDialogWithCombobox();
-      await registro.expectUsuariosFilterDialogWithCombobox();
-      await registro.expectModoYoFilterToggle();
-      await registro.expectSireciReporteToolbar();
       await registro.expectDescargarReporteDialogOpensAndCloses();
       await registro.expectSireciReporteToolbar();
     });
