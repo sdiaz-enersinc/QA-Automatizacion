@@ -12,14 +12,10 @@
     "Contadores INTI"
   ],
   "registroOtrosDocumentosDefaultView": "Hidrologia Horaria",
-  "registroOtrosDocumentosHidrologiaViews": [
-    "Hidrologia Horaria",
-    "Hidrologia Diaria"
-  ],
-  "registroOtrosDocumentosContadoresViews": [
-    "Contadores Frt",
-    "Contadores INTI"
-  ],
+  "registroOtrosDocumentosHidrologiaHorariaView": "Hidrologia Horaria",
+  "registroOtrosDocumentosHidrologiaDiariaView": "Hidrologia Diaria",
+  "registroOtrosDocumentosContadoresFrtView": "Contadores Frt",
+  "registroOtrosDocumentosContadoresIntiView": "Contadores INTI",
   "registroOtrosDocumentosHidrologiaHorariaColumns": [
     "Fecha",
     "Nivel Embalse",

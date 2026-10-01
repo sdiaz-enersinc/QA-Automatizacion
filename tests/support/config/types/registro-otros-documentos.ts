@@ -3,8 +3,10 @@ export interface RegistroOtrosDocumentosTenantConfig {
   registroOtrosDocumentosViewNames: readonly string[];
   registroOtrosDocumentosEnabledViewNames: readonly string[];
   registroOtrosDocumentosDefaultView: string;
-  registroOtrosDocumentosHidrologiaViews: readonly string[];
-  registroOtrosDocumentosContadoresViews: readonly string[];
+  registroOtrosDocumentosHidrologiaHorariaView: string;
+  registroOtrosDocumentosHidrologiaDiariaView: string;
+  registroOtrosDocumentosContadoresFrtView: string;
+  registroOtrosDocumentosContadoresIntiView: string;
   registroOtrosDocumentosHidrologiaHorariaColumns: readonly string[];
   registroOtrosDocumentosHidrologiaDiariaColumns: readonly string[];
   registroOtrosDocumentosContadoresColumns: readonly string[];

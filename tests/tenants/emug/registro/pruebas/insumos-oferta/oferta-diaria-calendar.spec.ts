@@ -15,7 +15,7 @@ test.describe('Insumos oferta', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_LAYOUT_A_TAB);
   });
 
-  test('Layout A — Oferta Diaria calendario, controles Mes/Año y diálogo Carga archivo', async ({
+  test('Oferta Diaria — calendario, controles Mes/Año y diálogo Carga archivo', async ({
     page,
     dashboardPage,
   }) => {

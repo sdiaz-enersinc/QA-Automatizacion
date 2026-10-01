@@ -25,11 +25,39 @@ export const REGISTRO_OTROS_DOCUMENTOS_ENABLED_VIEW_NAMES = getModuleEnabledTabN
 /** Vista de aterrizaje usada como ancla del menú lateral y semilla. */
 export const REGISTRO_OTROS_DOCUMENTOS_DEFAULT_VIEW = cfg.registroOtrosDocumentosDefaultView;
 
-/** Vistas de Hidrologia bajo Otros documentos (config del tenant). */
-export const REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS = cfg.registroOtrosDocumentosHidrologiaViews;
+/** Etiqueta de vista Hidrologia Horaria (config del tenant). */
+export const REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_HORARIA_VIEW =
+  cfg.registroOtrosDocumentosHidrologiaHorariaView;
 
-/** Vistas de Contadores bajo Otros documentos (config del tenant). */
-export const REGISTRO_OTROS_DOCUMENTOS_CONTADORES_VIEWS = cfg.registroOtrosDocumentosContadoresViews;
+/** Etiqueta de vista Hidrologia Diaria (config del tenant). */
+export const REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_DIARIA_VIEW =
+  cfg.registroOtrosDocumentosHidrologiaDiariaView;
+
+/** Etiqueta de vista Contadores Frt (config del tenant). */
+export const REGISTRO_OTROS_DOCUMENTOS_CONTADORES_FRT_VIEW =
+  cfg.registroOtrosDocumentosContadoresFrtView;
+
+/** Etiqueta de vista Contadores INTI (config del tenant). */
+export const REGISTRO_OTROS_DOCUMENTOS_CONTADORES_INTI_VIEW =
+  cfg.registroOtrosDocumentosContadoresIntiView;
+
+/**
+ * Vistas de Hidrologia, derivadas de las claves Horaria y Diaria.
+ * Conservado para path-a, path-b-hidrologia-tabs y toolbar hasta que esos specs se partan.
+ */
+export const REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS: readonly string[] = [
+  REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_HORARIA_VIEW,
+  REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_DIARIA_VIEW,
+];
+
+/**
+ * Vistas de Contadores, derivadas de las claves Frt e INTI.
+ * Conservado para path-a, path-b-contadores-tabs y toolbar hasta que esos specs se partan.
+ */
+export const REGISTRO_OTROS_DOCUMENTOS_CONTADORES_VIEWS: readonly string[] = [
+  REGISTRO_OTROS_DOCUMENTOS_CONTADORES_FRT_VIEW,
+  REGISTRO_OTROS_DOCUMENTOS_CONTADORES_INTI_VIEW,
+];
 
 /** Encabezados de columna de la grilla Hidrologia Horaria (config del tenant). */
 export const REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_HORARIA_COLUMNS =
@@ -228,20 +256,20 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
    */
   async expectOtrosDocumentosLayout(viewName: RegistroOtrosDocumentosViewName): Promise<void> {
     await this.expectGridColumnHeaders(this.columnsForView(viewName));
-    if (viewName === REGISTRO_OTROS_DOCUMENTOS_CONTADORES_VIEWS[0]) {
+    if (viewName === REGISTRO_OTROS_DOCUMENTOS_CONTADORES_FRT_VIEW) {
       await this.expectOtrosDocumentosPairTabVisible(viewName);
       await this.expectContadoresFrtSampleRows();
       return;
     }
-    if (viewName === REGISTRO_OTROS_DOCUMENTOS_CONTADORES_VIEWS[1]) {
+    if (viewName === REGISTRO_OTROS_DOCUMENTOS_CONTADORES_INTI_VIEW) {
       await this.expectNoErrorBanner();
       return;
     }
-    if (viewName === REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS[0]) {
+    if (viewName === REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_HORARIA_VIEW) {
       await this.expectGridPaginationFooter();
       return;
     }
-    if (viewName === REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS[1]) {
+    if (viewName === REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_DIARIA_VIEW) {
       await this.expectGridHasDataOrEmptyState();
     }
   }
@@ -350,9 +378,9 @@ export class RegistroOtrosDocumentosNavigationPage extends RegistroNavigationBas
    */
   private columnsForView(viewName: RegistroOtrosDocumentosViewName): readonly string[] {
     const columnsByView: Record<string, readonly string[]> = {
-      [REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS[0]]:
+      [REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_HORARIA_VIEW]:
         REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_HORARIA_COLUMNS,
-      [REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_VIEWS[1]]:
+      [REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_DIARIA_VIEW]:
         REGISTRO_OTROS_DOCUMENTOS_HIDROLOGIA_DIARIA_COLUMNS,
     };
     for (const contadoresView of REGISTRO_OTROS_DOCUMENTOS_CONTADORES_VIEWS) {

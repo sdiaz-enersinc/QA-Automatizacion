@@ -16,7 +16,7 @@ test.describe('Insumos oferta', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_TAB);
   });
 
-  test('Layout B — Gestion Conceptos grilla y Nuevo Registro', async ({ page, dashboardPage }) => {
+  test('Gestion Conceptos — grilla y Nuevo Registro', async ({ page, dashboardPage }) => {
     test.setTimeout(60_000);
     const registro = new RegistroInsumosOfertaNavigationPage(page);
 

@@ -10,13 +10,13 @@ import {
   RegistroOtrosContratosNavigationPage,
 } from '../../../../../support/pages/registro/otros-contratos';
 
-test.describe('Otros contratos — layouts (chips de barra integrados; AGR incluida)', () => {
+test.describe('Otros contratos — chips de barra integrados; AGR incluida', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroOtrosContratos);
     skipUnlessTabEnabled(MODULE_IDS.registroOtrosContratos, REGISTRO_OTROS_CONTRATOS_AGR_TAB);
   });
 
-  test('Layout AGR — barra sin chips, grilla sin Producto Facturable y diálogo Nuevo Registro', async ({
+  test('AGR — barra sin chips, grilla sin Producto Facturable y diálogo Nuevo Registro', async ({
     page,
     dashboardPage,
   }) => {

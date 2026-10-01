@@ -63,10 +63,8 @@
     "Limite facturación",
     "Archivo fuente"
   ],
-  "registroCttosEnergiaLayoutBStandardTabs": [
-    "DDV",
-    "RMS"
-  ],
+  "registroCttosEnergiaDdvTab": "DDV",
+  "registroCttosEnergiaRmsTab": "RMS",
   "registroCttosEnergiaLayoutAStandardTabs": [
     "Largo plazo",
     "DDV"

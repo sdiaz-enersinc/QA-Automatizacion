@@ -16,7 +16,7 @@ test.describe('Insumos oferta', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_TAB);
   });
 
-  test('Layout B — Conceptos OC grilla y diálogos Nuevo Concepto y Nuevo Registro', async ({
+  test('Conceptos OC — grilla y diálogos Nuevo Concepto y Nuevo Registro', async ({
     page,
     dashboardPage,
   }) => {

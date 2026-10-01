@@ -81,8 +81,20 @@ export const REGISTRO_CTTS_ENERGIA_DEC_CONTRACT_COLUMNS = cfg.registroCttosEnerg
 /** Columnas del registro de archivos de Respaldos (Layout D). */
 export const REGISTRO_CTTS_ENERGIA_RESPALDOS_COLUMNS = cfg.registroCttosEnergiaRespaldosColumns;
 
-/** Pestañas de contrato estándar Layout B (cobertura del asistente en layout-b-standard-grid). */
-export const REGISTRO_CTTS_ENERGIA_LAYOUT_B_STANDARD_TABS = cfg.registroCttosEnergiaLayoutBStandardTabs;
+/** Etiqueta de pestaña DDV (config del tenant). */
+export const REGISTRO_CTTS_ENERGIA_DDV_TAB = cfg.registroCttosEnergiaDdvTab;
+
+/** Etiqueta de pestaña RMS (config del tenant). */
+export const REGISTRO_CTTS_ENERGIA_RMS_TAB = cfg.registroCttosEnergiaRmsTab;
+
+/**
+ * Pestañas de contrato estándar Layout B, derivadas de las claves DDV y RMS.
+ * Conservado para el spec conjunto de gecg hasta que ese tenant se separe.
+ */
+export const REGISTRO_CTTS_ENERGIA_LAYOUT_B_STANDARD_TABS = [
+  REGISTRO_CTTS_ENERGIA_DDV_TAB,
+  REGISTRO_CTTS_ENERGIA_RMS_TAB,
+] as const;
 
 /** Pestañas de contrato estándar cuya grilla muestra columna de selección masiva (Layout A). */
 export const REGISTRO_CTTS_ENERGIA_LAYOUT_A_STANDARD_TABS = cfg.registroCttosEnergiaLayoutAStandardTabs;

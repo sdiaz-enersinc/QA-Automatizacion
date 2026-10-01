@@ -16,7 +16,7 @@ test.describe('Insumos oferta', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroInsumosOferta, REGISTRO_INSUMOS_OFERTA_OEF_PROYECTADA_TAB);
   });
 
-  test('Layout B — OEF Proyectada grilla y asistente Nueva Vigencia Oef', async ({ page, dashboardPage }) => {
+  test('OEF Proyectada — grilla y asistente Nueva Vigencia Oef', async ({ page, dashboardPage }) => {
     test.setTimeout(60_000);
     const registro = new RegistroInsumosOfertaNavigationPage(page);
 
