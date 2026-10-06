@@ -71,6 +71,7 @@ export interface RegistroWizardDialogOpensAndClosesOptions {
   fields: readonly RegistroWizardFieldDefinition[];
   dropdownOptions: RegistroWizardDropdownOptionsMap;
   assertScrollableForm?: boolean;
+  /** `standard`: asistente multipaso (Cancelar + Siguiente). `misc`: formulario en un paso (Cancelar, sin Siguiente). */
   footerVariant?: 'standard' | 'misc';
   /** Etiquetas de paso del asistente que no deben aparecer (layout MISC de energía). */
   absentWizardSteps?: readonly string[];
@@ -860,7 +861,7 @@ export class RegistroNavigationBasePage {
     }
 
     if (options.footerVariant === 'misc') {
-      await expect(dialog.getByRole('button', { name: 'Cancelar' })).toHaveCount(0);
+      await expect(dialog.getByRole('button', { name: 'Cancelar' })).toBeVisible();
       await expect(dialog.getByRole('button', { name: /Siguiente/i })).toHaveCount(0);
     } else {
       await expect(dialog.getByRole('button', { name: 'Cancelar' })).toBeVisible();

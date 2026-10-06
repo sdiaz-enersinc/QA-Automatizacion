@@ -319,6 +319,12 @@
       "EN PRUEBAS",
       "CEDIDO",
       "CREADO"
+    ],
+    "Destino": [
+      "GECELCA3",
+      "GECELCA",
+      "ECOPETROL",
+      "PROPIO"
     ]
   },
   "registroCttosCombustibleSuministroNuevoRegistroFieldsDropdownOptions": {
@@ -612,7 +618,69 @@
     ],
     "Ctto. Relacionado": "conditional",
     "Sector de Consumo": "conditional",
-    "Tipo Demanda Esencial": "conditional"
+    "Tipo Demanda Esencial": "conditional",
+    "Puntos de Suministro": [
+      "CALI",
+      "EL PORVENIR",
+      "GUANDO",
+      "MONTAÑUELO",
+      "SEBASTOPOL",
+      "NEIVA",
+      "MEDELLIN",
+      "POPAYAN",
+      "MAMONAL",
+      "SABANA_F",
+      "GUALANDAY",
+      "HOBO",
+      "SARDINATA",
+      "FUSAGASUGA",
+      "RICAURTE",
+      "CUSIANA",
+      "PEREIRA",
+      "CHICORAL",
+      "FLOREÑA",
+      "GBS_F",
+      "YUMBO/CALI",
+      "TANE/CACOTA",
+      "AGUAZUL",
+      "APIAY",
+      "Boca",
+      "PAMPLONA",
+      "MORICHAL",
+      "BARRANCABERMEJA",
+      "MARIQUITA",
+      "LA BELLEZA",
+      "COGUA",
+      "GIBRALTAR",
+      "LA CRECIENTE",
+      "VASCONIA CONEXIÓN",
+      "CENTAUROS",
+      "YOPAL",
+      "VASCONIA",
+      "PRADERA",
+      "Pozo",
+      "BUCARAMANGA",
+      "FLANDES",
+      "CUCUTA",
+      "RAMALES AISLADOS_F",
+      "BUENOS AIRES",
+      "GRANADA",
+      "GBS_I",
+      "USME",
+      "OCOA",
+      "ARMENIA",
+      "CALDAS VIEJO",
+      "IBAGUE",
+      "BALLENA",
+      "LA MAMI",
+      "BARRANQUILLA",
+      "CARTAGENA",
+      "SINCELEJO",
+      "JOBO",
+      "La Creciente",
+      "San Mateo",
+      "RAMALES AISLADOS_I"
+    ]
   },
   "registroCttosCombustibleTransporteNuevoRegistroFields": [
     {
@@ -648,6 +716,10 @@
       "label": "Contraparte del Contrato",
       "kind": "combobox",
       "required": true
+    },
+    {
+      "label": "Destino",
+      "kind": "combobox"
     },
     {
       "label": "Modalidad",
@@ -795,6 +867,11 @@
     },
     {
       "label": "Estado",
+      "kind": "combobox",
+      "requiresScroll": true
+    },
+    {
+      "label": "Puntos de Suministro",
       "kind": "combobox",
       "requiresScroll": true
     }

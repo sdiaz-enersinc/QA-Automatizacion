@@ -172,12 +172,13 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
 
   /**
    * Comprueba el shell del gestor de Sireci: URL, breadcrumb, tira de pestañas, búsqueda y grilla de datos.
+   * El segmento del breadcrumb es "Sireci"; la etiqueta del menú lateral sigue siendo "SIRECI".
    */
   async expectGestorDeDatosSireciShell(): Promise<void> {
     await expect(this.page).toHaveURL(/gestor-de-datos\/sireci\//);
     const breadcrumb = this.page.getByRole('navigation');
     await expect(breadcrumb).toContainText('Gestor de datos');
-    await expect(breadcrumb).toContainText(REGISTRO_SIRECI_SUBMODULE_LABEL);
+    await expect(breadcrumb).toContainText('Sireci');
     await assertTabStripMatchesConfig(this.page, {
       enabledTabs: REGISTRO_SIRECI_ENABLED_TAB_NAMES,
       lockedTabs: REGISTRO_SIRECI_LOCKED_TAB_NAMES,
@@ -267,19 +268,17 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
   }
 
   /**
-   * Comprueba la barra de Resumen: búsqueda, chips de filtro, CTAs y ausencia del chip Filtros.
+   * Comprueba la barra de Resumen: búsqueda y CTAs, sin chip Filtros ni chips Modo Yo, Estado o Usuarios.
    */
   async expectSireciResumenToolbar(): Promise<void> {
     const main = this.gestorMain();
     await expect(main.getByRole('searchbox', { name: /Buscar/i })).toBeVisible();
     await expect(main.getByRole('button', { name: 'search' })).toBeVisible();
-    await expect(main.getByText('Filtros', { exact: true })).toHaveCount(0);
-    await expect(this.filterChip('Modo Yo')).toBeVisible();
-    await expect(this.filterChip('Estado')).toBeVisible();
-    await expect(this.filterChip('Usuarios')).toBeVisible();
+    await this.expectFiltrosControlAbsent();
+    await this.expectToolbarFilterChipsAbsent();
     await expect(main.getByRole('button', { name: 'Descargar Reporte' })).toBeVisible();
     await expect(main.getByRole('button', { name: 'Nuevo Registro' })).toBeVisible();
-    await this.expectGridPaginationFooter('15 / página');
+    await this.expectGridPaginationFooter('20 / página');
   }
 
   /**

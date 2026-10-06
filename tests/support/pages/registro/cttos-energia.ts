@@ -499,7 +499,7 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
    * Abre Nuevo Contrato DDV, valida campos y desplegables, y cierra.
    *
    * Si el tenant declara pasos de asistente, valida el pie estándar (Cancelar / Siguiente).
-   * Si no hay pasos, el formulario es plano como MISC (solo Limpiar / Guardar).
+   * Si no hay pasos, el formulario es plano como MISC (Cancelar / Limpiar / Guardar, sin Siguiente).
    */
   async expectDdvNuevoContratoDialogOpensAndCloses(): Promise<void> {
     const wizardSteps = REGISTRO_CTTS_ENERGIA_DDV_NUEVO_CONTRATO_WIZARD_STEPS;
@@ -522,7 +522,7 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
    * Abre Nuevo Contrato RMS, valida campos y desplegables, y cierra.
    *
    * Si el tenant declara pasos de asistente, valida el pie estándar (Cancelar / Siguiente).
-   * Si no hay pasos, el formulario es plano como MISC (solo Limpiar / Guardar).
+   * Si no hay pasos, el formulario es plano como MISC (Cancelar / Limpiar / Guardar, sin Siguiente).
    */
   async expectRmsNuevoContratoDialogOpensAndCloses(): Promise<void> {
     const wizardSteps = REGISTRO_CTTS_ENERGIA_RMS_NUEVO_CONTRATO_WIZARD_STEPS;
@@ -545,7 +545,7 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
    * Abre Nuevo contrato DEC, valida campos y desplegables, y cierra.
    *
    * Si el tenant declara pasos de asistente, valida el pie estándar (Cancelar / Siguiente).
-   * Si no hay pasos, el formulario es plano como MISC (solo Limpiar / Guardar).
+   * Si no hay pasos, el formulario es plano como MISC (Cancelar / Limpiar / Guardar, sin Siguiente).
    */
   async expectDecNuevonContratoDialogOpensAndCloses(): Promise<void> {
     const wizardSteps = REGISTRO_CTTS_ENERGIA_DEC_NUEVO_CONTRATO_WIZARD_STEPS;
@@ -566,6 +566,8 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
 
   /**
    * Abre Nuevo Registro MISC, valida campos y desplegables (sin pasos de asistente), y cierra.
+   *
+   * Pie de formulario plano: Cancelar / Limpiar / Guardar (sin Siguiente).
    */
   async expectMiscNuevoRegistroDialogOpensAndCloses(): Promise<void> {
     await this.expectRegistroWizardDialogOpensAndCloses({
