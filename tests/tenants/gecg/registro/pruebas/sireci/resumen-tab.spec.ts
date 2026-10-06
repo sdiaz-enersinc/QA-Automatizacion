@@ -3,8 +3,9 @@
 
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
-import { test, expect } from '../../../../../support/fixtures';
+import { test } from '../../../../../support/fixtures';
 import {
+  REGISTRO_SIRECI_DEFAULT_TAB,
   REGISTRO_SIRECI_RESUMEN_COLUMNS,
   RegistroSireciNavigationPage,
 } from '../../../../../support/pages/registro/sireci';
@@ -12,7 +13,7 @@ import {
 test.describe('Sireci — Pestaña Resumen', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroSireci);
-    skipUnlessTabEnabled(MODULE_IDS.registroSireci, 'Resumen');
+    skipUnlessTabEnabled(MODULE_IDS.registroSireci, REGISTRO_SIRECI_DEFAULT_TAB);
   });
 
   test.fixme('Filtro Modo Yo no funciona en Resumen — columnas, barra, chips y diálogo Nuevo Registro', async ({
@@ -24,9 +25,9 @@ test.describe('Sireci — Pestaña Resumen', () => {
 
     await test.step('1. Abrir Resumen desde el menú lateral y validar el shell', async () => {
       await dashboardPage.expectLoaded();
-      await registro.openSireciFromSidebar('Resumen');
+      await registro.openSireciFromSidebar(REGISTRO_SIRECI_DEFAULT_TAB);
       await registro.expectGestorDeDatosSireciShell();
-      await registro.expectSireciViewActive('Resumen');
+      await registro.expectSireciViewActive(REGISTRO_SIRECI_DEFAULT_TAB);
     });
 
     await test.step('2. Validar columnas, barra, estado vacío o datos y filtros', async () => {
@@ -41,9 +42,7 @@ test.describe('Sireci — Pestaña Resumen', () => {
 
     await test.step('3. Validar diálogo Nuevo Registro y CTA Descargar Reporte', async () => {
       await registro.expectNuevoRegistroDialogOpensAndCloses();
-      const descargar = page.getByRole('button', { name: 'Descargar Reporte' });
-      await expect(descargar).toBeVisible();
-      await expect(descargar).toBeEnabled();
+      await registro.expectSireciResumenToolbar();
     });
   });
 });

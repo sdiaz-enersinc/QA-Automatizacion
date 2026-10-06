@@ -4,7 +4,11 @@
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
 import { test, expect } from '../../../../../support/fixtures';
-import { RegistroSireciNavigationPage } from '../../../../../support/pages/registro/sireci';
+import {
+  REGISTRO_SIRECI_DEFAULT_TAB,
+  REGISTRO_SIRECI_REPORTE_TAB,
+  RegistroSireciNavigationPage,
+} from '../../../../../support/pages/registro/sireci';
 
 test.describe('Sireci — Navegación entre pestañas', () => {
   test.beforeEach(() => {
@@ -19,21 +23,20 @@ test.describe('Sireci — Navegación entre pestañas', () => {
 
     await test.step('1. Abrir Resumen desde el menú lateral', async () => {
       await dashboardPage.expectLoaded();
-      await registro.openSireciFromSidebar('Resumen');
-      await registro.expectSireciViewActive('Resumen');
-      await registro.expectSireciPairTabVisible('Resumen');
+      await registro.openSireciFromSidebar(REGISTRO_SIRECI_DEFAULT_TAB);
+      await registro.expectSireciViewActive(REGISTRO_SIRECI_DEFAULT_TAB);
+      await registro.expectSireciPairTabVisible(REGISTRO_SIRECI_DEFAULT_TAB);
     });
 
     await test.step('2. Abrir la pestaña Reporte', async () => {
-      await registro.openSireciTab('Reporte');
+      await registro.openSireciTab(REGISTRO_SIRECI_REPORTE_TAB);
       await expect(page.getByRole('main').getByRole('table').first()).toBeVisible();
-      await registro.expectSireciPairTabVisible('Reporte');
+      await registro.expectSireciPairTabVisible(REGISTRO_SIRECI_REPORTE_TAB);
     });
 
     await test.step('3. Volver a la pestaña Resumen', async () => {
-      await registro.openSireciTab('Resumen');
-      await expect(page.getByRole('button', { name: 'Descargar Reporte' })).toBeVisible();
-      await expect(page.getByRole('button', { name: 'Nuevo Registro' })).toBeVisible();
+      await registro.openSireciTab(REGISTRO_SIRECI_DEFAULT_TAB);
+      await registro.expectSireciResumenToolbar();
     });
   });
 });

@@ -6,6 +6,7 @@ import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-gu
 import { test, expect } from '../../../../../support/fixtures';
 import {
   REGISTRO_CTTS_COMBUSTIBLE_ENABLED_TAB_NAMES,
+  REGISTRO_CTTS_COMBUSTIBLE_SUBMODULE_LABEL,
   RegistroCttosCombustibleNavigationPage,
 } from '../../../../../support/pages/registro/cttos-combustible';
 
@@ -27,7 +28,7 @@ test.describe('Contratos combustible — Ruta B (hover del tablero)', () => {
 
     await test.step('2. Abrir Cttos combustible desde el hover de la tarjeta Registro', async () => {
       await registro.hoverRegistroDashboardCard();
-      await expect(registro.registroDashboardCard().getByText('Cttos combustible')).toBeVisible();
+      await expect(registro.registroDashboardCard().getByText(REGISTRO_CTTS_COMBUSTIBLE_SUBMODULE_LABEL)).toBeVisible();
       await registro.openCttosCombustibleFromDashboardGrid();
     });
 

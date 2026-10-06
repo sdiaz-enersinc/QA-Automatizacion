@@ -4,12 +4,15 @@
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
 import { test, expect } from '../../../../../support/fixtures';
-import { RegistroRpmNavigationPage } from '../../../../../support/pages/registro/rpm';
+import {
+  REGISTRO_RPM_DEFAULT_TAB,
+  RegistroRpmNavigationPage,
+} from '../../../../../support/pages/registro/rpm';
 
 test.describe('RPM XML — Ruta B (hover del tablero)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroRpm);
-    skipUnlessTabEnabled(MODULE_IDS.registroRpm, 'XML');
+    skipUnlessTabEnabled(MODULE_IDS.registroRpm, REGISTRO_RPM_DEFAULT_TAB);
   });
 
   test('Ruta B — El hover del tablero abre RPM en la pestaña XML', async ({ page, dashboardPage }) => {
@@ -23,7 +26,7 @@ test.describe('RPM XML — Ruta B (hover del tablero)', () => {
 
     await test.step('2. Abrir RPM desde el icono del ojo y validar XML', async () => {
       await registro.openRpmFromDashboardGrid();
-      await registro.expectRpmViewActive('XML');
+      await registro.expectRpmViewActive(REGISTRO_RPM_DEFAULT_TAB);
       await expect(page.getByRole('searchbox', { name: /Buscar/i })).toBeVisible();
       await expect(page.getByRole('main').getByRole('table').first()).toBeVisible();
     });

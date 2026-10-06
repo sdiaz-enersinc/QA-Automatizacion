@@ -24,10 +24,10 @@ export type EnergiaWizardFieldDefinition = RegistroWizardFieldDefinition;
 export type EnergiaWizardDropdownOptionsMap = RegistroWizardDropdownOptionsMap;
 export type { RegistroCttosEnergiaTabName };
 
-/** Etiqueta visible del submenú y de la tarjeta del tablero para Cttos energía. */
-export const REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL = 'Cttos energía';
-
 const cfg = getRegistroCttosEnergiaConfig();
+
+/** Etiqueta visible del submenú y de la tarjeta del tablero para Cttos energía (config del tenant). */
+export const REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL = cfg.registroCttosEnergiaSubmoduleLabel;
 
 /** Indica si el módulo Registro Contratos energía está habilitado para el tenant activo. */
 export const REGISTRO_CTTS_ENERGIA_ENABLED = isModuleEnabled(MODULE_IDS.registroCttosEnergia);

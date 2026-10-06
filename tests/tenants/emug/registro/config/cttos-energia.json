@@ -15,6 +15,7 @@
   "registroCttosEnergiaLockedTabNames": [
     "Usuarios NR"
   ],
+  "registroCttosEnergiaSubmoduleLabel": "Cttos energía",
   "registroCttosEnergiaDefaultTab": "Largo plazo",
   "registroCttosEnergiaLayoutATab": "Largo plazo",
   "registroCttosEnergiaLayoutCTab": "DEC",

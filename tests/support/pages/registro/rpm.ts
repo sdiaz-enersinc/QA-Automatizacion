@@ -26,6 +26,12 @@ export const REGISTRO_RPM_ENABLED_TAB_NAMES = getModuleEnabledTabNames(MODULE_ID
 
 export const REGISTRO_RPM_LOCKED_TAB_NAMES = cfg.registroRpmLockedTabNames;
 
+/** Etiqueta visible del submenú y de la tarjeta del tablero para RPM (config del tenant). */
+export const REGISTRO_RPM_SUBMODULE_LABEL = cfg.registroRpmSubmoduleLabel;
+
+/** Pestaña de aterrizaje usada como ancla del menú lateral y semilla. */
+export const REGISTRO_RPM_DEFAULT_TAB = cfg.registroRpmDefaultTab;
+
 /** Encabezados de columna de la grilla XML (config del tenant). */
 export const REGISTRO_RPM_XML_COLUMNS = cfg.registroRpmXmlColumns;
 
@@ -53,7 +59,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
    * Expande Registro y el desplegable del submódulo RPM en el menú lateral.
    */
   async expandRpmSidebar(): Promise<void> {
-    await this.expandRegistroSubmodule('RPM');
+    await this.expandRegistroSubmodule(REGISTRO_RPM_SUBMODULE_LABEL);
   }
 
   /**
@@ -61,8 +67,8 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
    */
   async ensureRpmSidebarExpanded(): Promise<void> {
     await this.expandRegistroSidebar();
-    const rpmRow = this.registroSubmenu().getByRole('menuitem', { name: 'RPM' }).first();
-    const xmlItem = this.registroSubmenu().getByRole('menuitem', { name: 'XML' }).first();
+    const rpmRow = this.registroSubmenu().getByRole('menuitem', { name: REGISTRO_RPM_SUBMODULE_LABEL }).first();
+    const xmlItem = this.registroSubmenu().getByRole('menuitem', { name: REGISTRO_RPM_DEFAULT_TAB }).first();
     await expect(async () => {
       if ((await rpmRow.getAttribute('aria-expanded')) !== 'true') {
         await rpmRow.click();
@@ -76,7 +82,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
    */
   async expectRpmSubmenuEntryVisible(): Promise<void> {
     await this.expandRegistroSidebar();
-    await expect(this.registroSubmenu().getByRole('menuitem', { name: 'RPM' }).first()).toBeVisible();
+    await expect(this.registroSubmenu().getByRole('menuitem', { name: REGISTRO_RPM_SUBMODULE_LABEL }).first()).toBeVisible();
   }
 
   /**
@@ -84,14 +90,14 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
    */
   async expectRpmXmlSidebarEntryVisible(): Promise<void> {
     await this.ensureRpmSidebarExpanded();
-    const rpmRow = this.registroSubmenu().getByRole('menuitem', { name: 'RPM' }).first();
+    const rpmRow = this.registroSubmenu().getByRole('menuitem', { name: REGISTRO_RPM_SUBMODULE_LABEL }).first();
     await expect(rpmRow).toHaveAttribute('aria-expanded', 'true');
     await assertSidebarLabelsMatchConfig(
       this.registroSubmoduleNestedItems(),
       REGISTRO_RPM_TAB_NAMES,
       { context: 'RPM nested sidebar' },
     );
-    await expect(this.registroSubmenu().getByRole('menuitem', { name: 'XML', exact: true }).first()).toBeVisible();
+    await expect(this.registroSubmenu().getByRole('menuitem', { name: REGISTRO_RPM_DEFAULT_TAB, exact: true }).first()).toBeVisible();
   }
 
   /**
@@ -116,7 +122,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
       await this.hoverRegistroDashboardCard();
       const eye = this.registroDashboardCard()
         .getByRole('listitem')
-        .filter({ hasText: 'RPM' })
+        .filter({ hasText: REGISTRO_RPM_SUBMODULE_LABEL })
         .getByLabel('eye');
       await expect(eye).toBeVisible();
       await eye.click();
@@ -127,7 +133,7 @@ export class RegistroRpmNavigationPage extends RegistroNavigationBasePage {
    * Comprueba que el menú hover de la tarjeta Registro muestra RPM con el icono ojo.
    */
   async expectRpmVisibleOnDashboardHover(): Promise<void> {
-    await this.expectRegistroDashboardHoverSubmoduleVisible('RPM');
+    await this.expectRegistroDashboardHoverSubmoduleVisible(REGISTRO_RPM_SUBMODULE_LABEL);
   }
 
   /**

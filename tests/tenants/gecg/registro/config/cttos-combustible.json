@@ -13,6 +13,7 @@
   "registroCttosCombustibleLockedTabNames": [
     "Insumos"
   ],
+  "registroCttosCombustibleSubmoduleLabel": "Cttos combustible",
   "registroCttosCombustibleDefaultTab": "Transporte",
   "registroCttosCombustibleLayoutATab": "Transporte",
   "registroCttosCombustibleLayoutBTab": "Suministro",
@@ -675,6 +676,9 @@
       "kind": "combobox",
       "requiresScroll": true
     }
+  ],
+  "registroCttosCombustibleTransporteNuevoRegistroExtraLabels": [
+    "Incluye Transporte"
   ],
   "registroCttosCombustibleSuministroNuevoRegistroFields": [
     {

@@ -89,10 +89,13 @@ export const REGISTRO_CTTS_COMBUSTIBLE_SUMINISTRO_NUEVO_REGISTRO_FIELDS_DROPDOWN
 export const REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_NUEVO_REGISTRO_FIELDS: readonly CombustibleWizardFieldDefinition[] =
   cfg.registroCttosCombustibleTransporteNuevoRegistroFields;
 
-/** Etiquetas del formulario de Transporte en GECG QA no modeladas como tipos de campo de asistente. */
-export const REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_NUEVO_REGISTRO_EXTRA_LABELS = [
-  'Incluye Transporte',
-] as const;
+/** Etiqueta visible del submenú y de la tarjeta del tablero para Cttos combustible (config del tenant). */
+export const REGISTRO_CTTS_COMBUSTIBLE_SUBMODULE_LABEL =
+  cfg.registroCttosCombustibleSubmoduleLabel;
+
+/** Etiquetas del formulario de Transporte no modeladas como tipos de campo de asistente (config del tenant). */
+export const REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_NUEVO_REGISTRO_EXTRA_LABELS =
+  cfg.registroCttosCombustibleTransporteNuevoRegistroExtraLabels;
 
 /** Campos del paso 1 de Nuevo Registro de Suministro (config del tenant). */
 export const REGISTRO_CTTS_COMBUSTIBLE_SUMINISTRO_NUEVO_REGISTRO_FIELDS: readonly CombustibleWizardFieldDefinition[] =
@@ -115,7 +118,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
    * Expande Registro y el desplegable del submódulo Cttos combustible en el menú lateral.
    */
   async expandCttosCombustibleSidebar(): Promise<void> {
-    await this.expandRegistroSubmodule('Cttos combustible');
+    await this.expandRegistroSubmodule(REGISTRO_CTTS_COMBUSTIBLE_SUBMODULE_LABEL);
   }
 
   /**
@@ -145,7 +148,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
    */
   async ensureCttosCombustibleSidebarExpanded(): Promise<void> {
     await this.ensureRegistroSubmoduleNestedLinksVisible(
-      'Cttos combustible',
+      REGISTRO_CTTS_COMBUSTIBLE_SUBMODULE_LABEL,
       REGISTRO_CTTS_COMBUSTIBLE_DEFAULT_TAB,
     );
   }
@@ -192,7 +195,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   async openCttosCombustibleFromDashboardGrid(): Promise<void> {
     await this.registroDashboardCard()
       .getByRole('listitem')
-      .filter({ hasText: 'Cttos combustible' })
+      .filter({ hasText: REGISTRO_CTTS_COMBUSTIBLE_SUBMODULE_LABEL })
       .getByLabel('eye')
       .click();
   }

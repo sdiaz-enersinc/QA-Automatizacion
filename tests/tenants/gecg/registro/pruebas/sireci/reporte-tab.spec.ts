@@ -6,13 +6,14 @@ import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../su
 import { test } from '../../../../../support/fixtures';
 import {
   REGISTRO_SIRECI_REPORTE_COLUMNS,
+  REGISTRO_SIRECI_REPORTE_TAB,
   RegistroSireciNavigationPage,
 } from '../../../../../support/pages/registro/sireci';
 
 test.describe('Sireci — Pestaña Reporte', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroSireci);
-    skipUnlessTabEnabled(MODULE_IDS.registroSireci, 'Reporte');
+    skipUnlessTabEnabled(MODULE_IDS.registroSireci, REGISTRO_SIRECI_REPORTE_TAB);
   });
 
   test('Reporte — Columnas, barra y Descargar Reporte', async ({
@@ -24,10 +25,10 @@ test.describe('Sireci — Pestaña Reporte', () => {
 
     await test.step('1. Abrir Reporte desde el menú lateral y validar el shell', async () => {
       await dashboardPage.expectLoaded();
-      await registro.openSireciFromSidebar('Reporte');
+      await registro.openSireciFromSidebar(REGISTRO_SIRECI_REPORTE_TAB);
       await registro.expectGestorDeDatosSireciShell();
-      await registro.expectSireciViewActive('Reporte');
-      await registro.expectSireciPairTabVisible('Reporte');
+      await registro.expectSireciViewActive(REGISTRO_SIRECI_REPORTE_TAB);
+      await registro.expectSireciPairTabVisible(REGISTRO_SIRECI_REPORTE_TAB);
     });
 
     await test.step('2. Validar columnas, barra y Descargar Reporte', async () => {

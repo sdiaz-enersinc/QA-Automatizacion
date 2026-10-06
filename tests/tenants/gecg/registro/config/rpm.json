@@ -2,6 +2,8 @@
   "registroRpmTabNames": ["XML"],
   "registroRpmEnabledTabNames": ["XML"],
   "registroRpmLockedTabNames": [],
+  "registroRpmSubmoduleLabel": "RPM",
+  "registroRpmDefaultTab": "XML",
   "registroRpmXmlColumns": [
     "ID",
     "Cargado",

@@ -8,6 +8,7 @@ import {
   REGISTRO_HISTORIAL_ARCHIVOS_CARGADOS_TAB,
   REGISTRO_HISTORIAL_DEFAULT_TAB,
   REGISTRO_HISTORIAL_OPERACIONES_INDIVIDUALES_TAB,
+  REGISTRO_HISTORIAL_TAB_BREADCRUMBS,
   RegistroHistorialNavigationPage,
 } from '../../../../../support/pages/registro/historial';
 
@@ -32,7 +33,10 @@ test.describe('Historial — Navegación entre pestañas', () => {
     await test.step('2. Abrir la pestaña Operaciones individuales y validar la tabla', async () => {
       await registro.openHistorialTab(REGISTRO_HISTORIAL_OPERACIONES_INDIVIDUALES_TAB);
       await expect(page.getByRole('main').getByRole('table').first()).toBeVisible();
-      await expect(page.getByRole('navigation')).toContainText('Datos modificados');
+      // PROBLEMA CONOCIDO — el breadcrumb usa la etiqueta legacy del slug hasta corrección de producto.
+      await expect(page.getByRole('navigation')).toContainText(
+        REGISTRO_HISTORIAL_TAB_BREADCRUMBS[REGISTRO_HISTORIAL_OPERACIONES_INDIVIDUALES_TAB],
+      );
       await expect(page.getByRole('navigation')).not.toContainText(
         REGISTRO_HISTORIAL_OPERACIONES_INDIVIDUALES_TAB,
       );
@@ -46,7 +50,10 @@ test.describe('Historial — Navegación entre pestañas', () => {
 
     await test.step('4. Volver a la pestaña Operaciones multiples', async () => {
       await registro.openHistorialTab(REGISTRO_HISTORIAL_DEFAULT_TAB);
-      await expect(page.getByRole('navigation')).toContainText('Datos eliminados');
+      // PROBLEMA CONOCIDO — el breadcrumb usa la etiqueta legacy del slug hasta corrección de producto.
+      await expect(page.getByRole('navigation')).toContainText(
+        REGISTRO_HISTORIAL_TAB_BREADCRUMBS[REGISTRO_HISTORIAL_DEFAULT_TAB],
+      );
       await expect(page.getByRole('navigation')).not.toContainText(REGISTRO_HISTORIAL_DEFAULT_TAB);
     });
   });

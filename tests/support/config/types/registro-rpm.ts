@@ -8,6 +8,8 @@ export interface RegistroRpmTenantConfig {
   registroRpmTabNames: readonly string[];
   registroRpmEnabledTabNames: readonly string[];
   registroRpmLockedTabNames: readonly string[];
+  registroRpmSubmoduleLabel: string;
+  registroRpmDefaultTab: string;
   registroRpmXmlColumns: readonly string[];
   registroRpmCrearRegistroFields: readonly RegistroWizardFieldDefinition[];
   registroRpmCrearRegistroFieldsDropdownOptions: RegistroWizardDropdownOptionsMap;

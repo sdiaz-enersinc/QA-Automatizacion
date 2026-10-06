@@ -4,12 +4,15 @@
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled, skipUnlessTabEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
-import { RegistroRpmNavigationPage } from '../../../../../support/pages/registro/rpm';
+import {
+  REGISTRO_RPM_DEFAULT_TAB,
+  RegistroRpmNavigationPage,
+} from '../../../../../support/pages/registro/rpm';
 
 test.describe('RPM XML — Ruta A (menú lateral)', () => {
   test.beforeEach(() => {
     skipUnlessModuleEnabled(MODULE_IDS.registroRpm);
-    skipUnlessTabEnabled(MODULE_IDS.registroRpm, 'XML');
+    skipUnlessTabEnabled(MODULE_IDS.registroRpm, REGISTRO_RPM_DEFAULT_TAB);
   });
 
   test('Ruta A — RPM XML accesible por Registro → RPM → XML', async ({
@@ -28,8 +31,8 @@ test.describe('RPM XML — Ruta A (menú lateral)', () => {
       await registro.expectRpmSubmenuEntryVisible();
       await registro.expandRpmSidebar();
       await registro.expectRpmXmlSidebarEntryVisible();
-      await registro.openRpmFromSidebar('XML');
-      await registro.expectRpmViewActive('XML');
+      await registro.openRpmFromSidebar(REGISTRO_RPM_DEFAULT_TAB);
+      await registro.expectRpmViewActive(REGISTRO_RPM_DEFAULT_TAB);
       await registro.expectGestorDeDatosRpmShell();
     });
   });

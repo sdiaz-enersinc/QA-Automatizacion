@@ -28,6 +28,18 @@ export const REGISTRO_SIRECI_ENABLED_TAB_NAMES = getModuleEnabledTabNames(MODULE
 
 export const REGISTRO_SIRECI_LOCKED_TAB_NAMES = cfg.registroSireciLockedTabNames;
 
+/** Etiqueta visible del submenú y de la tarjeta del tablero para Sireci (config del tenant). */
+export const REGISTRO_SIRECI_SUBMODULE_LABEL = cfg.registroSireciSubmoduleLabel;
+
+/** Pestaña de aterrizaje usada como ancla del menú lateral y semilla. */
+export const REGISTRO_SIRECI_DEFAULT_TAB = cfg.registroSireciDefaultTab;
+
+/** Etiqueta de pestaña Resumen (primera entrada de registroSireciTabNames). */
+export const REGISTRO_SIRECI_RESUMEN_TAB = cfg.registroSireciTabNames[0];
+
+/** Etiqueta de pestaña Reporte (segunda entrada de registroSireciTabNames). */
+export const REGISTRO_SIRECI_REPORTE_TAB = cfg.registroSireciTabNames[1];
+
 /** Encabezados de columna de la grilla Resumen (config del tenant). */
 export const REGISTRO_SIRECI_RESUMEN_COLUMNS = cfg.registroSireciResumenColumns;
 
@@ -71,7 +83,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
    * Expande Registro y el desplegable del submódulo Sireci en el menú lateral.
    */
   async expandSireciSidebar(): Promise<void> {
-    await this.expandRegistroSubmodule('Sireci');
+    await this.expandRegistroSubmodule(REGISTRO_SIRECI_SUBMODULE_LABEL);
   }
 
   /**
@@ -79,8 +91,8 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
    */
   async ensureSireciSidebarExpanded(): Promise<void> {
     await this.expandRegistroSidebar();
-    const row = this.registroSubmenu().getByRole('menuitem', { name: 'Sireci' }).first();
-    const resumenLink = this.registroSubmenu().getByRole('link', { name: 'Resumen' });
+    const row = this.registroSubmenu().getByRole('menuitem', { name: REGISTRO_SIRECI_SUBMODULE_LABEL }).first();
+    const resumenLink = this.registroSubmenu().getByRole('link', { name: REGISTRO_SIRECI_DEFAULT_TAB });
     await expect(async () => {
       if ((await row.getAttribute('aria-expanded')) !== 'true') {
         await row.click();
@@ -94,7 +106,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
    */
   async expectSireciSubmenuEntryVisible(): Promise<void> {
     await this.expandRegistroSidebar();
-    await expect(this.registroSubmenu().getByRole('menuitem', { name: 'Sireci' }).first()).toBeVisible();
+    await expect(this.registroSubmenu().getByRole('menuitem', { name: REGISTRO_SIRECI_SUBMODULE_LABEL }).first()).toBeVisible();
   }
 
   /**
@@ -102,7 +114,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
    */
   async expectSireciNestedSidebarLinksVisible(): Promise<void> {
     await this.ensureSireciSidebarExpanded();
-    const row = this.registroSubmenu().getByRole('menuitem', { name: 'Sireci' }).first();
+    const row = this.registroSubmenu().getByRole('menuitem', { name: REGISTRO_SIRECI_SUBMODULE_LABEL }).first();
     await expect(row).toHaveAttribute('aria-expanded', 'true');
     await assertSidebarLabelsMatchConfig(
       this.registroSubmoduleNestedItems(),
@@ -141,7 +153,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
       await this.hoverRegistroDashboardCard();
       const eye = this.registroDashboardCard()
         .getByRole('listitem')
-        .filter({ hasText: 'Sireci' })
+        .filter({ hasText: REGISTRO_SIRECI_SUBMODULE_LABEL })
         .getByLabel('eye');
       await expect(eye).toBeVisible();
       await eye.click();
@@ -153,7 +165,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
    */
   async expectSireciVisibleOnDashboardHover(): Promise<void> {
     await this.expectRegistroDashboardHoverSubmoduleVisible(
-      'Sireci',
+      REGISTRO_SIRECI_SUBMODULE_LABEL,
       this.registroDashboardHoverLabelsFromInsumosOfertaThroughHistorial(),
     );
   }
@@ -165,7 +177,7 @@ export class RegistroSireciNavigationPage extends RegistroNavigationBasePage {
     await expect(this.page).toHaveURL(/gestor-de-datos\/sireci\//);
     const breadcrumb = this.page.getByRole('navigation');
     await expect(breadcrumb).toContainText('Gestor de datos');
-    await expect(breadcrumb).toContainText('Sireci');
+    await expect(breadcrumb).toContainText(REGISTRO_SIRECI_SUBMODULE_LABEL);
     await assertTabStripMatchesConfig(this.page, {
       enabledTabs: REGISTRO_SIRECI_ENABLED_TAB_NAMES,
       lockedTabs: REGISTRO_SIRECI_LOCKED_TAB_NAMES,

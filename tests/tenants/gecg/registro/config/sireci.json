@@ -8,6 +8,8 @@
     "Reporte"
   ],
   "registroSireciLockedTabNames": [],
+  "registroSireciSubmoduleLabel": "SIRECI",
+  "registroSireciDefaultTab": "Resumen",
   "registroSireciResumenColumns": [
     "Contrato",
     "Ordenador del Gasto",

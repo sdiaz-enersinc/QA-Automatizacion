@@ -4,7 +4,11 @@
 import { MODULE_IDS } from '../../../../../support/config/module-registry';
 import { skipUnlessModuleEnabled } from '../../../../../support/config/tenant-guards';
 import { test } from '../../../../../support/fixtures';
-import { RegistroSireciNavigationPage } from '../../../../../support/pages/registro/sireci';
+import {
+  REGISTRO_SIRECI_DEFAULT_TAB,
+  REGISTRO_SIRECI_REPORTE_TAB,
+  RegistroSireciNavigationPage,
+} from '../../../../../support/pages/registro/sireci';
 
 test.describe('Sireci — Ruta A (menú lateral)', () => {
   test.beforeEach(() => {
@@ -32,11 +36,11 @@ test.describe('Sireci — Ruta A (menú lateral)', () => {
     });
 
     await test.step('4. Abrir Resumen y Reporte desde el menú lateral', async () => {
-      await registro.openSireciFromSidebar('Resumen');
-      await registro.expectSireciViewActive('Resumen');
+      await registro.openSireciFromSidebar(REGISTRO_SIRECI_DEFAULT_TAB);
+      await registro.expectSireciViewActive(REGISTRO_SIRECI_DEFAULT_TAB);
       await registro.expectGestorDeDatosSireciShell();
-      await registro.openSireciFromSidebar('Reporte');
-      await registro.expectSireciViewActive('Reporte');
+      await registro.openSireciFromSidebar(REGISTRO_SIRECI_REPORTE_TAB);
+      await registro.expectSireciViewActive(REGISTRO_SIRECI_REPORTE_TAB);
       await registro.expectGestorDeDatosSireciShell();
     });
   });

@@ -49,6 +49,12 @@ export const REGISTRO_HISTORIAL_ARCHIVOS_CARGADOS_COLUMNS =
   cfg.registroHistorialArchivosCargadosColumns;
 
 /**
+ * Texto del tercer segmento del breadcrumb por pestaña activa (config del tenant).
+ * PROBLEMA CONOCIDO: las dos primeras pestañas usan etiquetas legacy del slug, no el texto de la pestaña.
+ */
+export const REGISTRO_HISTORIAL_TAB_BREADCRUMBS = cfg.registroHistorialTabBreadcrumbs;
+
+/**
  * Navegación y aserciones del submódulo Historial bajo Registro.
  */
 export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage {
@@ -62,7 +68,7 @@ export class RegistroHistorialNavigationPage extends RegistroNavigationBasePage 
    * PROBLEMA CONOCIDO: las dos primeras pestañas usan etiquetas legacy del slug, no el texto de la pestaña.
    */
   static readonly REGISTRO_HISTORIAL_TAB_BREADCRUMBS: Record<string, string> =
-    cfg.registroHistorialTabBreadcrumbs;
+    REGISTRO_HISTORIAL_TAB_BREADCRUMBS;
 
   /** Href del enlace anidado del menú lateral por pestaña (config del tenant). */
   static readonly REGISTRO_HISTORIAL_SIDEBAR_HREFS: Record<string, string> =

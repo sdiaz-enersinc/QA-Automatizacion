@@ -8,6 +8,7 @@ export interface RegistroCttosCombustibleTenantConfig {
   registroCttosCombustibleTabNames: readonly string[];
   registroCttosCombustibleEnabledTabNames: readonly string[];
   registroCttosCombustibleLockedTabNames: readonly string[];
+  registroCttosCombustibleSubmoduleLabel: string;
   registroCttosCombustibleDefaultTab: string;
   registroCttosCombustibleLayoutATab: string;
   registroCttosCombustibleLayoutBTab: string;
@@ -19,6 +20,7 @@ export interface RegistroCttosCombustibleTenantConfig {
   registroCttosCombustibleTransporteNuevoRegistroFieldsDropdownOptions: RegistroWizardDropdownOptionsMap;
   registroCttosCombustibleSuministroNuevoRegistroFieldsDropdownOptions: RegistroWizardDropdownOptionsMap;
   registroCttosCombustibleTransporteNuevoRegistroFields: readonly RegistroWizardFieldDefinition[];
+  registroCttosCombustibleTransporteNuevoRegistroExtraLabels: readonly string[];
   registroCttosCombustibleSuministroNuevoRegistroFields: readonly RegistroWizardFieldDefinition[];
   registroCttosCombustibleTabSlugs: Record<string, string>;
   registroCttosCombustibleTabBreadcrumbs: Record<string, string>;

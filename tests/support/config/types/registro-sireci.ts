@@ -8,6 +8,8 @@ export interface RegistroSireciTenantConfig {
   registroSireciTabNames: readonly string[];
   registroSireciEnabledTabNames: readonly string[];
   registroSireciLockedTabNames: readonly string[];
+  registroSireciSubmoduleLabel: string;
+  registroSireciDefaultTab: string;
   registroSireciResumenColumns: readonly string[];
   registroSireciReporteColumns: readonly string[];
   registroSireciNuevoRegistroComboboxFields: readonly RegistroWizardFieldDefinition[];
