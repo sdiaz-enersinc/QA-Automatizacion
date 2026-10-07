@@ -40,6 +40,9 @@ export const REGISTRO_OTROS_CONTRATOS_MISC_TAB = cfg.registroOtrosContratosMiscT
 /** Etiqueta de pestaña AGR (config del tenant). */
 export const REGISTRO_OTROS_CONTRATOS_AGR_TAB = cfg.registroOtrosContratosAgrTab;
 
+/** Etiqueta de pestaña Excedentes (habilitada en algunos tenants). */
+export const REGISTRO_OTROS_CONTRATOS_EXCEDENTES_TAB = 'Excedentes';
+
 /** Columnas de la grilla Miscelaneos (conjunto estándar más Producto Facturable). */
 export const REGISTRO_OTROS_CONTRATOS_MISC_CONTRACT_COLUMNS =
   cfg.registroOtrosContratosMiscContractColumns;
@@ -261,6 +264,20 @@ export class RegistroOtrosContratosNavigationPage extends RegistroNavigationBase
    * Abre Nuevo Registro de AGR, valida campos sin Producto Facturable (sin pasos de asistente), y cierra.
    */
   async expectAgrNuevoRegistroDialogOpensAndCloses(): Promise<void> {
+    await this.expectNuevoRegistroDialogWithoutProductoFacturable();
+  }
+
+  /**
+   * Abre Nuevo Registro de Excedentes, valida campos sin Producto Facturable (sin pasos de asistente), y cierra.
+   */
+  async expectExcedentesNuevoRegistroDialogOpensAndCloses(): Promise<void> {
+    await this.expectNuevoRegistroDialogWithoutProductoFacturable();
+  }
+
+  /**
+   * Abre Nuevo Registro, valida el formulario de contrato sin Producto Facturable y cierra el diálogo.
+   */
+  private async expectNuevoRegistroDialogWithoutProductoFacturable(): Promise<void> {
     const fields = cfg.registroOtrosContratosMiscNuevoRegistroFields.filter(
       (field) => field.label !== 'Producto Facturable',
     );

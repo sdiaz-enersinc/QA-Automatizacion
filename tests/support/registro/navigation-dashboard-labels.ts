@@ -35,15 +35,21 @@ export function sliceRegistroDashboardHoverLabels(
 }
 
 /**
- * Etiquetas de contexto del hover al validar la fila Empresas (desde Cttos energía hasta Insumos oferta).
+ * Etiquetas de contexto del hover al validar la fila Empresas (rango definido en navigation.json).
  */
 export function registroDashboardHoverLabelsEmpresasContext(): readonly string[] {
-  return sliceRegistroDashboardHoverLabels('Cttos energía', 'Insumos oferta');
+  return sliceRegistroDashboardHoverLabels(
+    cfg.registroNavigationEmpresasHoverFromLabel,
+    cfg.registroNavigationEmpresasHoverToLabel,
+  );
 }
 
 /**
- * Etiquetas de contexto del hover para submódulos bajos de Registro (desde Insumos oferta hasta Historial).
+ * Etiquetas de contexto del hover para submódulos bajos de Registro (rango definido en navigation.json).
  */
 export function registroDashboardHoverLabelsFromInsumosOfertaThroughHistorial(): readonly string[] {
-  return sliceRegistroDashboardHoverLabels('Insumos oferta', 'Historial');
+  return sliceRegistroDashboardHoverLabels(
+    cfg.registroNavigationLowerHoverFromLabel,
+    cfg.registroNavigationLowerHoverToLabel,
+  );
 }

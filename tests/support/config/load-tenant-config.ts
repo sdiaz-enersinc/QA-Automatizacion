@@ -16,6 +16,7 @@ import type { RegistroInsumosOfertaTenantConfig } from './types/registro-insumos
 import type { RegistroNavigationTenantConfig } from './types/registro-navigation';
 import type { RegistroOtrosContratosTenantConfig } from './types/registro-otros-contratos';
 import type { RegistroOtrosDocumentosTenantConfig } from './types/registro-otros-documentos';
+import type { RegistroPlantaConsumosTenantConfig } from './types/registro-planta-consumos';
 import type { RegistroRpmTenantConfig } from './types/registro-rpm';
 import type { RegistroSireciTenantConfig } from './types/registro-sireci';
 import type { TenantBreadcrumbMatcher } from './types/tenant-breadcrumb';
@@ -32,6 +33,7 @@ let cachedRegistroCttosCombustibleConfig: RegistroCttosCombustibleTenantConfig |
 let cachedRegistroCttosEnergiaConfig: RegistroCttosEnergiaTenantConfig | undefined;
 let cachedRegistroOtrosContratosConfig: RegistroOtrosContratosTenantConfig | undefined;
 let cachedRegistroInsumosOfertaConfig: RegistroInsumosOfertaTenantConfig | undefined;
+let cachedRegistroPlantaConsumosConfig: RegistroPlantaConsumosTenantConfig | undefined;
 let cachedRegistroOtrosDocumentosConfig: RegistroOtrosDocumentosTenantConfig | undefined;
 let cachedRegistroHistorialConfig: RegistroHistorialTenantConfig | undefined;
 let cachedRegistroSireciConfig: RegistroSireciTenantConfig | undefined;
@@ -224,6 +226,16 @@ export function getRegistroInsumosOfertaConfig(): RegistroInsumosOfertaTenantCon
 }
 
 /**
+ * Devuelve la config de Registro Planta y consumos del tenant activo (con caché).
+ */
+export function getRegistroPlantaConsumosConfig(): RegistroPlantaConsumosTenantConfig {
+  cachedRegistroPlantaConsumosConfig ??= loadTenantJsonConfig<RegistroPlantaConsumosTenantConfig>(
+    MODULE_CONFIG_PATHS.registroPlantaConsumos,
+  );
+  return cachedRegistroPlantaConsumosConfig;
+}
+
+/**
  * Devuelve la config de Registro Otros documentos del tenant activo (con caché).
  */
 export function getRegistroOtrosDocumentosConfig(): RegistroOtrosDocumentosTenantConfig {
@@ -288,6 +300,8 @@ export function getModuleAllTabNames(moduleId: ModuleId | string): readonly stri
       return getRegistroOtrosContratosConfig().registroOtrosContratosTabNames;
     case MODULE_IDS.registroInsumosOferta:
       return getRegistroInsumosOfertaConfig().registroInsumosOfertaTabNames;
+    case MODULE_IDS.registroPlantaConsumos:
+      return getRegistroPlantaConsumosConfig().registroPlantaConsumosTabNames;
     case MODULE_IDS.registroOtrosDocumentos:
       return getRegistroOtrosDocumentosConfig().registroOtrosDocumentosViewNames;
     case MODULE_IDS.registroHistorial:
@@ -316,6 +330,8 @@ function getModulePartialEnabledTabNames(moduleId: ModuleId | string): readonly 
       return getRegistroOtrosContratosConfig().registroOtrosContratosEnabledTabNames;
     case MODULE_IDS.registroInsumosOferta:
       return getRegistroInsumosOfertaConfig().registroInsumosOfertaEnabledTabNames;
+    case MODULE_IDS.registroPlantaConsumos:
+      return getRegistroPlantaConsumosConfig().registroPlantaConsumosEnabledTabNames;
     case MODULE_IDS.registroOtrosDocumentos:
       return getRegistroOtrosDocumentosConfig().registroOtrosDocumentosEnabledViewNames;
     case MODULE_IDS.registroHistorial:

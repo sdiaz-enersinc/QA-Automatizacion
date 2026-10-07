@@ -1,4 +1,4 @@
-import { expect } from '@playwright/test';
+import { expect, type Locator } from '@playwright/test';
 import {
   getRegistroCttosEnergiaConfig,
   getModuleEnabledTabNames,
@@ -92,6 +92,9 @@ export const REGISTRO_CTTS_ENERGIA_DDV_TAB = cfg.registroCttosEnergiaDdvTab;
 
 /** Etiqueta de pestaña RMS (config del tenant). */
 export const REGISTRO_CTTS_ENERGIA_RMS_TAB = cfg.registroCttosEnergiaRmsTab;
+
+/** Etiqueta de pestaña UNR (config del tenant). */
+export const REGISTRO_CTTS_ENERGIA_UNR_TAB = cfg.registroCttosEnergiaUnrTab;
 
 /** Pestañas de contrato estándar cuya grilla muestra columna de selección masiva (Layout A). */
 export const REGISTRO_CTTS_ENERGIA_LAYOUT_A_STANDARD_TABS = cfg.registroCttosEnergiaLayoutAStandardTabs;
@@ -205,6 +208,15 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   }
 
   /**
+   * Localiza el enlace anidado de una pestaña de Cttos energía en el submenú o en el flyout.
+   *
+   * @param tabName - Etiqueta visible de pestaña del JSON del tenant.
+   */
+  private cttosEnergiaNestedTabLink(tabName: RegistroCttosEnergiaTabName): Locator {
+    return this.page.getByRole('link', { name: tabName, exact: true }).first();
+  }
+
+  /**
    * Hace clic en el enlace anidado de una pestaña de Contratos energía.
    *
    * Si esa pestaña no tiene enlace en el menú (mismo patrón que Inventarios en combustible),
@@ -214,19 +226,18 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
    */
   async clickCttosEnergiaSidebarLink(tabName: RegistroCttosEnergiaTabName): Promise<void> {
     await this.ensureCttosEnergiaSidebarExpanded();
-    const submenu = this.registroSubmenu();
-    const nestedLink = submenu.getByRole('link', { name: tabName });
+    const nestedLink = this.cttosEnergiaNestedTabLink(tabName);
     const targetSlug = RegistroCttosEnergiaNavigationPage.REGISTRO_CTTS_ENERGIA_TAB_SLUGS[tabName];
 
     if (await nestedLink.isVisible()) {
-      await this.clickRegistroSubmenuLink(tabName);
+      await nestedLink.click();
       await expect(this.page).toHaveURL(targetSlug, { timeout: 15_000 });
       return;
     }
 
-    const landingLink = submenu.getByRole('link', { name: REGISTRO_CTTS_ENERGIA_DEFAULT_TAB });
+    const landingLink = this.cttosEnergiaNestedTabLink(REGISTRO_CTTS_ENERGIA_DEFAULT_TAB);
     if (await landingLink.isVisible()) {
-      await this.clickRegistroSubmenuLink(REGISTRO_CTTS_ENERGIA_DEFAULT_TAB);
+      await landingLink.click();
       await expect(this.page).toHaveURL(
         RegistroCttosEnergiaNavigationPage.REGISTRO_CTTS_ENERGIA_TAB_SLUGS[
           REGISTRO_CTTS_ENERGIA_DEFAULT_TAB
@@ -245,20 +256,22 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   }
 
   /**
-   * Vuelve a expandir Registro y Cttos energía cuando la navegación plegó los menús laterales.
+   * Vuelve a expandir Registro y Cttos energía hasta que el enlace de aterrizaje sea visible.
+   *
+   * En tbsg el enlace Largo plazo puede vivir en un flyout fuera del complementary.
    */
   async ensureCttosEnergiaSidebarExpanded(): Promise<void> {
-    await this.expandCttosEnergiaSidebar();
-    const landingLink = this.registroSubmenu()
-      .getByRole('link', { name: REGISTRO_CTTS_ENERGIA_DEFAULT_TAB })
-      .first();
-    if (await landingLink.isVisible()) {
-      return;
-    }
-    await this.ensureRegistroSubmoduleNestedLinksVisible(
-      REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL,
-      REGISTRO_CTTS_ENERGIA_DEFAULT_TAB,
-    );
+    await expect(async () => {
+      await this.expandCttosEnergiaSidebar();
+      const landingLink = this.cttosEnergiaNestedTabLink(REGISTRO_CTTS_ENERGIA_DEFAULT_TAB);
+      if (!(await landingLink.isVisible())) {
+        await this.registroSubmenu()
+          .getByRole('menuitem', { name: REGISTRO_CTTS_ENERGIA_SUBMODULE_LABEL })
+          .first()
+          .click();
+      }
+      await expect(landingLink).toBeVisible();
+    }).toPass({ timeout: 15_000 });
   }
 
   /**
@@ -301,6 +314,37 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
       lockedTabs: REGISTRO_CTTS_ENERGIA_LOCKED_TAB_NAMES,
       context: 'Contratos energía',
     });
+  }
+
+  /**
+   * Comprueba que las pestañas bloqueadas de Contratos energía son visibles pero están deshabilitadas.
+   */
+  async expectLockedTabsDisabled(): Promise<void> {
+    for (const tabName of REGISTRO_CTTS_ENERGIA_LOCKED_TAB_NAMES) {
+      const tab = this.page.getByRole('tab', { name: tabName, exact: true });
+      await expect(tab).toBeVisible();
+      await expect(tab).toBeDisabled();
+    }
+  }
+
+  /**
+   * Comprueba que un clic forzado en una pestaña bloqueada no navega fuera de la vista actual.
+   *
+   * @param tabName - Etiqueta de pestaña bloqueada (p. ej. Usuarios NR).
+   */
+  async expectLockedTabDoesNotNavigate(tabName: RegistroCttosEnergiaTabName): Promise<void> {
+    const url = this.page.url();
+    const selected = this.page.getByRole('tab', { selected: true });
+    const selectedName = (await selected.textContent())?.trim() ?? '';
+    await this.page.getByRole('tab', { name: tabName, exact: true }).click({ force: true });
+    await expect(this.page).toHaveURL(url);
+    if (selectedName) {
+      await expect(this.page.getByRole('tab', { name: selectedName, exact: true })).toHaveAttribute(
+        'aria-selected',
+        'true',
+      );
+    }
+    await expect(this.page.getByRole('dialog')).toHaveCount(0);
   }
 
   /**

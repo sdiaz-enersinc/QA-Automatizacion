@@ -24,6 +24,7 @@ export interface RegistroCttosEnergiaTenantConfig {
   registroCttosEnergiaRespaldosColumns: readonly string[];
   registroCttosEnergiaDdvTab: string;
   registroCttosEnergiaRmsTab: string;
+  registroCttosEnergiaUnrTab: string;
   registroCttosEnergiaLayoutAStandardTabs: readonly string[];
   registroCttosEnergiaLpNuevoContratoWizardSteps: readonly string[];
   registroCttosEnergiaUnrNuevoContratoWizardSteps: readonly string[];

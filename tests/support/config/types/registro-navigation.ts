@@ -5,4 +5,8 @@ export interface RegistroNavigationTenantConfig {
   registroNavigationLockedSubmenuLabels: readonly string[];
   registroNavigationLegacySubmoduleLabels: readonly string[];
   registroNavigationDashboardPreviewLabels: readonly string[];
+  registroNavigationEmpresasHoverFromLabel: string;
+  registroNavigationEmpresasHoverToLabel: string;
+  registroNavigationLowerHoverFromLabel: string;
+  registroNavigationLowerHoverToLabel: string;
 }

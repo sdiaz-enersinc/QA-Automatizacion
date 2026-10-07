@@ -42,7 +42,7 @@ export const REGISTRO_CTTS_COMBUSTIBLE_LOCKED_TAB_NAMES =
 /** Pestaña de aterrizaje usada como ancla del menú lateral, semilla y recuperación tras Inventarios. */
 export const REGISTRO_CTTS_COMBUSTIBLE_DEFAULT_TAB = cfg.registroCttosCombustibleDefaultTab;
 
-/** Pestaña Layout A (grilla Transporte con Select all y Carga Ramales). */
+/** Pestaña Layout A (grilla Transporte con Select all). */
 export const REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_A_TAB = cfg.registroCttosCombustibleLayoutATab;
 
 /** Pestaña Layout B (grilla Suministro sin Select all). */
@@ -59,7 +59,7 @@ export const REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_SPOT_CHECK_TABS = [
   REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_A_TAB,
   REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_B_TAB,
   REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_C_TAB,
-] as const;
+].filter((tabName) => tabName.length > 0);
 
 /** Encabezados de columna de la grilla Transporte (Layout A, sin Select all ni Acciones). */
 export const REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_COLUMNS =
@@ -271,26 +271,24 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Comprueba la barra Layout A Transporte: búsqueda, Filtros, Carga Ramales y Nuevo Registro.
+   * Comprueba la barra Layout A Transporte: búsqueda, Filtros y Nuevo Registro.
    */
   async expectLayoutATransporteToolbar(): Promise<void> {
     const main = this.gestorMain();
     await expect(main.getByRole('searchbox', { name: /Buscar/i })).toBeVisible();
     await this.expectFiltrosControlVisible();
     await this.expectToolbarFilterChipsAbsent();
-    await expect(main.getByRole('button', { name: 'Carga Ramales' })).toBeVisible();
     await expect(main.getByRole('button', { name: 'Nuevo Registro' })).toBeVisible();
   }
 
   /**
-   * Comprueba la barra Layout B Suministro: búsqueda, Filtros y Nuevo Registro (sin Carga Ramales).
+   * Comprueba la barra Layout B Suministro: búsqueda, Filtros y Nuevo Registro.
    */
   async expectLayoutBSuministroToolbar(): Promise<void> {
     const main = this.gestorMain();
     await expect(main.getByRole('searchbox', { name: /Buscar/i })).toBeVisible();
     await this.expectFiltrosControlVisible();
     await this.expectToolbarFilterChipsAbsent();
-    await expect(main.getByRole('button', { name: 'Carga Ramales' })).toHaveCount(0);
     await expect(main.getByRole('button', { name: 'Nuevo Registro' })).toBeVisible();
   }
 
@@ -362,13 +360,6 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   async expectNoSelectAllColumn(): Promise<void> {
     const table = this.gestorMain().getByRole('table').first();
     await expect(table.getByRole('columnheader', { name: 'Select all' })).toHaveCount(0);
-  }
-
-  /**
-   * Abre Carga Ramales, valida la zona de carga de Registrar Información y cierra el diálogo.
-   */
-  async expectCargaRamalesDialogOpensAndCloses(): Promise<void> {
-    await this.expectFileUploadDialogOpensAndCloses('Carga Ramales');
   }
 
   /**
