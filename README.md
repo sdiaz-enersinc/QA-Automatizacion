@@ -2,7 +2,7 @@
 
 Suite de pruebas de UI contra el entorno QA de Enersinc. El login usa la cabecera `QA-Bypass-Token`. El código compartido vive en `tests/support/`; los datos JSON y los specs viven en `tests/tenants/<tenant>/`.
 
-Tenants activos: **emug** y **gecg**. El tenant se elige con `TEST_TENANT` (por defecto `emug`).
+Tenants activos: **emug**, **gecg** y **tbsg**. El tenant se elige con `TEST_TENANT` (por defecto `emug`).
 
 ## Instalar y correr
 
@@ -19,10 +19,13 @@ Correr el tenant por defecto (`emug`):
 npx playwright test --project=chromium
 ```
 
-Correr gecg (PowerShell):
+Correr gecg o tbsg (PowerShell):
 
 ```powershell
 $env:TEST_TENANT="gecg"
+npx playwright test --project=chromium
+
+$env:TEST_TENANT="tbsg"
 npx playwright test --project=chromium
 ```
 
@@ -43,7 +46,7 @@ Definir estas claves en `.env` (no se versiona):
 
 - `BASE_URL` — URL de QA (`use.baseURL`).
 - `TOKEN_BYPASS` — valor de la cabecera `QA-Bypass-Token`.
-- `TEST_TENANT` — `emug` o `gecg`. Filtra `tests/tenants/<tenant>/**/*.spec.ts`.
+- `TEST_TENANT` — `emug`, `gecg` o `tbsg`. Filtra `tests/tenants/<tenant>/**/*.spec.ts`.
 - `VALID_EMAIL` / `VALID_PASSWORD` — login válido.
 - `INVALID_EMAIL` / `INVALID_PASSWORD` — casos negativos de auth.
 
@@ -69,7 +72,8 @@ tests/
     │   └── registro/
     │       ├── config/               # JSON de columnas, tabs, wizard
     │       └── pruebas/              # specs Playwright
-    └── gecg/                         # misma forma
+    ├── gecg/                         # misma forma
+    └── tbsg/                         # misma forma; incluye planta-consumos
 ```
 
 ```mermaid
@@ -112,7 +116,7 @@ Los submódulos de Registro también exigen `modules.registro.enabled` en `tenan
 
 ### POM de Registro
 
-`RegistroNavigationBasePage` cubre menú lateral, hover del tablero, toolbar, asistentes y aserciones compartidas. Cada módulo tiene su página (`cttos-energia.ts`, `empresas.ts`, `historial.ts`, `rpm.ts`, `sireci.ts`, …) que lee el JSON del tenant activo al importar.
+`RegistroNavigationBasePage` cubre menú lateral, hover del tablero, toolbar, asistentes y aserciones compartidas. Cada módulo tiene su página (`cttos-energia.ts`, `empresas.ts`, `historial.ts`, `rpm.ts`, `sireci.ts`, `planta-consumos.ts`, …) que lee el JSON del tenant activo al importar.
 
 ## Configs JSON
 
@@ -124,7 +128,7 @@ Cada módulo tiene un JSON en `tests/tenants/<tenant>/registro/config/`. Convenc
 - columnas de grilla, pasos y campos de asistente, mapas `*DropdownOptions`.
 - `*TabSlugs` y `*TabBreadcrumbs` — aserciones de URL y miga de pan.
 
-`navigation.json` lista el submenú de Registro: habilitados, bloqueados, legacy y previsualización del tablero.
+`navigation.json` lista el submenú de Registro: habilitados, bloqueados, legacy, previsualización del tablero y anclas de hover (`registroNavigationEmpresasHover*`, `registroNavigationLowerHover*`).
 
 `tenant.json` es el interruptor de módulos. Un módulo `enabled: false` hace que los specs llamen `test.skip` vía guards. El loader no exige que el JSON exista si el módulo está apagado.
 
@@ -156,15 +160,19 @@ Deshabilitados: cttos-combustible, RPM, SIRECI.
 
 No hay módulo `planta-consumos`. La etiqueta legacy «Planta y consumos» queda en `navigation.json` para aserciones de menú.
 
-Specs extra de navigation (`ratify-*`, chips de toolbar) viven solo en emug.
+### gecg (~50 specs)
 
-### gecg (~46 specs)
-
-Habilitados: navigation, empresas, cttos-energía, cttos-combustible, RPM, SIRECI, historial.
+Habilitados: navigation, empresas, cttos-energía, cttos-combustible, otros-contratos, RPM, SIRECI, historial.
 
 Deshabilitados: planta/consumos y otros-documentos (sin carpeta de pruebas).
 
-No copia los specs de `registro/pruebas/navigation/` de emug.
+### tbsg
+
+Habilitados: navigation, empresas, cttos-energía, cttos-combustible, planta y consumos, historial.
+
+Deshabilitados (specs presentes, `test.skip` vía guards): RPM, SIRECI, otros documentos.
+
+Planta y consumos es el módulo vivo (Heat Rate, Regas, Promigas). No se reutiliza el POM de Insumos oferta.
 
 ## Recaptura de desplegables
 
@@ -182,7 +190,6 @@ Config: `playwright.refresh.config.ts`. Runner: `scripts/refresh-dropdown-option
 
 ## Fuera de alcance
 
-- Tenant `tbsg`.
 - Módulo Despacho.
 - Reporters CSV y harvest histórico.
 - Agentes de Cursor (`.cursor/commands/*.agent.md`): definiciones de Playwright MCP, en inglés a propósito.
