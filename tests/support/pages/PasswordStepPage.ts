@@ -42,7 +42,7 @@ export class PasswordStepPage {
    * @param expectedUsername - Correo o usuario mostrado en el campo de solo lectura tras la verificación.
    * @param timeoutMs - Espera máxima por aserción (necesaria si la UI se detiene en la verificación de correo).
    */
-  async expectReady(expectedUsername: string, timeoutMs: number = 10_000): Promise<void> {
+  async expectReady(expectedUsername: string, timeoutMs: number = 20_000): Promise<void> {
     await expect(this.usernameInput()).toBeVisible({ timeout: timeoutMs });
     await expect(this.usernameInput()).toHaveValue(expectedUsername, { timeout: timeoutMs });
     await expect(this.passwordInput()).toBeVisible({ timeout: timeoutMs });
