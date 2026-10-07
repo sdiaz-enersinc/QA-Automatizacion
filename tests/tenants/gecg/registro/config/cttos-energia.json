@@ -89,6 +89,7 @@
   ],
   "registroCttosEnergiaDdvTab": "DDV",
   "registroCttosEnergiaRmsTab": "RMS",
+  "registroCttosEnergiaUnrTab": "Usuarios NR",
   "registroCttosEnergiaLayoutAStandardTabs": [
     "Largo plazo"
   ],
