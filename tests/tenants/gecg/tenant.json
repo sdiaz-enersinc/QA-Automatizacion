@@ -15,6 +15,9 @@
     "registroCttosCombustible": {
       "enabled": true
     },
+    "registroOtrosContratos": {
+      "enabled": true
+    },
     "registroPlantaConsumos": {
       "enabled": false
     },
