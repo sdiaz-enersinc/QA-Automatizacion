@@ -1,0 +1,171 @@
+{
+  "registroSireciTabNames": [
+    "Resumen",
+    "Reporte"
+  ],
+  "registroSireciEnabledTabNames": [
+    "Resumen",
+    "Reporte"
+  ],
+  "registroSireciLockedTabNames": [],
+  "registroSireciResumenColumns": [
+    "Contrato",
+    "Ordenador del Gasto",
+    "N. Reportes",
+    "Usuario",
+    "Acciones"
+  ],
+  "registroSireciReporteColumns": [
+    "Contrato",
+    "Fecha Suscripción",
+    "Fecha Inicio",
+    "Fecha Fin",
+    "Fecha Liquidación",
+    "Ordenador Gasto",
+    "Contratista",
+    "Tipo Seguimiento",
+    "Nombre Interventor",
+    "Nombre Supervisor",
+    "Plazos",
+    "Tipo Anticipo",
+    "Total Avances",
+    "Tipo Adiciones",
+    "Total Adiciones Valor",
+    "Total Adiciones Días",
+    "% Avance Físico",
+    "% Avance Físico Real",
+    "% Avance Prep",
+    "% Avance Prep Real",
+    "Acciones"
+  ],
+  "registroSireciNuevoRegistroComboboxFields": [
+    {
+      "label": "Contrato",
+      "kind": "combobox",
+      "required": true
+    },
+    {
+      "label": "Ordenador del Gasto",
+      "kind": "combobox"
+    },
+    {
+      "label": "Clase de Contrato",
+      "kind": "combobox"
+    },
+    {
+      "label": "Recursos provienen de otro contrato o un convenio Administrativo",
+      "kind": "combobox",
+      "requiresScroll": true
+    },
+    {
+      "label": "Entidad de donde provienen los recursos",
+      "kind": "combobox",
+      "requiresScroll": true
+    },
+    {
+      "label": "Tipo seguimiento",
+      "kind": "combobox",
+      "required": true,
+      "requiresScroll": true
+    },
+    {
+      "label": "Interventor",
+      "kind": "combobox",
+      "requiresScroll": true
+    },
+    {
+      "label": "Supervisor",
+      "kind": "combobox",
+      "requiresScroll": true
+    },
+    {
+      "label": "Tipo de Anticipo",
+      "kind": "combobox",
+      "requiresScroll": true
+    },
+    {
+      "label": "Tipo de Adicion",
+      "kind": "combobox",
+      "requiresScroll": true
+    }
+  ],
+  "registroSireciNuevoRegistroTextDateFields": [
+    {
+      "label": "Describa la clase de contrato",
+      "kind": "textbox",
+      "requiresScroll": true
+    },
+    {
+      "label": "Objeto del Contrato",
+      "kind": "textbox",
+      "requiresScroll": true
+    },
+    {
+      "label": "Fecha liq Contrato",
+      "kind": "datepicker",
+      "requiresScroll": true
+    },
+    {
+      "label": "Observaciones",
+      "kind": "textbox",
+      "requiresScroll": true
+    }
+  ],
+  "registroSireciNuevoRegistroSpinbuttonLabels": [
+    "N. Reportes",
+    "Ctto valor inicial",
+    "Plazos del Contrato",
+    "Valor de los Anticipos",
+    "Valor de la Adiciones",
+    "Numero de días Adicionados",
+    "% Avance Fisico Real a la Fecha de Corte",
+    "% Avance Fisico a la Fecha de Corte",
+    "% Avance Fisico Programado Real a la Fecha de Corte",
+    "% Avance Fisico Programado a la Fecha de Corte"
+  ],
+  "registroSireciNuevoRegistroFieldsDropdownOptions": {
+    "Contrato": [
+      "CSIC-006-2025",
+      "UG-009-2023"
+    ],
+    "Clase de Contrato": [
+      "AGENCIA",
+      "CONCESIÓN"
+    ],
+    "Tipo seguimiento": [
+      "INTERVENTOR",
+      "SUPERVISOR",
+      "INTERVENTOR y SUPERVISOR",
+      "NO SE DILIGENCIA INFORMACIÓN PARA ESTE FORMULARIO EN ESTE PERÍODO DE REPORTE"
+    ],
+    "Recursos provienen de otro contrato o un convenio Administrativo": [
+      "Si",
+      "No"
+    ],
+    "Tipo de Anticipo": [
+      "ANTICIPOS",
+      "NO PACTADOS",
+      "PAGO ANTICIPADO"
+    ],
+    "Tipo de Adicion": [
+      "ADICIÓN EN VALOR (DIFERENTE A PRÓRROGAS)",
+      "ADICIÓN EN TIEMPO (PRÓRROGAS)",
+      "ADICIÓN EN VALOR y EN TIEMPO",
+      "NO SE HA ADICIONADO NI EN VALOR y EN TIEMPO"
+    ]
+  },
+  "registroSireciTabSlugs": {
+    "Resumen": "gestor-de-datos/sireci/resumen",
+    "Reporte": "gestor-de-datos/sireci/reporte"
+  },
+  "registroSireciTabBreadcrumbs": {
+    "Resumen": "Resumen",
+    "Reporte": "Reporte"
+  },
+  "registroSireciSidebarHrefs": {
+    "Resumen": "/gestor-de-datos/sireci/resumen",
+    "Reporte": "/gestor-de-datos/sireci/reporte"
+  },
+  "registroSireciSubmoduleLabel": "SIRECI",
+  "registroSireciDefaultTab": "Resumen"
+}
