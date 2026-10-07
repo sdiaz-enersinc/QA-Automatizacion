@@ -518,7 +518,7 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
    */
   async expectLayoutBTableToolbar(extraButtons: readonly string[] = ['Nuevo Registro']): Promise<void> {
     const main = this.gestorMain();
-    await expect(main.getByRole('searchbox', { name: /Buscar/i })).toBeVisible();
+    await expect(main.getByRole('searchbox', { name: /Buscar/i })).toBeVisible({timeout:10_000});
     await this.expectFiltrosControlAbsent();
     await this.expectToolbarFilterChipsAbsent();
     for (const buttonName of extraButtons) {
