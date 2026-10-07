@@ -87,6 +87,7 @@
     "Archivo fuente"
   ],
   "registroCttosEnergiaDdvTab": "DDV",
+  "registroCttosEnergiaUnrTab": "Usuarios NR",
   "registroCttosEnergiaRmsTab": "RMS",
   "registroCttosEnergiaLayoutAStandardTabs": [
     "Largo plazo",
