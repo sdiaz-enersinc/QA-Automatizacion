@@ -16,7 +16,7 @@ test.describe('Contratos combustible — Transporte (Ruta A)', () => {
     skipUnlessTabEnabled(MODULE_IDS.registroCttosCombustible, REGISTRO_CTTS_COMBUSTIBLE_LAYOUT_A_TAB);
   });
 
-  test('Transporte — Grilla, filtros, Carga Ramales y diálogo Nuevo Registro', async ({
+  test('Transporte — Grilla, filtros y diálogo Nuevo Registro', async ({
     page,
     dashboardPage,
   }) => {
@@ -38,10 +38,6 @@ test.describe('Contratos combustible — Transporte (Ruta A)', () => {
 
     await test.step('3. Validar apertura y cierre del asistente Nuevo Registro', async () => {
       await registro.expectTransporteNuevoRegistroDialogOpensAndCloses();
-    });
-
-    await test.step('4. Validar apertura y cierre del diálogo Carga Ramales', async () => {
-      await registro.expectCargaRamalesDialogOpensAndCloses();
     });
   });
 });

@@ -44,7 +44,7 @@ test.describe('Contratos combustible — Ruta B (tablero)', () => {
         await registro.expectTransporteGridColumnHeaders(REGISTRO_CTTS_COMBUSTIBLE_TRANSPORTE_COLUMNS);
         await registro.expectLayoutATransporteToolbar();
       },
-      '2. Transporte — validar Select all, columnas y Carga Ramales',
+      '2. Transporte — validar Select all, columnas y barra',
     );
 
     await whenTabEnabled(
