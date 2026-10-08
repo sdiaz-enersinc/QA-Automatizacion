@@ -110,6 +110,30 @@ export const REGISTRO_INSUMOS_OFERTA_CONCEPTOS_OC_COLUMNS =
 export const REGISTRO_INSUMOS_OFERTA_GESTION_CONCEPTOS_COLUMNS =
   cfg.registroInsumosOfertaGestionConceptosColumns;
 
+/** Pestaña Parametros Regas (habilitada en algunos tenants). */
+export const REGISTRO_INSUMOS_OFERTA_PARAMETROS_REGAS_TAB = 'Parametros Regas';
+
+/** Pestaña Diario Promigas (habilitada en algunos tenants). */
+export const REGISTRO_INSUMOS_OFERTA_DIARIO_PROMIGAS_TAB = 'Diario Promigas';
+
+/** Pestaña Horario Promigas (habilitada en algunos tenants). */
+export const REGISTRO_INSUMOS_OFERTA_HORARIO_PROMIGAS_TAB = 'Horario Promigas';
+
+/** Pestaña Costos Regas (habilitada en algunos tenants). */
+export const REGISTRO_INSUMOS_OFERTA_COSTOS_REGAS_TAB = 'Costos Regas';
+
+/** Encabezados de columna de la grilla Parametros Regas. */
+export const REGISTRO_INSUMOS_OFERTA_PARAMETROS_REGAS_COLUMNS =
+  cfg.registroInsumosOfertaParametrosRegasColumns;
+
+/** Encabezados de columna de la grilla Costos Regas. */
+export const REGISTRO_INSUMOS_OFERTA_COSTOS_REGAS_COLUMNS =
+  cfg.registroInsumosOfertaCostosRegasColumns;
+
+/** Etiquetas del formulario plano Cargar Archivo / Nuevo Registro de Parametros Regas. */
+export const REGISTRO_INSUMOS_OFERTA_PARAMETROS_REGAS_FORM_LABELS =
+  cfg.registroInsumosOfertaParametrosRegasFormLabels;
+
 /** Títulos de paso del asistente Nuevo Registro de OEF Proyectada. */
 export const REGISTRO_INSUMOS_OFERTA_OEF_NUEVO_REGISTRO_WIZARD_STEPS =
   cfg.registroInsumosOfertaOefNuevoRegistroWizardSteps;
@@ -636,5 +660,42 @@ export class RegistroInsumosOfertaNavigationPage extends RegistroNavigationBaseP
     await expect(dialog).not.toBeVisible({ timeout: 10_000 });
     await this.dismissOpenSelectDropdowns();
     await this.expectNoVisibleModals();
+  }
+
+  /**
+   * Abre un CTA de formulario plano, valida etiquetas de campo y cierra el diálogo.
+   *
+   * @param buttonName - Botón de la barra que abre Registrar Información.
+   * @param fieldLabels - Etiquetas visibles de campo en el formulario.
+   */
+  async expectFlatFormDialogOpensAndCloses(
+    buttonName: string | RegExp,
+    fieldLabels: readonly string[],
+  ): Promise<void> {
+    const dialog = await this.openRegistrarInformacionDialog(buttonName);
+    const fields: RegistroWizardFieldDefinition[] = fieldLabels.map((label) => ({
+      label,
+      kind: 'textbox',
+    }));
+    await assertRegistroWizardFieldsMatchConfig(dialog, fields);
+    for (const label of fieldLabels) {
+      await expect(dialog.locator('.ant-form-item-label').filter({ hasText: label }).first()).toBeVisible();
+    }
+    await expect(dialog.getByRole('button', { name: 'Limpiar' })).toBeVisible();
+    await expect(dialog.getByRole('button', { name: 'Guardar' })).toBeVisible();
+    await dialog.getByRole('button', { name: 'Close' }).click();
+    await expect(dialog).not.toBeVisible({ timeout: 10_000 });
+    await this.dismissOpenSelectDropdowns();
+    await this.expectNoVisibleModals();
+  }
+
+  /**
+   * Abre Cargar Archivo en Parametros Regas, valida los campos del formulario plano y cierra.
+   */
+  async expectParametrosRegasCargarArchivoDialog(): Promise<void> {
+    await this.expectFlatFormDialogOpensAndCloses(
+      'Cargar Archivo',
+      REGISTRO_INSUMOS_OFERTA_PARAMETROS_REGAS_FORM_LABELS,
+    );
   }
 }
