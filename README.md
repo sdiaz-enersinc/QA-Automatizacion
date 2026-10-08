@@ -73,7 +73,7 @@ tests/
     │       ├── config/               # JSON de columnas, tabs, wizard
     │       └── pruebas/              # specs Playwright
     ├── gecg/                         # misma forma
-    └── tbsg/                         # misma forma; incluye planta-consumos
+    └── tbsg/                         # misma forma; incluye insumos-oferta y otros-contratos
 ```
 
 ```mermaid
@@ -168,11 +168,11 @@ Deshabilitados: planta/consumos y otros-documentos (sin carpeta de pruebas).
 
 ### tbsg
 
-Habilitados: navigation, empresas, cttos-energía, cttos-combustible, planta y consumos, historial.
+Habilitados: navigation, empresas, cttos-energía, cttos-combustible, otros contratos, insumos oferta, historial.
 
-Deshabilitados (specs presentes, `test.skip` vía guards): RPM, SIRECI, otros documentos.
+Deshabilitados (sin carpeta de pruebas; el bloqueo lo cubre navegación): RPM, SIRECI, otros documentos, planta y consumos.
 
-Planta y consumos es el módulo vivo (Heat Rate, Regas, Promigas). No se reutiliza el POM de Insumos oferta.
+Insumos oferta reemplaza Planta y consumos. Heat Rate ya no está; AGR queda bloqueada. Otras pestañas (Regas, Promigas, OEF, Conceptos) siguen habilitadas.
 
 ## Recaptura de desplegables
 
