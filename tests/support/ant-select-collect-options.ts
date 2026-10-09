@@ -6,9 +6,20 @@ export async function collectAntSelectDropdownOptionsInBrowser(root: Element): P
   const VIRTUAL_LIST_RENDER_WAIT_MS = 100;
   const STAGNANT_SCROLL_PASSES = 5;
 
+  /**
+   * Espera el número de milisegundos indicado (sustituto de timers del Node dentro de evaluate).
+   *
+   * @param ms - Duración de la espera.
+   */
   const sleep = (ms: number): Promise<void> =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
+  /**
+   * Desplaza el contenedor de lista virtual y espera a que Ant Design pinte nuevas filas.
+   *
+   * @param holder - Nodo `.rc-virtual-list-holder` del desplegable.
+   * @param scrollTop - Posición vertical a aplicar.
+   */
   const scrollVirtualListHolder = async (holder: Element, scrollTop: number): Promise<void> => {
     const el = holder as HTMLElement;
     el.scrollTop = scrollTop;
@@ -19,6 +30,9 @@ export async function collectAntSelectDropdownOptionsInBrowser(root: Element): P
   const seen = new Set<string>();
   const out: string[] = [];
 
+  /**
+   * Añade al acumulador las etiquetas de opción visibles que aún no se han visto.
+   */
   const collect = () => {
     root.querySelectorAll('.ant-select-item-option-content').forEach((node) => {
       const text = node.textContent?.trim();

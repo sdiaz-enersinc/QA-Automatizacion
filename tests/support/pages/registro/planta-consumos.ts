@@ -199,7 +199,7 @@ export class RegistroPlantaConsumosNavigationPage extends RegistroNavigationBase
   }
 
   /**
-   * Comprueba que los ítems anidados de Planta y consumos coinciden con enabled + locked.
+   * Comprueba que los ítems anidados de Planta y consumos coinciden con las pestañas habilitadas y bloqueadas.
    */
   async expectPlantaConsumosSidebarLinksVisible(): Promise<void> {
     await this.expandPlantaConsumosSidebar();

@@ -188,6 +188,17 @@ npm run refresh:dropdowns
 
 Config: `playwright.refresh.config.ts`. Runner: `scripts/refresh-dropdown-options.spec.ts`.
 
+## Convenciones de documentación
+
+Markdown, JSDoc y comentarios van en español. No se traducen nombres de código (símbolos, claves JSON, APIs de Playwright, variables de entorno, rutas, copy de la UI, `MODULE_IDS`). Cada función en `tests/support/`, `scripts/` y `tests/global-setup.ts` lleva docstring.
+
+Para buscar prosa en inglés residual desde la raíz del repo:
+
+```bash
+rg -n -g '*.ts' -g '*.md' '// .*\b(the|currently|instead of|is selected)\b'
+rg -n -g '*.ts' '\*\s+(The|Returns the|Whether)'
+```
+
 ## Fuera de alcance
 
 - Módulo Despacho.

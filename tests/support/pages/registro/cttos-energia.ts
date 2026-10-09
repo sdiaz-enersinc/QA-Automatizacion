@@ -188,7 +188,7 @@ export class RegistroCttosEnergiaNavigationPage extends RegistroNavigationBasePa
   }
 
   /**
-   * Comprueba que los ítems anidados de Contratos energía coinciden exactamente con enabled + locked.
+   * Comprueba que los ítems anidados de Contratos energía coinciden exactamente con las pestañas habilitadas y bloqueadas.
    */
   async expectCttosEnergiaSidebarLinksVisible(): Promise<void> {
     await this.expandCttosEnergiaSidebar();

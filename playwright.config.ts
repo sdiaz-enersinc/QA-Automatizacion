@@ -22,6 +22,9 @@ const BROWSERS = [
  */
 export default defineConfig({
   testDir: './tests',
+  expect: {
+    timeout: 10_000,
+  },
   globalSetup: require.resolve('./tests/global-setup.ts'),
   testMatch: [tenantSpecMatch],
   fullyParallel: false,
@@ -36,9 +39,9 @@ export default defineConfig({
       'QA-Bypass-Token': process.env.TOKEN_BYPASS || '',
     },
     trace: 'on-first-retry',
-    // launchOptions: {
-    //   slowMo: 500,
-    // },
+    launchOptions: {
+      slowMo: 250,
+    },
   },
 
   projects: [

@@ -8,11 +8,17 @@ import { Locator, Page, expect } from '@playwright/test';
 export class PasswordStepPage {
   constructor(private readonly page: Page) {}
 
+  /** Localizador del campo Nombre de usuario (solo lectura tras verificar el correo). */
   usernameInput = () => this.page.getByRole('textbox', { name: 'Nombre de usuario' });
+  /** Localizador del campo Contraseña. */
   passwordInput = () => this.page.getByRole('textbox', { name: 'Contraseña' });
+  /** Localizador del botón Entrar. */
   entrarBtn = () => this.page.getByRole('button', { name: 'Entrar' });
+  /** Localizador del enlace ¿Olvidaste tu contraseña? */
   forgotPassword = () => this.page.getByRole('button', { name: '¿Olvidaste tu contraseña?' });
+  /** Localizador del botón de SSO con Google. */
   googleSsoBtn = () => this.page.getByRole('button', { name: 'google Ingresar con Google' });
+  /** Localizador del botón de SSO con Azure. */
   azureSsoBtn = () => this.page.getByRole('button', { name: 'path21 Ingresar con Azure' });
 
   /**

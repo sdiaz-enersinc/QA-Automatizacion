@@ -392,6 +392,11 @@ function printDiffs(job: HarvestJob, diffs: FieldDiff[]): void {
     return;
   }
   for (const diff of diffs) {
+    /**
+     * Resume una lista de opciones para la salida de consola (hasta tres ítems).
+     *
+     * @param items - Opciones añadidas o eliminadas.
+     */
     const preview = (items: string[]) => {
       if (items.length === 0) {
         return 'ninguna';

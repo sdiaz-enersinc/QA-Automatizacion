@@ -32,6 +32,6 @@ export default async function globalSetup(): Promise<void> {
   const enabledCount = Object.values(manifest.modules).filter((entry) => entry.enabled).length;
 
   console.log(
-    `[playwright] TEST_TENANT=${tenant} → tests/tenants/${tenant}/** (${enabledCount} módulos enabled)`,
+    `[playwright] TEST_TENANT=${tenant} → tests/tenants/${tenant}/** (${enabledCount} módulos habilitados)`,
   );
 }

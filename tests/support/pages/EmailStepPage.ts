@@ -8,7 +8,9 @@ import { Page } from '@playwright/test';
 export class EmailStepPage {
   constructor(private readonly page: Page) {}
 
+  /** Localizador del campo Correo electrónico del paso de autorización. */
   emailInput = () => this.page.getByRole('textbox', { name: '* Correo electrónico' });
+  /** Localizador del botón Continuar. */
   continueBtn = () => this.page.getByRole('button', { name: 'Continuar' });
 
   /**

@@ -122,7 +122,7 @@ export class RegistroCttosCombustibleNavigationPage extends RegistroNavigationBa
   }
 
   /**
-   * Comprueba que los ítems anidados de Contratos combustible coinciden exactamente con enabled + locked.
+   * Comprueba que los ítems anidados de Contratos combustible coinciden exactamente con las pestañas habilitadas y bloqueadas.
    */
   async expectCttosCombustibleSidebarLinksVisible(): Promise<void> {
     await this.expandCttosCombustibleSidebar();

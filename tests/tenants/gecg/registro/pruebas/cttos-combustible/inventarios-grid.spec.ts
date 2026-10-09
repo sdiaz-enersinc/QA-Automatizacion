@@ -28,8 +28,8 @@ test.describe('Contratos combustible — Inventarios (Ruta A)', () => {
     });
 
     await test.step('2. Validar el estado 404 de Inventarios (grilla aún no disponible)', async () => {
-      // Inventarios is selected and enabled, but /gestor-de-datos/combustible/inventarios
-      // currently renders the Gestor 404 empty state instead of a data grid.
+      // Inventarios está seleccionada y habilitada, pero /gestor-de-datos/combustible/inventarios
+      // muestra el estado vacío 404 del Gestor en lugar de una grilla de datos.
       await registro.expectInventariosUnavailablePage();
     });
   });

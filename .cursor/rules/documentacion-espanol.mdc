@@ -1,0 +1,27 @@
+---
+description: Documentación y comentarios en español; docstrings en funciones
+alwaysApply: true
+---
+
+# Documentación en español
+
+Markdown, JSDoc y comentarios se escriben en español. No traduzcas nombres de código (símbolos, claves JSON, APIs de Playwright, variables de entorno, rutas, copy de la UI, `MODULE_IDS`).
+
+Términos técnicos aceptables en prosa: Playwright, bypass, fixture, hover.
+
+## Docstrings
+
+Cada función nueva o modificada en `tests/support/**`, `scripts/**` y `tests/global-setup.ts` lleva `/** ... */`. Usa `@param` y `@returns` cuando aplique. Los constructores triviales de page objects pueden omitirse si la clase ya está documentada.
+
+```ts
+/**
+ * Omite el test actual si el módulo o su grupo padre está desactivado en tenant.json.
+ *
+ * @param moduleId - Id canónico de módulo o clave string de tenant.json.
+ */
+export function skipUnlessModuleEnabled(moduleId: ModuleId | string): void {
+  // ...
+}
+```
+
+Los agentes de `.cursor/commands/` pueden generar comentarios en inglés. Tras generar, traduce la prosa o pide comentarios en español antes de guardar.
